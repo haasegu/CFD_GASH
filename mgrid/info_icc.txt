@@ -1,0 +1,9 @@
+#pragma nounroll
+
+#pragma vector vecremainder
+
+#pragma loop_count min(), max(), avg()
+
+data alignment
+
+
