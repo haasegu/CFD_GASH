@@ -1,0 +1,78 @@
+git clone https://ghaase@143.50.47.112:8443/r/haase/lv/Math2CPP.git
+
+ssh -X 143.50.47.112
+
+sudo service gitblit restart
+
+pushd /opt/gitblit/data/git
+
+
+#############################
+#######################################################################
+## first checkout
+
+git clone https://ghaase@143.50.47.112:8443/r/haase/lv/Math2CPP.git
+cd Math2CPP
+
+#######################################################################
+# check in existing directory
+
+cd Math2CPP
+git init
+git add *
+git commit
+git remote add origin https://ghaase@143.50.47.112:8443/r/haase/lv/Math2CPP.git
+git push -u origin master
+
+
+#######################################################################
+## working with git
+
+#  add a file/directory to repository
+ git add
+
+# remove a file/directory from repository
+ git rm
+ 
+# transfer changes in local repository 
+ git commit -a 
+ # or
+ git commit -a -m "My Comment"
+ 
+# transfer changes fom the local to the global repository
+ git push
+ 
+#  transfer changes fom the global to the local repository
+ git pull
+
+#######################################################################
+####### Some hints from page
+// ??
+
+##  Create a new repository
+
+touch info.txt
+git init
+git add  info.txt
+git commit -m "first commit"
+ls
+git remote add origin https://ghaase@143.50.47.112:8443/r/haase/lv/Math2CPP.git
+git push -u origin master
+
+### OR from an existing directory 
+
+git remote add origin https://ghaase@143.50.47.112:8443/r/haase/lv/Math2CPP.git
+git push -u origin master
+
+
+#################
+check links in web-page
+
+http://validator.w3.org/checklink
+http://wummel.github.io/linkchecker/
+(http://www.brokenlinkcheck.com/)
+
+pdf checker
+http://free-electrons.com/blog/pdf-link-checker/
+
+#
