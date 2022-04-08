@@ -8,21 +8,22 @@ pushd /opt/gitblit/data/git
 
 
 #############################
+## connect to github
+gh auth login
+
+## if needed:  gh auth logout
 #######################################################################
 ## first checkout
 
-git clone https://ghaase@143.50.47.112:8443/r/haase/lv/Math2CPP.git
-cd Math2CPP
+gh repo clone haasegu/CFD_GASH
+cd CFD_GASH
 
-#######################################################################
-# check in existing directory
-
-cd Math2CPP
-git init
-git add *
-git commit
-git remote add origin https://ghaase@143.50.47.112:8443/r/haase/lv/Math2CPP.git
-git push -u origin master
+###########
+## man command in daily use
+git pull                                <---  updates
+....
+git commit -a -m "."
+git push                                --->  updates
 
 
 #######################################################################
@@ -46,26 +47,7 @@ git push -u origin master
  git pull
 
 #######################################################################
-####### Some hints from page
-// ??
 
-##  Create a new repository
-
-touch info.txt
-git init
-git add  info.txt
-git commit -m "first commit"
-ls
-git remote add origin https://ghaase@143.50.47.112:8443/r/haase/lv/Math2CPP.git
-git push -u origin master
-
-### OR from an existing directory 
-
-git remote add origin https://ghaase@143.50.47.112:8443/r/haase/lv/Math2CPP.git
-git push -u origin master
-
-
-#################
 check links in web-page
 
 http://validator.w3.org/checklink
