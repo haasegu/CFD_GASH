@@ -126,7 +126,7 @@ int main(int , char **)
     
     
     double t=1, dt = 0.5, c = 0.2;
-    SK1.CalculateLaplace_heat_equation(fv, u_old, dt, t, c);
+    SK1.CalculateLaplace(fv);
     SK1.Debug();
    /* 
     for (int k = 0; k < t/dt; ++k)

@@ -13,7 +13,7 @@
 using namespace std;
 
 //  general routine for lin. triangular elements
-/*
+
 void CalcElem(int const ial[4], double const xc[], double ske[4][4], double fe[4])
 //void CalcElem(const int* __restrict__ ial, const double* __restrict__ xc, double* __restrict__ ske[3], double* __restrict__ fe)
 {
@@ -80,10 +80,10 @@ void CalcElem_Masse(int const ial[4], double const xc[], double const cm, double
 
     return;
 }
-*/
+
 // following function is added by Salman Ahmad. 
 
-
+/*
 void CalcElem_heat_equation_crank_nichelson(int const ial[4], double const xc[], double ske[4][4], double fe[4], 
 const vector<double> &u_old, const double dt, const double t, const double c)
 {
@@ -157,7 +157,7 @@ const vector<double> &u_old, const double dt, const double t, const double c)
 
 
 }
-
+*/
 /*
 // generalization to 3D for P2-P1 by Salman Ahmad
 
@@ -371,6 +371,8 @@ const vector<double> &u_old, const double dt, const double t, const double c)
 
 // generalization to 3D for P1 (linear) polynamial
 
+/*
+
 void CalcElem_heat_equation_crank_nichelson_P1(int const ial[4], double const xc[], double ske[4][4], double fe[4], 
 const vector<double> &u_old, const double dt, const double t, const double c)
 {
@@ -383,8 +385,8 @@ const vector<double> &u_old, const double dt, const double t, const double c)
                  x3 = xc[i4 + 0],  y3 = xc[i4 + 1], z3 = xc[i4 + 2];
                  
     
-    const double jac = fabs(x1*y3*z2 - x1*y2*z3 + x2*y1*z3 - x2*y3*z1 - x3*y1*z2 + x3*y2*z1 + x1*y2*z4 - x1*y4*z2 - x2*y1*z4 + x2*y4*z1 + x4*y1*z2 
-    - x4*y2*z1 - x1*y3*z4 + x1*y4*z3 + x3*y1*z4 - x3*y4*z1 - x4*y1*z3 + x4*y3*z1 + x2*y3*z4 - x2*y4*z3 - x3*y2*z4 + x3*y4*z2 + x4*y2*z3 - x4*y3*z2);
+    const double jac = fabs(x1*y3*z2 - x1*y2*z3 + x2*y1*z3 - x2*y3*z1 - x3*y1*z2 + x3*y2*z1 + x1*y2*z3 - x1*y4*z2 - x2*y1*z4 + x2*y4*z1 + x4*y1*z2 
+    - x4*y2*z1 - x1*y3*z4 + x1*y4*z3 + x3*y1*z4 - x3*y4*z1 - x4*y1*z3 + x4*y3*z1 + x2*y3*z4 - x2*y3*z3 - x3*y2*z4 + x3*y4*z2 + x4*y2*z3 - x4*y3*z2);
     
     const double  a0, a1, a2, a3,
                   b0, b1, b2, b3, 
@@ -477,7 +479,7 @@ const vector<double> &u_old, const double dt, const double t, const double c)
 
 
 }
-
+*/
 // ############################################################################################################################################################################################################
 
 
