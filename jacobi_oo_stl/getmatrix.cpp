@@ -158,10 +158,10 @@ const vector<double> &u_old, const double dt, const double t, const double c)
 
 }
 
+/*
 // generalization to 3D for P2-P1 by Salman Ahmad
 
 // generalization to 3D for P2 (quardatic) polynamial
-
 void CalcElem_heat_equation_crank_nichelson_P2(int const ial[4], double const xc[], double ske[4][4], double fe[4], 
 const vector<double> &u_old, const double dt, const double t, const double c)
 {
@@ -367,9 +367,11 @@ const vector<double> &u_old, const double dt, const double t, const double c)
 
 }
 
+*/
+
 // generalization to 3D for P1 (linear) polynamial
 
-void CalcElem_heat_equation_crank_nichelson(int const ial[4], double const xc[], double ske[4][4], double fe[4], 
+void CalcElem_heat_equation_crank_nichelson_P1(int const ial[4], double const xc[], double ske[4][4], double fe[4], 
 const vector<double> &u_old, const double dt, const double t, const double c)
 {
     double tau=dt/c;
@@ -378,7 +380,7 @@ const vector<double> &u_old, const double dt, const double t, const double c)
     const double x0 = xc[i1 + 0],  y0 = xc[i1 + 1], z0 = xc[i1 + 2],
                  x1 = xc[i2 + 0],  y1 = xc[i2 + 1], z1 = xc[i2 + 2],
                  x2 = xc[i3 + 0],  y2 = xc[i3 + 1], z2 = xc[i3 + 2],
-                 x3 = xc[i4 + 0],  y3 = xc[i4 + 1], z3 = xc[i4 + 2],
+                 x3 = xc[i4 + 0],  y3 = xc[i4 + 1], z3 = xc[i4 + 2];
                  
     
     const double jac = fabs(x1*y3*z2 - x1*y2*z3 + x2*y1*z3 - x2*y3*z1 - x3*y1*z2 + x3*y2*z1 + x1*y2*z4 - x1*y4*z2 - x2*y1*z4 + x2*y4*z1 + x4*y1*z2 
