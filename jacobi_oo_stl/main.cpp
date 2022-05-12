@@ -113,15 +113,26 @@ int main(int , char **)
     //mesh.Debug();
 
      //CRS_Matrix SK(mesh);                   // CRS matrix
-    //SK.Debug();
+     //SK.Debug();
     
     FEM_Matrix SK1(mesh); 
     SK1.Debug();
 
     vector<double> uv(SK1.Nrows(),0.0);     // temperature
     vector<double> fv(SK1.Nrows(),0.0);     // r.h.s.
-
-    SK1.CalculateLaplace(fv);
+    vector<double> u_old(SK1.Nrows(),0.0);
+    
+    
+    
+    
+    double t=1, dt = 0.5, c = 0.2;
+    SK1.CalculateLaplace_heat_equation(fv, u_old, dt, t, c);
+    SK1.Debug();
+   /* 
+    for (int k = 0; k < t/dt; ++k)
+    {
+		
+    SK1.CalculateLaplace_heat_equation(fv, u_old, dt, t, c);
     SK1.Debug();
     
 
@@ -141,9 +152,15 @@ int main(int , char **)
 
     JacobiSolve(SK1, fv, uv );          // solve the system of equations
 
+    
+    
+    
+    
+
     //double t1 = (clock() - tstart) / CLOCKS_PER_SEC;// timing
     double t1 = omp_get_wtime() - tstart;             // OpenMP
     cout << "JacobiSolve: timing in sec. : " << t1 << endl;
+
     
     //mesh.Write_ascii_matlab("uv.txt", uv);
     //mesh.Visualize(uv);
@@ -152,10 +169,13 @@ int main(int , char **)
     {
 		cout << "Error in solution." << endl;
 	}
+	
+	auto s = std::to_string(k);
 
-    mesh.Write_ascii_paraview("uv.vtk", uv);
+    mesh.Write_ascii_paraview("uv"+s+".vtk", uv);
     mesh.Visualize_paraview(uv);
-  
+    }
+  */
 }    
     return 0;
 }

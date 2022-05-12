@@ -13,7 +13,7 @@
 using namespace std;
 
 //  general routine for lin. triangular elements
-
+/*
 void CalcElem(int const ial[4], double const xc[], double ske[4][4], double fe[4])
 //void CalcElem(const int* __restrict__ ial, const double* __restrict__ xc, double* __restrict__ ske[3], double* __restrict__ fe)
 {
@@ -47,14 +47,12 @@ void CalcElem(int const ial[4], double const xc[], double ske[4][4], double fe[4
                  ym    = (xc[i1 + 1] + xc[i2 + 1] + xc[i3 + 1]+ xc[i4 + 1]) / 4.0,
                  zm    = (xc[i1 + 2] + xc[i2 + 2] + xc[i3 + 2]+ xc[i4 + 2]) / 4.0;
     //fe[0] = fe[1] = fe[2] = 0.5 * jac * FunctF(xm, ym) / 3.0;
-    fe[0] = fe[1] = fe[2]= fe[3] =  (jac/6.0) * fNice(xm, ym, zm) / 4.0;
+    fe[0] = fe[1] = fe[2]= fe[3] =  0*(jac/6.0) * fNice(0, xm, ym, zm) / 4.0;
 }
 
-
-/*
-void CalcElem_Masse(int const ial[4], double const xc[], double ske[4][4])
+void CalcElem_Masse(int const ial[4], double const xc[], double const cm, double ske[4][4])
 {
-    const int  i1  = 2 * ial[0],   i2 = 2 * ial[1],   i3 = 2 * ial[2], i4 = 2 * ial[3];
+    const int  i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3];
     const double x1 = xc[i2 + 0] - xc[i1 + 0],  y1 = xc[i2 + 1] - xc[i1 + 1], z1 = xc[i2 + 2] - xc[i1 + 2],
                  x2 = xc[i3 + 0] - xc[i1 + 0],  y2 = xc[i3 + 1] - xc[i1 + 1], z2 = xc[i3 + 2] - xc[i1 + 2],
                  x3 = xc[i4 + 0] - xc[i1 + 0],  y3 = xc[i4 + 1] - xc[i1 + 1], z3 = xc[i4 + 2] - xc[i1 + 2],
@@ -63,42 +61,438 @@ void CalcElem_Masse(int const ial[4], double const xc[], double ske[4][4])
                  x6 = xc[i4 + 0] - xc[i3 + 0],  y6 = xc[i4 + 1] - xc[i3 + 1], z6 = xc[i4 + 2] - xc[i3 + 2];
     const double jac = fabs(x3*(y1*z2-y2*z1)+y3*(x2*z1-x1*z2)+z3*(x1*y2-y1*x2));
 
-    ske[0][0] += jac / 12.0;
-    ske[0][1] += jac / 24.0;
-    ske[0][2] += jac / 24.0;
-    ske[0][3] += jac / 24.0;
-    ske[1][0] += jac / 24.0;
-    ske[1][1] += jac / 12.0;
-    ske[1][2] += jac / 24.0;
-    ske[1][3] += jac / 24.0;
-    ske[2][0] += jac / 24.0;
-    ske[2][1] += jac / 24.0;
-    ske[2][2] += jac / 12.0;
-    ske[2][3] += jac / 12.0;
-    ske[3][0] += jac / 12.0;
-    ske[3][1] += jac / 12.0;
-    ske[3][2] += jac / 12.0;
-    ske[3][3] += jac / 12.0;
+    ske[0][0] += jac/12.0;
+    ske[0][1] += jac/24.0;
+    ske[0][2] += jac/24.0;
+    ske[0][3] += jac/24.0;
+    ske[1][0] += jac/24.0;
+    ske[1][1] += jac/12.0;
+    ske[1][2] += jac/24.0;
+    ske[1][3] += jac/24.0;
+    ske[2][0] += jac/24.0;
+    ske[2][1] += jac/24.0;
+    ske[2][2] += jac/12.0;
+    ske[2][3] += jac/24.0;
+    ske[3][0] += jac/24.0;
+    ske[3][1] += jac/24.0;
+    ske[3][2] += jac/24.0;
+    ske[3][3] += jac/12.0;
 
     return;
-}*/
+}
+*/
+// following function is added by Salman Ahmad. 
 
-// general routine for lin. triangular elements,
-// non-symm. matrix
-// node numbering in element:  a s c e n d i n g   indices !!
-// GH: deprecated
+
+void CalcElem_heat_equation_crank_nichelson(int const ial[4], double const xc[], double ske[4][4], double fe[4], 
+const vector<double> &u_old, const double dt, const double t, const double c)
+{
+    double tau=dt/c;
+
+    const int  i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3];
+    const double x1 = xc[i2 + 0] - xc[i1 + 0],  y1 = xc[i2 + 1] - xc[i1 + 1], z1 = xc[i2 + 2] - xc[i1 + 2],
+                 x2 = xc[i3 + 0] - xc[i1 + 0],  y2 = xc[i3 + 1] - xc[i1 + 1], z2 = xc[i3 + 2] - xc[i1 + 2],
+                 x3 = xc[i4 + 0] - xc[i1 + 0],  y3 = xc[i4 + 1] - xc[i1 + 1], z3 = xc[i4 + 2] - xc[i1 + 2],
+                 x4 = xc[i3 + 0] - xc[i2 + 0],  y4 = xc[i3 + 1] - xc[i2 + 1], z4 = xc[i3 + 2] - xc[i2 + 2],
+                 x5 = xc[i2 + 0] - xc[i4 + 0],  y5 = xc[i2 + 1] - xc[i4 + 1], z5 = xc[i2 + 2] - xc[i4 + 2],
+                 x6 = xc[i4 + 0] - xc[i3 + 0],  y6 = xc[i4 + 1] - xc[i3 + 1], z6 = xc[i4 + 2] - xc[i3 + 2];
+    const double jac = fabs(x3*(y1*z2-y2*z1)+y3*(x2*z1-x1*z2)+z3*(x1*y2-y1*x2));
+
+    ske[0][0] = (1/(6*jac)) * ((x4*x4+y4*y4+z4*z4)*(x5*x5+y5*y5+z5*z5)-(x4*x5+y4*y5+z4*z5)*(x4*x5+y4*y5+z4*z5));
+    ske[0][1] = (1/(6*jac)) * ((x2*x6+y2*y6+z2*z6)*(x4*x6+y4*y6+z4*z6)-(x2*x4+y2*y4+z2*z4)*(x6*x6+y6*y6+z6*z6));
+    ske[0][2] = (1/(6*jac)) * ((x3*x4+y3*y4+z3*z4)*(x5*x5+y5*y5+z5*z5)-(x3*x5+y3*y5+z3*z5)*(x4*x5+y4*y5+z4*z5));
+    ske[0][3] = (1/(6*jac)) * ((x1*x6+y1*y6+z1*z6)*(x4*x4+y4*y4+z4*z4)-(x1*x4+y1*y4+z1*z4)*(x4*x6+y4*y6+z4*z6));
+    ske[1][0] = ske[0][1];
+    ske[1][1] = (1/(6*jac)) * ((x2*x2+y2*y2+z2*z2)*(x3*x3+y3*y3+z3*z3)-(x2*x3+y2*y3+z2*z3)*(x2*x3+y2*y3+z2*z3));
+    ske[1][2] = (1/(6*jac)) * ((x1*x6+y1*y6+z1*z6)*(x3*x3+y3*y3+z3*z3)-(x1*x3+y1*y3+z1*z3)*(x3*x6+y3*y6+z3*z6));
+    ske[1][3] = (1/(6*jac)) * ((x1*x3+y1*y3+z1*z3)*(x4*x6+y4*y6+z4*z6)-(x1*x6+y1*y6+z1*z6)*(x3*x4+y3*y4+z3*z4));
+    ske[2][0] = ske[0][2];
+    ske[2][1] = ske[1][2];
+    ske[2][2] = (1/(6*jac)) * ((x1*x1+y1*y1+z1*z1)*(x3*x3+y3*y3+z3*z3)-(x1*x3+y1*y3+z1*z3)*(x1*x3+y1*y3+z1*z3));
+    ske[2][3] = (1/(6*jac)) * ((x1*x3+y1*y3+z1*z3)*(x1*x4+y1*y4+z1*z4)-(x1*x1+y1*y1+z1*z1)*(x3*x4+y3*y4+z3*z4));
+    ske[3][0] = ske[0][3];
+    ske[3][1] = ske[1][3];
+    ske[3][2] = ske[2][3];
+    ske[3][3] = (1/(6*jac)) * ((x1*x1+y1*y1+z1*z1)*(x4*x4+y4*y4+z4*z4)-(x1*x4+y1*y4+z1*z4)*(x1*x4+y1*y4+z1*z4));
+    
+
+    const double xm    = (xc[i1 + 0] + xc[i2 + 0] + xc[i3 + 0]+ xc[i4 + 0]) / 4.0,
+                 ym    = (xc[i1 + 1] + xc[i2 + 1] + xc[i3 + 1]+ xc[i4 + 1]) / 4.0,
+                 zm    = (xc[i1 + 2] + xc[i2 + 2] + xc[i3 + 2]+ xc[i4 + 2]) / 4.0;
+    //fe[0] = fe[1] = fe[2] = 0.5 * jac * FunctF(xm, ym) / 3.0;
+    fe[0] = fe[1] = fe[2]= fe[3] =  0*(jac/6.0) * fNice(t+dt/2, xm, ym, zm) / 4.0; // jac*0.5/3 is integral of one hat function over the triangle (volume of pyramid)
+
+    // add contributions from crank nichelson to right hand-side
+
+    fe[0] += -ske[0][0]*tau/2*u_old.at(ial[0])-ske[0][1]*tau/2*u_old.at(ial[1])-ske[0][2]*tau/2*u_old.at(ial[2])-ske[0][3]*tau/2*u_old.at(ial[3]);
+    fe[1] += -ske[1][0]*tau/2*u_old.at(ial[0])-ske[1][1]*tau/2*u_old.at(ial[1])-ske[1][2]*tau/2*u_old.at(ial[2])-ske[1][3]*tau/2*u_old.at(ial[3]);
+    fe[2] += -ske[2][0]*tau/2*u_old.at(ial[0])-ske[2][1]*tau/2*u_old.at(ial[1])-ske[2][2]*tau/2*u_old.at(ial[2])-ske[2][3]*tau/2*u_old.at(ial[3]);
+    fe[3] += -ske[3][0]*tau/2*u_old.at(ial[0])-ske[3][1]*tau/2*u_old.at(ial[1])-ske[3][2]*tau/2*u_old.at(ial[2])-ske[3][3]*tau/2*u_old.at(ial[3]);
+
+
+    ske[0][0] = ske[0][0]*tau/2 + jac/12.0;
+    ske[0][1] = ske[0][1]*tau/2 + jac/24.0;
+    ske[0][2] = ske[0][2]*tau/2 + jac/24.0;
+    ske[0][3] = ske[0][2]*tau/2 + jac/24.0;
+    ske[1][0] = ske[1][0]*tau/2 + jac/24.0;
+    ske[1][1] = ske[1][1]*tau/2 + jac/12.0;
+    ske[1][2] = ske[1][2]*tau/2 + jac/24.0;
+    ske[1][3] = ske[1][2]*tau/2 + jac/24.0;
+    ske[2][0] = ske[2][0]*tau/2 + jac/24.0;
+    ske[2][1] = ske[2][1]*tau/2 + jac/24.0;
+    ske[2][2] = ske[2][2]*tau/2 + jac/12.0;
+    ske[2][3] = ske[2][2]*tau/2 + jac/24.0;
+    ske[3][0] = ske[2][0]*tau/2 + jac/24.0;
+    ske[3][1] = ske[2][1]*tau/2 + jac/24.0;
+    ske[3][2] = ske[2][2]*tau/2 + jac/24.0;
+    ske[3][3] = ske[2][2]*tau/2 + jac/12.0;
+
+
+    // add contributions from mass matrix/time derivative to rhs
+
+    fe[0] += jac/12.0*u_old.at(ial[0]) + jac/24.0*u_old.at(ial[1]) + jac/24.0*u_old.at(ial[2])+ jac/24.0*u_old.at(ial[3]);
+    fe[1] += jac/24.0*u_old.at(ial[0]) + jac/12.0*u_old.at(ial[1]) + jac/24.0*u_old.at(ial[2])+ jac/24.0*u_old.at(ial[3]);
+    fe[2] += jac/24.0*u_old.at(ial[0]) + jac/24.0*u_old.at(ial[1]) + jac/12.0*u_old.at(ial[2])+ jac/24.0*u_old.at(ial[3]);
+    fe[3] += jac/24.0*u_old.at(ial[0]) + jac/24.0*u_old.at(ial[1]) + jac/24.0*u_old.at(ial[2])+ jac/12.0*u_old.at(ial[3]);
+
+
+}
+
+// generalization to 3D for P2-P1 by Salman Ahmad
+
+// generalization to 3D for P2 (quardatic) polynamial
+
+void CalcElem_heat_equation_crank_nichelson(int const ial[4], double const xc[], double ske[4][4], double fe[4], 
+const vector<double> &u_old, const double dt, const double t, const double c)
+{
+    double tau=dt/c;
+
+    const int  i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3];
+    const double x0 = xc[i1 + 0],  y0 = xc[i1 + 1], z0 = xc[i1 + 2],
+                 x1 = xc[i2 + 0],  y1 = xc[i2 + 1], z1 = xc[i2 + 2],
+                 x2 = xc[i3 + 0],  y2 = xc[i3 + 1], z2 = xc[i3 + 2],
+                 x3 = xc[i4 + 0],  y3 = xc[i4 + 1], z3 = xc[i4 + 2],
+                 x4 = (xc[i1 + 0]+xc[i2 + 0])/2,  y4 = (xc[i1 + 1]+xc[i2 + 1])/2, z4 = (xc[i1 + 2]+xc[i2 + 2])/2,
+                 x5 = (xc[i2 + 0]+xc[i4 + 0])/2,  y5 = (xc[i2 + 1]+xc[i4 + 1])/2, z5 = (xc[i2 + 2]+xc[i4 + 2])/2,
+                 x6 = (xc[i2 + 0]+xc[i3 + 0])/2,  y6 = (xc[i2 + 1]+xc[i3 + 1])/2, z6 = (xc[i2 + 2]+xc[i3 + 2])/2,
+                 x7 = (xc[i3 + 0]+xc[i4 + 0])/2,  y7 = (xc[i3 + 1]+xc[i4 + 1])/2, z7 = (xc[i3 + 2]+xc[i4 + 2])/2,
+                 x8 = (xc[i1 + 0]+xc[i3 + 0])/2,  y8 = (xc[i1 + 1]+xc[i3 + 1])/2, z8 = (xc[i1 + 2]+xc[i3 + 2])/2,
+                 x9 = (xc[i1 + 0]+xc[i4 + 0])/2,  y9 = (xc[i1 + 1]+xc[i4 + 1])/2, z9 = (xc[i1 + 2]+xc[i4 + 2])/2;
+   
+    
+    const double jac = fabs(x3*(y1*z2-y2*z1)+y3*(x2*z1-x1*z2)+z3*(x1*y2-y1*x2));
+    
+    const double  a0, a1, a2, a3, a4, a5, a6, a7, a8, a9,
+                  b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, 
+                  c0, c1, c2, c3, c4, c5, c6, c7, c8, c9,
+                  d0, d1, d2, d3, d4, d5, d6, d7, d8, d9,
+                  e0, e1, e2, e3, e4, e5, e6, e7, e8, e9,
+                  f0, f1, f2, f3, f4, f5, f6, f7, f8, f9,
+                  g0, g1, g2, g3, g4, g5, g6, g7, g8, g9,
+                  h0, h1, h2, h3, h4, h5, h6, h7, h8, h9,
+                  k0, k1, k2, k3, k4, k5, k6, k7, k8, k9,
+                  r0, r1, r2, r3, r4, r5, r6, r7, r8, r9;
+      a0 = ()/jac;
+      a1 = -()/jac;
+      a2 = ()/jac;
+      a3 = -()/jac;
+      a4 = ()/jac;
+      a5 = -()/jac;
+      a6 = ()/jac;
+      a7 = -()/jac;
+      a8 = ()/jac;
+      a9 = -()/jac;
+      
+      b0 = -()/jac;
+      b1 = ()/jac;
+      b2 = -()/jac;
+      b3 = ()/jac;
+      b4 = -()/jac;
+      b5 = ()/jac;
+      b6 = -()/jac;
+      b7 = ()/jac;
+      b8 = -()/jac;
+      b9 = ()/jac;
+      
+      c0 = ()/jac;
+      c1 = -()/jac;
+      c2 = ()/jac;
+      c3 = -()/jac;
+      c4 = ()/jac;
+      c5 = -()/jac;
+      c6 = ()/jac;
+      c7 = -()/jac;
+      c8 = ()/jac;
+      c9 = -()/jac;
+      
+      d0 = -()/jac;
+      d1 = ()/jac;
+      d2 = -()/jac;
+      d3 = ()/jac;
+      d4 = -()/jac;
+      d5 = ()/jac;
+      d6 = -()/jac;
+      d7 = ()/jac;
+      d8 = -()/jac;
+      d9 = ()/jac;
+      
+      e0 = ()/jac;
+      e1 = -()/jac;
+      e2 = ()/jac;
+      e3 = -()/jac;
+      e4 = ()/jac;
+      e5 = -()/jac;
+      e6 = ()/jac;
+      e7 = -()/jac;
+      e8 = ()/jac;
+      e9 = -()/jac;
+      
+      f0 = -()/jac;
+      f1 = ()/jac;
+      f2 = -()/jac;
+      f3 = ()/jac;
+      f4 = -()/jac;
+      f5 = ()/jac;
+      f6 = -()/jac;
+      f7 = ()/jac;
+      f8 = -()/jac;
+      f9 = ()/jac;
+      
+      g0 = ()/jac;
+      g1 = -()/jac;
+      g2 = ()/jac;
+      g3 = -()/jac;
+      g4 = ()/jac;
+      g5 = -()/jac;
+      g6 = ()/jac;
+      g7 = -()/jac;
+      g8 = ()/jac;
+      g9 = -()/jac;
+      
+      h0 = -()/jac;
+      h1 = ()/jac;
+      h2 = -()/jac;
+      h3 = ()/jac;
+      h4 = -()/jac;
+      h5 = ()/jac;
+      h6 = -()/jac;
+      h7 = ()/jac;
+      h8 = -()/jac;
+      h9 = ()/jac;
+      
+      k0 = ()/jac;
+      k1 = -()/jac;
+      k2 = ()/jac;
+      k3 = -()/jac;
+      k4 = ()/jac;
+      k5 = -()/jac;
+      k6 = ()/jac;
+      k7 = -()/jac;
+      k8 = ()/jac;
+      k9 = -()/jac;
+      
+      r0 = -()/jac;
+      r1 = ()/jac;
+      r2 = -()/jac;
+      r3 = ()/jac;
+      r4 = -()/jac;
+      r5 = ()/jac;
+      r6 = -()/jac;
+      r7 = ()/jac;
+      r8 = -()/jac;
+      r9 = ()/jac;
+      
+      
+   
+    
+    
+
+    ske[0][0] = (1/(6*jac)) * ((x4*x4+y4*y4+z4*z4)*(x5*x5+y5*y5+z5*z5)-(x4*x5+y4*y5+z4*z5)*(x4*x5+y4*y5+z4*z5));
+    ske[0][1] = (1/(6*jac)) * ((x2*x6+y2*y6+z2*z6)*(x4*x6+y4*y6+z4*z6)-(x2*x4+y2*y4+z2*z4)*(x6*x6+y6*y6+z6*z6));
+    ske[0][2] = (1/(6*jac)) * ((x3*x4+y3*y4+z3*z4)*(x5*x5+y5*y5+z5*z5)-(x3*x5+y3*y5+z3*z5)*(x4*x5+y4*y5+z4*z5));
+    ske[0][3] = (1/(6*jac)) * ((x1*x6+y1*y6+z1*z6)*(x4*x4+y4*y4+z4*z4)-(x1*x4+y1*y4+z1*z4)*(x4*x6+y4*y6+z4*z6));
+    ske[1][0] = ske[0][1];
+    ske[1][1] = (1/(6*jac)) * ((x2*x2+y2*y2+z2*z2)*(x3*x3+y3*y3+z3*z3)-(x2*x3+y2*y3+z2*z3)*(x2*x3+y2*y3+z2*z3));
+    ske[1][2] = (1/(6*jac)) * ((x1*x6+y1*y6+z1*z6)*(x3*x3+y3*y3+z3*z3)-(x1*x3+y1*y3+z1*z3)*(x3*x6+y3*y6+z3*z6));
+    ske[1][3] = (1/(6*jac)) * ((x1*x3+y1*y3+z1*z3)*(x4*x6+y4*y6+z4*z6)-(x1*x6+y1*y6+z1*z6)*(x3*x4+y3*y4+z3*z4));
+    ske[2][0] = ske[0][2];
+    ske[2][1] = ske[1][2];
+    ske[2][2] = (1/(6*jac)) * ((x1*x1+y1*y1+z1*z1)*(x3*x3+y3*y3+z3*z3)-(x1*x3+y1*y3+z1*z3)*(x1*x3+y1*y3+z1*z3));
+    ske[2][3] = (1/(6*jac)) * ((x1*x3+y1*y3+z1*z3)*(x1*x4+y1*y4+z1*z4)-(x1*x1+y1*y1+z1*z1)*(x3*x4+y3*y4+z3*z4));
+    ske[3][0] = ske[0][3];
+    ske[3][1] = ske[1][3];
+    ske[3][2] = ske[2][3];
+    ske[3][3] = (1/(6*jac)) * ((x1*x1+y1*y1+z1*z1)*(x4*x4+y4*y4+z4*z4)-(x1*x4+y1*y4+z1*z4)*(x1*x4+y1*y4+z1*z4));
+    
+
+    const double xm    = (xc[i1 + 0] + xc[i2 + 0] + xc[i3 + 0]+ xc[i4 + 0]) / 4.0,
+                 ym    = (xc[i1 + 1] + xc[i2 + 1] + xc[i3 + 1]+ xc[i4 + 1]) / 4.0,
+                 zm    = (xc[i1 + 2] + xc[i2 + 2] + xc[i3 + 2]+ xc[i4 + 2]) / 4.0;
+    //fe[0] = fe[1] = fe[2] = 0.5 * jac * FunctF(xm, ym) / 3.0;
+    fe[0] = fe[1] = fe[2]= fe[3] =  0*(jac/6.0) * fNice(t+dt/2, xm, ym, zm) / 4.0; // jac*0.5/3 is integral of one hat function over the triangle (volume of pyramid)
+
+    // add contributions from crank nichelson to right hand-side
+
+    fe[0] += -ske[0][0]*tau/2*u_old.at(ial[0])-ske[0][1]*tau/2*u_old.at(ial[1])-ske[0][2]*tau/2*u_old.at(ial[2])-ske[0][3]*tau/2*u_old.at(ial[3]);
+    fe[1] += -ske[1][0]*tau/2*u_old.at(ial[0])-ske[1][1]*tau/2*u_old.at(ial[1])-ske[1][2]*tau/2*u_old.at(ial[2])-ske[1][3]*tau/2*u_old.at(ial[3]);
+    fe[2] += -ske[2][0]*tau/2*u_old.at(ial[0])-ske[2][1]*tau/2*u_old.at(ial[1])-ske[2][2]*tau/2*u_old.at(ial[2])-ske[2][3]*tau/2*u_old.at(ial[3]);
+    fe[3] += -ske[3][0]*tau/2*u_old.at(ial[0])-ske[3][1]*tau/2*u_old.at(ial[1])-ske[3][2]*tau/2*u_old.at(ial[2])-ske[3][3]*tau/2*u_old.at(ial[3]);
+
+
+    ske[0][0] = ske[0][0]*tau/2 + jac/12.0;
+    ske[0][1] = ske[0][1]*tau/2 + jac/24.0;
+    ske[0][2] = ske[0][2]*tau/2 + jac/24.0;
+    ske[0][3] = ske[0][2]*tau/2 + jac/24.0;
+    ske[1][0] = ske[1][0]*tau/2 + jac/24.0;
+    ske[1][1] = ske[1][1]*tau/2 + jac/12.0;
+    ske[1][2] = ske[1][2]*tau/2 + jac/24.0;
+    ske[1][3] = ske[1][2]*tau/2 + jac/24.0;
+    ske[2][0] = ske[2][0]*tau/2 + jac/24.0;
+    ske[2][1] = ske[2][1]*tau/2 + jac/24.0;
+    ske[2][2] = ske[2][2]*tau/2 + jac/12.0;
+    ske[2][3] = ske[2][2]*tau/2 + jac/24.0;
+    ske[3][0] = ske[2][0]*tau/2 + jac/24.0;
+    ske[3][1] = ske[2][1]*tau/2 + jac/24.0;
+    ske[3][2] = ske[2][2]*tau/2 + jac/24.0;
+    ske[3][3] = ske[2][2]*tau/2 + jac/12.0;
+
+
+    // add contributions from mass matrix/time derivative to rhs
+
+    fe[0] += jac/12.0*u_old.at(ial[0]) + jac/24.0*u_old.at(ial[1]) + jac/24.0*u_old.at(ial[2])+ jac/24.0*u_old.at(ial[3]);
+    fe[1] += jac/24.0*u_old.at(ial[0]) + jac/12.0*u_old.at(ial[1]) + jac/24.0*u_old.at(ial[2])+ jac/24.0*u_old.at(ial[3]);
+    fe[2] += jac/24.0*u_old.at(ial[0]) + jac/24.0*u_old.at(ial[1]) + jac/12.0*u_old.at(ial[2])+ jac/24.0*u_old.at(ial[3]);
+    fe[3] += jac/24.0*u_old.at(ial[0]) + jac/24.0*u_old.at(ial[1]) + jac/24.0*u_old.at(ial[2])+ jac/12.0*u_old.at(ial[3]);
+
+
+}
+
+// generalization to 3D for P1 (linear) polynamial
+
+void CalcElem_heat_equation_crank_nichelson(int const ial[4], double const xc[], double ske[4][4], double fe[4], 
+const vector<double> &u_old, const double dt, const double t, const double c)
+{
+    double tau=dt/c;
+
+    const int  i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3];
+    const double x0 = xc[i1 + 0],  y0 = xc[i1 + 1], z0 = xc[i1 + 2],
+                 x1 = xc[i2 + 0],  y1 = xc[i2 + 1], z1 = xc[i2 + 2],
+                 x2 = xc[i3 + 0],  y2 = xc[i3 + 1], z2 = xc[i3 + 2],
+                 x3 = xc[i4 + 0],  y3 = xc[i4 + 1], z3 = xc[i4 + 2],
+                 
+    
+    const double jac = fabs(x1*y3*z2 - x1*y2*z3 + x2*y1*z3 - x2*y3*z1 - x3*y1*z2 + x3*y2*z1 + x1*y2*z4 - x1*y4*z2 - x2*y1*z4 + x2*y4*z1 + x4*y1*z2 
+    - x4*y2*z1 - x1*y3*z4 + x1*y4*z3 + x3*y1*z4 - x3*y4*z1 - x4*y1*z3 + x4*y3*z1 + x2*y3*z4 - x2*y4*z3 - x3*y2*z4 + x3*y4*z2 + x4*y2*z3 - x4*y3*z2);
+    
+    const double  a0, a1, a2, a3,
+                  b0, b1, b2, b3, 
+                  c0, c1, c2, c3, 
+                  d0, d1, d2, d3;
+      a0 = x2*y3*z4 - x2*y4*z3 - x3*y2*z4 + x3*y4*z2 + x4*y2*z3 - x4*y3*z2;
+      a1 = x1*y4*z3 - x1*y3*z4 + x3*y1*z4 - x3*y4*z1 - x4*y1*z3 + x4*y3*z1;
+      a2 = x1*y2*z4 - x1*y4*z2 - x2*y1*z4 + x2*y4*z1 + x4*y1*z2 - x4*y2*z1;
+      a3 = x1*y3*z2 - x1*y2*z3 + x2*y1*z3 - x2*y3*z1 - x3*y1*z2 + x3*y2*z1;
+      
+      
+      b0 = y3*z2 - y2*z3 + y2*z4 - y4*z2 - y3*z4 + y4*z3;
+      b1 = y1*z3 - y3*z1 - y1*z4 + y4*z1 + y3*z4 - y4*z3;
+      b2 = y2*z1 - y1*z2 + y1*z4 - y4*z1 - y2*z4 + y4*z2;
+      b3 = y1*z2 - y2*z1 - y1*z3 + y3*z1 + y2*z3 - y3*z2;
+      
+      
+      
+      c0 = x2*z3 - x3*z2 - x2*z4 + x4*z2 + x3*z4 - x4*z3;
+      c1 = x3*z1 - x1*z3 + x1*z4 - x4*z1 - x3*z4 + x4*z3;
+      c2 = x1*z2 - x2*z1 - x1*z4 + x4*z1 + x2*z4 - x4*z2;
+      c3 = x2*z1 - x1*z2 + x1*z3 - x3*z1 - x2*z3 + x3*z2;
+      
+      
+      d0 = x3*y2 - x2*y3 + x2*y4 - x4*y2 - x3*y4 + x4*y3;
+      d1 = x1*y3 - x3*y1 - x1*y4 + x4*y1 + x3*y4 - x4*y3;
+      d2 = x2*y1 - x1*y2 + x1*y4 - x4*y1 - x2*y4 + x4*y2;
+      d3 = x1*y2 - x2*y1 - x1*y3 + x3*y1 + x2*y3 - x3*y2;
+      
+      
+    
+    
+
+    ske[0][0] = (1/(6*jac)) * ((x4*x4+y4*y4+z4*z4)*(x5*x5+y5*y5+z5*z5)-(x4*x5+y4*y5+z4*z5)*(x4*x5+y4*y5+z4*z5));
+    ske[0][1] = (1/(6*jac)) * ((x2*x6+y2*y6+z2*z6)*(x4*x6+y4*y6+z4*z6)-(x2*x4+y2*y4+z2*z4)*(x6*x6+y6*y6+z6*z6));
+    ske[0][2] = (1/(6*jac)) * ((x3*x4+y3*y4+z3*z4)*(x5*x5+y5*y5+z5*z5)-(x3*x5+y3*y5+z3*z5)*(x4*x5+y4*y5+z4*z5));
+    ske[0][3] = (1/(6*jac)) * ((x1*x6+y1*y6+z1*z6)*(x4*x4+y4*y4+z4*z4)-(x1*x4+y1*y4+z1*z4)*(x4*x6+y4*y6+z4*z6));
+    ske[1][0] = ske[0][1];
+    ske[1][1] = (1/(6*jac)) * ((x2*x2+y2*y2+z2*z2)*(x3*x3+y3*y3+z3*z3)-(x2*x3+y2*y3+z2*z3)*(x2*x3+y2*y3+z2*z3));
+    ske[1][2] = (1/(6*jac)) * ((x1*x6+y1*y6+z1*z6)*(x3*x3+y3*y3+z3*z3)-(x1*x3+y1*y3+z1*z3)*(x3*x6+y3*y6+z3*z6));
+    ske[1][3] = (1/(6*jac)) * ((x1*x3+y1*y3+z1*z3)*(x4*x6+y4*y6+z4*z6)-(x1*x6+y1*y6+z1*z6)*(x3*x4+y3*y4+z3*z4));
+    ske[2][0] = ske[0][2];
+    ske[2][1] = ske[1][2];
+    ske[2][2] = (1/(6*jac)) * ((x1*x1+y1*y1+z1*z1)*(x3*x3+y3*y3+z3*z3)-(x1*x3+y1*y3+z1*z3)*(x1*x3+y1*y3+z1*z3));
+    ske[2][3] = (1/(6*jac)) * ((x1*x3+y1*y3+z1*z3)*(x1*x4+y1*y4+z1*z4)-(x1*x1+y1*y1+z1*z1)*(x3*x4+y3*y4+z3*z4));
+    ske[3][0] = ske[0][3];
+    ske[3][1] = ske[1][3];
+    ske[3][2] = ske[2][3];
+    ske[3][3] = (1/(6*jac)) * ((x1*x1+y1*y1+z1*z1)*(x4*x4+y4*y4+z4*z4)-(x1*x4+y1*y4+z1*z4)*(x1*x4+y1*y4+z1*z4));
+    
+
+    const double xm    = (xc[i1 + 0] + xc[i2 + 0] + xc[i3 + 0]+ xc[i4 + 0]) / 4.0,
+                 ym    = (xc[i1 + 1] + xc[i2 + 1] + xc[i3 + 1]+ xc[i4 + 1]) / 4.0,
+                 zm    = (xc[i1 + 2] + xc[i2 + 2] + xc[i3 + 2]+ xc[i4 + 2]) / 4.0;
+    //fe[0] = fe[1] = fe[2] = 0.5 * jac * FunctF(xm, ym) / 3.0;
+    fe[0] = fe[1] = fe[2]= fe[3] =  0*(jac/6.0) * fNice(t+dt/2, xm, ym, zm) / 4.0; // jac*0.5/3 is integral of one hat function over the triangle (volume of pyramid)
+
+    // add contributions from crank nichelson to right hand-side
+
+    fe[0] += -ske[0][0]*tau/2*u_old.at(ial[0])-ske[0][1]*tau/2*u_old.at(ial[1])-ske[0][2]*tau/2*u_old.at(ial[2])-ske[0][3]*tau/2*u_old.at(ial[3]);
+    fe[1] += -ske[1][0]*tau/2*u_old.at(ial[0])-ske[1][1]*tau/2*u_old.at(ial[1])-ske[1][2]*tau/2*u_old.at(ial[2])-ske[1][3]*tau/2*u_old.at(ial[3]);
+    fe[2] += -ske[2][0]*tau/2*u_old.at(ial[0])-ske[2][1]*tau/2*u_old.at(ial[1])-ske[2][2]*tau/2*u_old.at(ial[2])-ske[2][3]*tau/2*u_old.at(ial[3]);
+    fe[3] += -ske[3][0]*tau/2*u_old.at(ial[0])-ske[3][1]*tau/2*u_old.at(ial[1])-ske[3][2]*tau/2*u_old.at(ial[2])-ske[3][3]*tau/2*u_old.at(ial[3]);
+
+
+    ske[0][0] = ske[0][0]*tau/2 + jac/12.0;
+    ske[0][1] = ske[0][1]*tau/2 + jac/24.0;
+    ske[0][2] = ske[0][2]*tau/2 + jac/24.0;
+    ske[0][3] = ske[0][2]*tau/2 + jac/24.0;
+    ske[1][0] = ske[1][0]*tau/2 + jac/24.0;
+    ske[1][1] = ske[1][1]*tau/2 + jac/12.0;
+    ske[1][2] = ske[1][2]*tau/2 + jac/24.0;
+    ske[1][3] = ske[1][2]*tau/2 + jac/24.0;
+    ske[2][0] = ske[2][0]*tau/2 + jac/24.0;
+    ske[2][1] = ske[2][1]*tau/2 + jac/24.0;
+    ske[2][2] = ske[2][2]*tau/2 + jac/12.0;
+    ske[2][3] = ske[2][2]*tau/2 + jac/24.0;
+    ske[3][0] = ske[2][0]*tau/2 + jac/24.0;
+    ske[3][1] = ske[2][1]*tau/2 + jac/24.0;
+    ske[3][2] = ske[2][2]*tau/2 + jac/24.0;
+    ske[3][3] = ske[2][2]*tau/2 + jac/12.0;
+
+
+    // add contributions from mass matrix/time derivative to rhs
+
+    fe[0] += jac/12.0*u_old.at(ial[0]) + jac/24.0*u_old.at(ial[1]) + jac/24.0*u_old.at(ial[2])+ jac/24.0*u_old.at(ial[3]);
+    fe[1] += jac/24.0*u_old.at(ial[0]) + jac/12.0*u_old.at(ial[1]) + jac/24.0*u_old.at(ial[2])+ jac/24.0*u_old.at(ial[3]);
+    fe[2] += jac/24.0*u_old.at(ial[0]) + jac/24.0*u_old.at(ial[1]) + jac/12.0*u_old.at(ial[2])+ jac/24.0*u_old.at(ial[3]);
+    fe[3] += jac/24.0*u_old.at(ial[0]) + jac/24.0*u_old.at(ial[1]) + jac/24.0*u_old.at(ial[2])+ jac/12.0*u_old.at(ial[3]);
+
+
+}
+
+// ############################################################################################################################################################################################################
+
+
 void AddElem(int const ial[4], double const ske[4][4], double const fe[4],
              int const id[], int const ik[], double sk[], double f[])
 {
     for (int i = 0; i < 4; ++i)
     {
-        const int ii  = ial[i],           // row ii (global index)
+		for(int ki=0; ki<4; ++ki){
+        const int ii  = 4*ial[i]+ki,           // row ii (global index)
                   id1 = id[ii],           // start and
                   id2 = id[ii + 1];       // end of row ii in matrix
         int ip  = id1;
         for (int j = 0; j < 4; ++j)       // no symmetry assumed
         {
-            const int jj = ial[j];
+			for(int kj=0; kj<4; ++kj){
+            const int jj = 4*ial[j]+kj;
             bool not_found = true;
             do       // find entry jj (global index) in row ii
             {
@@ -115,11 +509,14 @@ void AddElem(int const ial[4], double const ske[4][4], double const fe[4],
                 assert(!not_found);
             }
 #endif
+
 #pragma omp atomic
-            sk[ip - 1] += ske[i][j];
+            sk[ip - 1] += ske[4*i+ki][4*j+kj];
         }
 #pragma omp atomic
-        f[ii] += fe[i];
+        f[ii] += fe[4*i+ki];
+	}
+	}
     }
 }
 
@@ -133,10 +530,11 @@ void AddElem(int const ial[4], double const ske[4][4], double const fe[4],
 
 
 
-CRS_Matrix::CRS_Matrix(Mesh const & mesh)
- : _mesh(mesh), _nrows(0), _nnz(0), _id(0), _ik(0), _sk(0)
+CRS_Matrix::CRS_Matrix(Mesh const & mesh, int ndof_v)
+ : _mesh(mesh), _nrows(0), _nnz(0), _id(0), _ik(0), _sk(0), _ndof_v(ndof_v)
 {
     Derive_Matrix_Pattern();
+    Skalar2VectorMatrix(ndof_v);
     return;
 }
 
@@ -192,6 +590,50 @@ void CRS_Matrix::Derive_Matrix_Pattern()
     return;
 }
 
+void CRS_Matrix::Skalar2VectorMatrix(int ndof_v)
+{
+    this->Debug();
+    cout << "\n########################\n";
+    if (1 == ndof_v) return;
+    assert(2 == ndof_v);
+
+    auto old_id = _id;
+    auto old_ik = _ik;
+
+    _sk.resize(ndof_v * ndof_v * _sk.size(), -1.0);
+    _id.resize(ndof_v * (_id.size() - 1) + 1);
+    _ik.resize(ndof_v * ndof_v * _ik.size(), -7);
+
+    _id[0] = 0;
+    for (int kold = 0; kold < Nrows(); ++kold) {
+        int nr = old_id[kold + 1] - old_id[kold];
+        
+        for (int ii=1; ii<=ndof_v; ++ii){
+			_id[ndof_v * kold + ii] = _id[ndof_v * kold + ii-1] + ndof_v * nr;
+		}
+  
+    }
+
+    for (int newrow = 0; newrow < ndof_v * Nrows(); ++newrow ) {
+        int oldrow = newrow / ndof_v;
+        int idx = _id[newrow];
+        //cout << " ("<< newrow<<")  " << idx;
+        for (int oid = old_id[oldrow]; oid < old_id[oldrow + 1]; ++oid) {
+            int oldcol = old_ik[oid];
+            
+            for (int ii=0; ii < ndof_v; ++ii){
+				_ik[idx + ii] = ndof_v * oldcol+ii;
+				}
+         
+            idx += ndof_v;
+        }
+    }
+
+    _nrows =  _id.size() - 1;
+    _nnz   =  _ik.size();
+
+    return;
+}
 
 void CRS_Matrix::Debug() const
 {
@@ -660,10 +1102,11 @@ void CRS_Matrix1::readBinary(const std::string &file)
 // ############################################################################################################################################################################################################
 
 
-FEM_Matrix::FEM_Matrix(Mesh const &mesh)
-    : CRS_Matrix1(), _mesh(mesh)
+FEM_Matrix::FEM_Matrix(Mesh const &mesh, int ndof_v)
+    : CRS_Matrix1(), _mesh(mesh), _ndof_v(ndof_v)
 {
     Derive_Matrix_Pattern();
+    Skalar2VectorMatrix(ndof_v);
     return;
 }
 
@@ -777,6 +1220,144 @@ void FEM_Matrix::Derive_Matrix_Pattern_slow()
     return;
 }
 
+void FEM_Matrix::Skalar2VectorMatrix(int ndof_v)
+{
+    this->Debug();
+    cout << "\n########################\n";
+    if (1 == ndof_v) return;
+    assert(4 == ndof_v);
+
+    auto old_id = _id;
+    auto old_ik = _ik;
+
+    _sk.resize(ndof_v * ndof_v * _sk.size(), 0.0);
+    _id.resize(ndof_v * (_id.size() - 1) + 1);
+    _ik.resize(ndof_v * ndof_v * _ik.size(), -7);
+
+    _id[0] = 0;
+    for (int kold = 0; kold < Nrows(); ++kold) {
+        int nr = old_id[kold + 1] - old_id[kold];
+        
+        for (int ii=1; ii<=ndof_v; ++ii){
+			_id[ndof_v * kold + ii] = _id[ndof_v * kold + ii-1] + ndof_v * nr;
+		}
+  
+    }
+
+    for (int newrow = 0; newrow < ndof_v * Nrows(); ++newrow ) {
+        int oldrow = newrow / ndof_v;
+        int idx = _id[newrow];
+        //cout << " ("<< newrow<<")  " << idx;
+        for (int oid = old_id[oldrow]; oid < old_id[oldrow + 1]; ++oid) {
+            int oldcol = old_ik[oid];
+            
+            for (int ii=0; ii < ndof_v; ++ii){
+				_ik[idx + ii] = ndof_v * oldcol+ii;
+				}
+         
+            idx += ndof_v;
+        }
+    }
+
+    _nrows =  _id.size() - 1;
+    _nnz   =  _ik.size();
+
+    return;
+}
+/*
+void CRS_Matrix::Skalar2VectorMatrix(int ndof_v)
+{
+    this->Debug();
+    cout << "\n########################\n";
+    if (1 == ndof_v) return;
+    assert(4 == ndof_v);
+
+    auto old_id = _id;
+    auto old_ik = _ik;
+
+    _sk.resize(ndof_v * ndof_v * _sk.size(), 0.0);
+    _id.resize(ndof_v * (_id.size() - 1) + 1);
+    _ik.resize(ndof_v * ndof_v * _ik.size(), -7);
+
+    _id[0] = 0;
+    for (int kold = 0; kold < Nrows(); ++kold) {
+        int nr = old_id[kold + 1] - old_id[kold];
+        
+        for (int ii=1; ii<=ndof_v; ++ii){
+			_id[ndof_v * kold + ii] = _id[ndof_v * kold + ii-1] + ndof_v * nr;
+		}
+  
+    }
+
+    for (int newrow = 0; newrow < ndof_v * Nrows(); ++newrow ) {
+        int oldrow = newrow / ndof_v;
+        int idx = _id[newrow];
+        //cout << " ("<< newrow<<")  " << idx;
+        for (int oid = old_id[oldrow]; oid < old_id[oldrow + 1]; ++oid) {
+            int oldcol = old_ik[oid];
+            
+            for (int ii=0; ii < ndof_v; ++ii){
+				_ik[idx + ii] = ndof_v * oldcol+ii;
+				}
+         
+            idx += ndof_v;
+        }
+    }
+
+    _nrows =  _id.size() - 1;
+    _nnz   =  _ik.size();
+
+    return;
+}
+
+
+
+void FEM_Matrix::Skalar2VectorMatrix(int ndof_v)
+{
+	if (1==ndof_v) return;
+	
+	auto old_id = _id;
+	auto old_ik = _ik;
+	
+	_sk.resize(ndof_v*ndof_v*_sk.size());
+	_id.resize(ndof_v*_id.size());
+	_ik.resize(ndof_v*ndof_v*_ik.size());
+    
+    for(int kold = 0; kold < 14; ++kold){
+    _id[4*ndof_v*kold+0] = ndof_v*old_id[kold]*ndof_v;
+    _id[4*kold+1] = _id[4*kold]+ndof_v*(old_id[kold+1]-old_id[kold]);
+    _id[4*kold+2] = _id[4*kold+1]+ndof_v*(old_id[kold+1]-old_id[kold]);
+    _id[4*kold+3] = _id[4*kold+2]+ndof_v*(old_id[kold+2]-old_id[kold]);
+     }
+     
+     for(int kold = 0; kold < 14; ++kold){
+    _ik[16*kold+0] = old_id[kold]*ndof_v+0;
+    _ik[16*kold+1] = old_id[kold]*ndof_v+1;
+    _ik[16*kold+2] = old_id[kold]*ndof_v+2;
+    _ik[16*kold+3] = old_id[kold]*ndof_v+3;
+    
+    _ik[16*kold+4] = _ik[16*kold+0];
+    _ik[16*kold+5] = _ik[16*kold+1];
+    _ik[16*kold+6] = _ik[16*kold+2];
+    _ik[16*kold+7] = _ik[16*kold+3];
+    
+    _ik[16*kold+8] = _ik[16*kold+0];
+    _ik[16*kold+9] = _ik[16*kold+1];
+    _ik[16*kold+10] = _ik[16*kold+2];
+    _ik[16*kold+11] = _ik[16*kold+3];
+    
+    _ik[16*kold+12] = _ik[16*kold+0];
+    _ik[16*kold+13] = _ik[16*kold+1];
+    _ik[16*kold+14] = _ik[16*kold+2];
+    _ik[16*kold+15] = _ik[16*kold+3];
+    
+    
+     }
+    
+	return;
+}
+*/
+
 
 void FEM_Matrix::CalculateLaplace(vector<double> &f)
 {
@@ -804,6 +1385,46 @@ void FEM_Matrix::CalculateLaplace(vector<double> &f)
     for (int i = 0; i < nelem; ++i) {
         CalcElem(ia.data() + 4 * i, xc.data(), ske, fe);
         AddElem_3(ia.data() + 4 * i, ske, fe, f);
+    }
+
+    //double duration = (clock() - tstart) / CLOCKS_PER_SEC;
+    double duration = omp_get_wtime() - tstart;             // OpenMP
+    cout << "finished in  " <<  duration  << " sec.    ########\n";
+    //Debug();
+
+    return;
+}
+
+void FEM_Matrix::CalculateLaplace_heat_equation(vector<double> &f, const vector<double> &u_old, const double dt, const double t, const double c)
+{
+    cout << "\n############   FEM_Matrix::CalculateLaplace ";
+    //double tstart = clock();
+    double tstart = omp_get_wtime();                  // OpenMP
+    assert(_mesh.NdofsElement() == 4);               // only for triangular, linear elements
+    //cout << _nnz << " vs. " << _id[_nrows] << "  " << _nrows<< endl;
+    assert(_nnz == _id[_nrows]);
+
+    for (int k = 0; k < _nrows; ++k)
+    {
+        _sk[k] = 0.0;
+    }
+    for (int k = 0; k < _nrows; ++k)
+    {
+        f[k] = 0.0;
+    }
+
+    double ske[4][4], fe[4];
+    //  Loop over all elements
+    auto const nelem = _mesh.Nelems();
+    auto const &ia   = _mesh.GetConnectivity();
+    auto const &xc   = _mesh.GetCoords();
+
+#pragma omp parallel for private(ske,fe)
+    for (int i = 0; i < nelem; ++i)
+    {
+        CalcElem_heat_equation_crank_nichelson(ia.data()+4 * i, xc.data(), ske, fe, u_old, dt, t, c);
+        //AddElem(ia.data()+3 * i, ske, fe, _id.data(), _ik.data(), _sk.data(), f.data()); // GH: deprecated
+        AddElem_3(ia.data()+4 * i, ske, fe, f);
     }
 
     //double duration = (clock() - tstart) / CLOCKS_PER_SEC;
@@ -887,9 +1508,15 @@ void FEM_Matrix::ApplyDirichletBC(std::vector<double> const &u, std::vector<doub
 void FEM_Matrix::AddElem_3(int const ial[4], double const ske[4][4], double const fe[4], vector<double> &f)
 {
     for (int i = 0; i < 4; ++i) {
-        const int ii  = ial[i];           // row ii (global index)
+		
+		for (int ki = 0; ki < 4; ++ki) {
+		
+        const int ii  = 4*ial[i]+ki;           // row ii (global index)
         for (int j = 0; j < 4; ++j) {     // no symmetry assumed
-            const int jj = ial[j];        // column jj (global index)
+			
+			for (int kj = 0; kj < 4; ++kj) {
+				
+            const int jj = 4*ial[j]+kj;        // column jj (global index)
             const int ip = fetch(ii, jj);       // find column entry jj in row ii
 #ifndef NDEBUG                 // compiler option -DNDEBUG switches off the check
             if (ip < 0) {      // no entry found !!
@@ -899,10 +1526,12 @@ void FEM_Matrix::AddElem_3(int const ial[4], double const ske[4][4], double cons
             }
 #endif
             #pragma omp atomic
-            _sk[ip] += ske[i][j];
+            _sk[ip] += ske[4*i+ki][4*j+kj];
         }
         #pragma omp atomic
-        f[ii] += fe[i];
+        f[ii] += fe[4*i+ki];
+	}
+    }
     }
 }
 

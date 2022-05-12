@@ -25,9 +25,17 @@ double FunctU(double const x, double const y);
  * @return  value f(@p x,@p y)
  */
 inline
-double fNice(double const x, double const y, double const z)
+double fNice(const double t, double const x, double const y, double const z)
 {
-    return z * std::sin(2.5 * 3.14159 * x * x * y);
+    return std::sin(M_PI*2.5*y*z)*(M_PI*M_PI*2.5*2.5*x*x - 2)*exp(-pow(t-1,2));
+}
+
+inline
+double u_boundary(double const x, double const y, double const z)
+{
+    //return x * x * std::sin(2.5 * M_PI * y);               // solution u
+    return x*y*z;
+    //sin(x*y*2*M_PI); // -Laplacian(u)
 }
 
 /**
@@ -37,10 +45,10 @@ double fNice(double const x, double const y, double const z)
  * @return  value 0
  */
 inline
-double f_zero(double const x, double const y)
+double f_zero(double const x, double const y, double const z)
 //double f_zero(double const  /*x*/, double const /*y*/)
 {
-    return 0.0 + 0.0*(x+y);
+    return 0.0 + 0.0*(x+y+z);
 }
 
 #endif

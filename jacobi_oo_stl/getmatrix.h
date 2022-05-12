@@ -29,6 +29,21 @@ void CalcElem(int const ial[4], double const xc[], double ske[4][4], double fe[4
 void CalcElem_Masse(int const ial[4], double const xc[], double ske[4][4]);
 
 /**
+ * Calculates the matrix @p ske of our system which consists of element stiffness matrix and mass matrix and the element load vector @p fe
+ * of one triangular element with linear shape functions.
+ * @param[in] ial node indices of the three element vertices
+ * @param[in] xc  vector of node coordinates with x(2*k,2*k+1) as coordinates of node k
+ * @param[in] u_old  solution of previous time step
+ * @param[in] dt  size of time step
+ * @param[in] t  current time
+ * @param[in] c  velocity in heat equation
+ * @param[out] ske  element stiffness matrix
+ * @param[out] fe element load vector
+ */
+void CalcElem_heat_equation_crank_nichelson(int const ial[4], double const xc[], double ske[4][4], double fe[4], const std::vector<double> &u_old, 
+const double dt, const double t, const double c);
+
+/**
  * Adds the element stiffness matrix @p ske and the element load vector @p fe
  * of one triangular element with linear shape functions to the appropriate positions in
  * the symmetric stiffness matrix, stored as CSR matrix K(@p sk,@p id, @p ik)
@@ -72,7 +87,8 @@ class CRS_Matrix
         *
         * @see Derive_Matrix_Pattern
         */
-       explicit CRS_Matrix(Mesh const & mesh);
+       explicit CRS_Matrix(Mesh const & mesh,int ndof_v=2);
+       //explicit FEM_Matrix(Mesh const & mesh, int ndof_v=1);
       
 
       /**
@@ -95,6 +111,16 @@ class CRS_Matrix
         * @param[in,out] f (preallocated) rhs/load vector
         */
        void CalculateLaplace(std::vector<double> &f);
+       
+       void Skalar2VectorMatrix(int ndof_v);
+       
+       /**
+        * Calculates the entries of f.e. matrix (stiffnes matrix + mass matrix using Crank-Nichelson implicit scheme) load/rhs vector @p f.
+        *
+        * @param[in,out] f (preallocated) rhs/load vector
+        */
+       void CalculateLaplace_heat_equation(std::vector<double> &f, const std::vector<double> &u_old, const double dt, const double t, const double c);
+       //void CalculateLaplace_heat_equation(vector<double> &f, const vector<double> &u_old, const double dt, const double t, const double c);
 
        /**
         * Applies Dirichlet boundary conditions to stiffness matrix and to load vector @p f.
@@ -181,6 +207,11 @@ class CRS_Matrix
         * @return true iff all data are identical.
         */
        bool Compare2Old(int nnode, int const id[], int const ik[], double const sk[]) const;
+       
+       int NdofsVertex() const
+    {
+        return _ndof_v;
+    }
 
     private:
        Mesh const & _mesh;      //!< reference to discretization
@@ -190,6 +221,7 @@ class CRS_Matrix
        std::vector<int> _id;    //!< start indices of matrix rows
        std::vector<int> _ik;    //!< column indices
        std::vector<double> _sk; //!< non-zero values
+       int  const _ndof_v;      //!< degrees of freedom per vertex (vector valued problems)
 
 };
 
@@ -210,6 +242,9 @@ class Matrix
 		*/
        Matrix(int nrows, int ncols);
        //Matrix();
+       
+       
+       //explicit CRS_Matrix(Mesh const & mesh,int ndof_v=5);
 
        Matrix(Matrix const &) = default;
        /**
@@ -245,6 +280,8 @@ class Matrix
 		 * Show the matrix entries.
 		 */
        virtual void Debug() const = 0;
+       
+       //void Skalar2VectorMatrix(int ndof_v);
 
        /**
         * Extracts the diagonal elements of an inherited matrix.
@@ -296,6 +333,8 @@ class Matrix
            std::cout << "ERROR in Matrix::JacobiSmoother" << std::endl;
            assert(false);
        }
+       
+      
 
        /**
 		 * Finds in a CRS matrix the access index for an entry at row @p row and column @p col.
@@ -492,7 +531,7 @@ class FEM_Matrix: public CRS_Matrix1
         * @see Derive_Matrix_Pattern
         */
       
-      explicit FEM_Matrix(Mesh const & mesh);
+      explicit FEM_Matrix(Mesh const & mesh, int ndof_v=4);
       
       
        FEM_Matrix(FEM_Matrix const &) = default;
@@ -524,6 +563,13 @@ class FEM_Matrix: public CRS_Matrix1
         * @param[in,out] f (preallocated) rhs/load vector
         */
        void CalculateLaplace(std::vector<double> &f);
+       
+       /**
+        * Calculates the entries of f.e. matrix (stiffnes matrix + mass matrix using Crank-Nichelson implicit scheme) load/rhs vector @p f.
+        *
+        * @param[in,out] f (preallocated) rhs/load vector
+        */
+       void CalculateLaplace_heat_equation(std::vector<double> &f, const std::vector<double> &u_old, const double dt, const double t, const double c);
 
        /**
         * Applies Dirichlet boundary conditions to stiffness matrix and to load vector @p f.
@@ -549,7 +595,7 @@ class FEM_Matrix: public CRS_Matrix1
        // Solves non-M matrix problems for Jacobi iteration but not for MG
        void GetDiag_M(std::vector<double> &d) const;
        
-       
+       void Skalar2VectorMatrix(int ndof_v);
        
 
       /**
@@ -565,7 +611,16 @@ class FEM_Matrix: public CRS_Matrix1
         * @warning Algorithm assumes  linear triangular elements (ndof_e==3).
        */
        void AddElem_3(int const ial[4], double const ske[4][4], double const fe[4], std::vector<double> &f);
-
+       
+    /**
+     * Global number of degrees of freedom (dof) for each finite element.
+     * @return degrees of freedom per element.
+     */
+    int NdofsVertex() const
+    {
+        return _ndof_v;
+    }
+    
     //private:
        bool CheckSymmetry() const;
        bool CheckRowSum() const;
@@ -576,11 +631,12 @@ class FEM_Matrix: public CRS_Matrix1
 
     private:
        Mesh const & _mesh;      //!< reference to discretization
+       int  const _ndof_v;      //!< degrees of freedom per vertex (vector valued problems)
 
 };
 
 
-///**
+//**
  //* Prolongation matrix in CRS format (compressed row storage; also named CSR),
  //* see an <a href="https://en.wikipedia.org/wiki/Sparse_matrix">introduction</a>.
  //*
