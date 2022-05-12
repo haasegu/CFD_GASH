@@ -178,7 +178,8 @@ public:
      * Determines the indices of those vertices with Dirichlet boundary conditions
      * @return index vector.
      */
-    virtual std::vector<int> Index_DirichletNodes() const = 0;
+    // GH virtual std::vector<int> Index_DirichletNodes() const = 0;
+    virtual std::vector<int> Index_DirichletNodes() const;
 
     /**
      * Write vector @p v toghether with its mesh information to an ASCii file @p fname.

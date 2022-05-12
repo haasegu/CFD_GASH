@@ -109,7 +109,7 @@ vector<vector<int>> Mesh::Node2NodeGraph_2() const
     vector<vector<int>> v2v(_nnode, vector<int>(0));    // stores the vertex to vertex connections
 
     ////--------------
-    vector<int> cnt(_nnode);
+    vector<int> cnt(_nnode,0);
     for (size_t i = 0; i < _ia.size(); ++i)  ++cnt[_ia[i]]; // determine number of entries per vertex
     for (size_t k = 0; k < v2v.size(); ++k)
     {
@@ -366,7 +366,18 @@ void Mesh::Visualize_paraview(vector<double> const &v) const
     return;
 } 
   
- 
+std::vector<int> Mesh::Index_DirichletNodes() const
+{
+    //vector<int> idx(_bedges);                              // copy
+
+    //sort(idx.begin(), idx.end());                         // sort
+    //idx.erase( unique(idx.begin(), idx.end()), idx.end() ); // remove duplicate data
+
+    //return idx;
+    vector<int> idx;
+    cout << "\n WARNING:  Mesh::Index_DirichletNodes()   N O T   implemented\n";
+    return idx;
+} 
 
 
 
