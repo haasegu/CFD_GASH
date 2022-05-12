@@ -162,7 +162,7 @@ const vector<double> &u_old, const double dt, const double t, const double c)
 
 // generalization to 3D for P2 (quardatic) polynamial
 
-void CalcElem_heat_equation_crank_nichelson(int const ial[4], double const xc[], double ske[4][4], double fe[4], 
+void CalcElem_heat_equation_crank_nichelson_P2(int const ial[4], double const xc[], double ske[4][4], double fe[4], 
 const vector<double> &u_old, const double dt, const double t, const double c)
 {
     double tau=dt/c;
