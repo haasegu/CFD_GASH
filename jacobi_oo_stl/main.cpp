@@ -120,19 +120,24 @@ int main(int , char **)
 
     vector<double> uv(SK1.Nrows(),0.0);     // temperature
     vector<double> fv(SK1.Nrows(),0.0);     // r.h.s.
-    vector<double> u_old(SK1.Nrows(),0.0);
+    vector<double> r_old_n(SK1.Nrows(),0.0);
+    vector<double> u_old_n(SK1.Nrows(),0.0);
+    vector<double> v_old_n(SK1.Nrows(),0.0);
+    vector<double> w_old_n(SK1.Nrows(),0.0);
     
     
     
     
-    double t=1, dt = 0.5, c = 0.2;
-    SK1.CalculateLaplace(fv);
-    SK1.Debug();
-   /* 
+    double t=0.5, dt = 0.5, c = 0.2;
     for (int k = 0; k < t/dt; ++k)
     {
-		
-    SK1.CalculateLaplace_heat_equation(fv, u_old, dt, t, c);
+	vector<double> r_old_m(SK1.Nrows(),0.0);
+    vector<double> u_old_m(SK1.Nrows(),0.0);
+    vector<double> v_old_m(SK1.Nrows(),0.0);
+    vector<double> w_old_m(SK1.Nrows(),0.0);
+    for(int n=0; n<=3; ++n){
+    //SK1.CalculateLaplace_heat_equation(fv, u_old, dt, t, c);
+    SK1.CalculateLaplace(fv);
     SK1.Debug();
     
 
@@ -154,7 +159,7 @@ int main(int , char **)
 
     
     
-    
+
     
 
     //double t1 = (clock() - tstart) / CLOCKS_PER_SEC;// timing
@@ -169,13 +174,13 @@ int main(int , char **)
     {
 		cout << "Error in solution." << endl;
 	}
-	
+}
 	auto s = std::to_string(k);
 
     mesh.Write_ascii_paraview("uv"+s+".vtk", uv);
     mesh.Visualize_paraview(uv);
     }
-  */
+  
 }    
     return 0;
 }

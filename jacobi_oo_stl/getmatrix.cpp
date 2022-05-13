@@ -81,7 +81,1421 @@ void CalcElem_Masse(int const ial[4], double const xc[], double const cm, double
     return;
 }
 
-// following function is added by Salman Ahmad. 
+// The following functions are added by Salman Ahmad. 
+
+//A00
+void CalcElem_Navier_Stokes_A00(int const ial[4], double const xc[], double ske[4][4], double fe[4], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
+const double dt, const double t, const double mu, const double lambda, const double kp)
+{
+    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3];
+    const double x1 = xc[i1 + 0] - xc[i4 + 0],  y1 = xc[i1 + 1] - xc[i4 + 1], z1 = xc[i1 + 2] - xc[i4 + 2],
+                 x2 = xc[i2 + 0] - xc[i4 + 0],  y2 = xc[i2 + 1] - xc[i4 + 1], z2 = xc[i2 + 2] - xc[i4 + 2],
+                 x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
+                 
+    const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
+    const double ve = jac/6.0;
+
+    ske[0][0] = 0;
+    ske[0][1] = 0;
+    ske[0][2] = 0;
+    ske[0][3] = 0;
+    ske[1][0] = 0;
+    ske[1][1] = 0;
+    ske[1][2] = 0;
+    ske[1][3] = 0;
+    ske[2][0] = 0;
+    ske[2][1] = 0;
+    ske[2][2] = 0;
+    ske[2][3] = 0;
+    ske[3][0] = 0;
+    ske[3][1] = 0;
+    ske[3][2] = 0;
+    ske[3][3] = 0;
+
+    fe[0] = fe[1] = fe[2]= fe[3] =  0;
+}
+
+//A01
+void CalcElem_Navier_Stokes_A01(int const ial[10], double const xc[], double ske[4][10], double fe[4], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
+const double dt, const double t, const double mu, const double lambda, const double kp)
+{
+    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3], i5 = 3 * ial[5], i6 = 3 * ial[6],
+     i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
+    const double x1 = xc[i1 + 0] - xc[i4 + 0],  y1 = xc[i1 + 1] - xc[i4 + 1], z1 = xc[i1 + 2] - xc[i4 + 2],
+                 x2 = xc[i2 + 0] - xc[i4 + 0],  y2 = xc[i2 + 1] - xc[i4 + 1], z2 = xc[i2 + 2] - xc[i4 + 2],
+                 x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
+                 
+    const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
+    const double ve = jac/6.0;
+
+    ske[0][0] = 0;
+    ske[0][1] = 0;
+    ske[0][2] = 0;
+    ske[0][3] = 0;
+    ske[0][4] = 0;
+    ske[0][5] = 0;
+    ske[0][6] = 0;
+    ske[0][7] = 0;
+    ske[0][8] = 0;
+    ske[0][9] = 0;
+    ske[1][0] = 0;
+    ske[1][1] = 0;
+    ske[1][2] = 0;
+    ske[1][3] = 0;
+    ske[1][4] = 0;
+    ske[1][5] = 0;
+    ske[1][6] = 0;
+    ske[1][7] = 0;
+    ske[1][8] = 0;
+    ske[1][9] = 0;
+    ske[2][0] = 0;
+    ske[2][1] = 0;
+    ske[2][2] = 0;
+    ske[2][3] = 0;
+    ske[2][4] = 0;
+    ske[2][5] = 0;
+    ske[2][6] = 0;
+    ske[2][7] = 0;
+    ske[2][8] = 0;
+    ske[2][9] = 0;
+    ske[3][0] = 0;
+    ske[3][1] = 0;
+    ske[3][2] = 0;
+    ske[3][3] = 0;
+    ske[3][4] = 0;
+    ske[3][5] = 0;
+    ske[3][6] = 0;
+    ske[3][7] = 0;
+    ske[3][8] = 0;
+    ske[3][9] = 0;
+
+    fe[0] = fe[1] = fe[2]= fe[3] =  0;
+}
+//A02
+void CalcElem_Navier_Stokes_A02(int const ial[10], double const xc[], double ske[4][10], double fe[4], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
+const double dt, const double t, const double mu, const double lambda, const double kp)
+{
+    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3], i5 = 3 * ial[5], i6 = 3 * ial[6],
+     i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
+    const double x1 = xc[i1 + 0] - xc[i4 + 0],  y1 = xc[i1 + 1] - xc[i4 + 1], z1 = xc[i1 + 2] - xc[i4 + 2],
+                 x2 = xc[i2 + 0] - xc[i4 + 0],  y2 = xc[i2 + 1] - xc[i4 + 1], z2 = xc[i2 + 2] - xc[i4 + 2],
+                 x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
+                 
+    const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
+    const double ve = jac/6.0;
+
+    ske[0][0] = 0;
+    ske[0][1] = 0;
+    ske[0][2] = 0;
+    ske[0][3] = 0;
+    ske[0][4] = 0;
+    ske[0][5] = 0;
+    ske[0][6] = 0;
+    ske[0][7] = 0;
+    ske[0][8] = 0;
+    ske[0][9] = 0;
+    ske[1][0] = 0;
+    ske[1][1] = 0;
+    ske[1][2] = 0;
+    ske[1][3] = 0;
+    ske[1][4] = 0;
+    ske[1][5] = 0;
+    ske[1][6] = 0;
+    ske[1][7] = 0;
+    ske[1][8] = 0;
+    ske[1][9] = 0;
+    ske[2][0] = 0;
+    ske[2][1] = 0;
+    ske[2][2] = 0;
+    ske[2][3] = 0;
+    ske[2][4] = 0;
+    ske[2][5] = 0;
+    ske[2][6] = 0;
+    ske[2][7] = 0;
+    ske[2][8] = 0;
+    ske[2][9] = 0;
+    ske[3][0] = 0;
+    ske[3][1] = 0;
+    ske[3][2] = 0;
+    ske[3][3] = 0;
+    ske[3][4] = 0;
+    ske[3][5] = 0;
+    ske[3][6] = 0;
+    ske[3][7] = 0;
+    ske[3][8] = 0;
+    ske[3][9] = 0;
+
+    fe[0] = fe[1] = fe[2]= fe[3] =  0;
+}
+
+//A03
+void CalcElem_Navier_Stokes_A03(int const ial[10], double const xc[], double ske[4][10], double fe[4], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
+const double dt, const double t, const double mu, const double lambda, const double kp)
+{
+    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3], i5 = 3 * ial[5], i6 = 3 * ial[6],
+     i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
+    const double x1 = xc[i1 + 0] - xc[i4 + 0],  y1 = xc[i1 + 1] - xc[i4 + 1], z1 = xc[i1 + 2] - xc[i4 + 2],
+                 x2 = xc[i2 + 0] - xc[i4 + 0],  y2 = xc[i2 + 1] - xc[i4 + 1], z2 = xc[i2 + 2] - xc[i4 + 2],
+                 x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
+                 
+    const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
+    const double ve = jac/6.0;
+
+    ske[0][0] = 0;
+    ske[0][1] = 0;
+    ske[0][2] = 0;
+    ske[0][3] = 0;
+    ske[0][4] = 0;
+    ske[0][5] = 0;
+    ske[0][6] = 0;
+    ske[0][7] = 0;
+    ske[0][8] = 0;
+    ske[0][9] = 0;
+    ske[1][0] = 0;
+    ske[1][1] = 0;
+    ske[1][2] = 0;
+    ske[1][3] = 0;
+    ske[1][4] = 0;
+    ske[1][5] = 0;
+    ske[1][6] = 0;
+    ske[1][7] = 0;
+    ske[1][8] = 0;
+    ske[1][9] = 0;
+    ske[2][0] = 0;
+    ske[2][1] = 0;
+    ske[2][2] = 0;
+    ske[2][3] = 0;
+    ske[2][4] = 0;
+    ske[2][5] = 0;
+    ske[2][6] = 0;
+    ske[2][7] = 0;
+    ske[2][8] = 0;
+    ske[2][9] = 0;
+    ske[3][0] = 0;
+    ske[3][1] = 0;
+    ske[3][2] = 0;
+    ske[3][3] = 0;
+    ske[3][4] = 0;
+    ske[3][5] = 0;
+    ske[3][6] = 0;
+    ske[3][7] = 0;
+    ske[3][8] = 0;
+    ske[3][9] = 0;
+
+    fe[0] = fe[1] = fe[2]= fe[3] =  0;
+}
+//A10
+void CalcElem_Navier_Stokes_A10(int const ial[10], double const xc[], double ske[10][4], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
+const double dt, const double t, const double mu, const double lambda, const double kp)
+{
+    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3], i5 = 3 * ial[5], i6 = 3 * ial[6],
+     i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
+    const double x1 = xc[i1 + 0] - xc[i4 + 0],  y1 = xc[i1 + 1] - xc[i4 + 1], z1 = xc[i1 + 2] - xc[i4 + 2],
+                 x2 = xc[i2 + 0] - xc[i4 + 0],  y2 = xc[i2 + 1] - xc[i4 + 1], z2 = xc[i2 + 2] - xc[i4 + 2],
+                 x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
+                 
+    const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
+    const double ve = jac/6.0;
+
+    ske[0][0] = 0;
+    ske[0][1] = 0;
+    ske[0][2] = 0;
+    ske[0][3] = 0;
+    ske[1][0] = 0;
+    ske[1][1] = 0;
+    ske[1][2] = 0;
+    ske[1][3] = 0;
+    ske[2][0] = 0;
+    ske[2][1] = 0;
+    ske[2][2] = 0;
+    ske[2][3] = 0;
+    ske[3][0] = 0;
+    ske[3][1] = 0;
+    ske[3][2] = 0;
+    ske[3][3] = 0;
+    ske[4][0] = 0;
+    ske[4][1] = 0;
+    ske[4][2] = 0;
+    ske[4][3] = 0;
+    ske[5][0] = 0;
+    ske[5][1] = 0;
+    ske[5][2] = 0;
+    ske[5][3] = 0;
+    ske[6][0] = 0;
+    ske[6][1] = 0;
+    ske[6][2] = 0;
+    ske[6][3] = 0;
+    ske[7][0] = 0;
+    ske[7][1] = 0;
+    ske[7][2] = 0;
+    ske[7][3] = 0;
+    ske[8][0] = 0;
+    ske[8][1] = 0;
+    ske[8][2] = 0;
+    ske[8][3] = 0;
+    ske[9][0] = 0;
+    ske[9][1] = 0;
+    ske[9][2] = 0;
+    ske[9][3] = 0;
+
+    fe[0] = fe[1] = fe[2] = fe[3] = fe[4] = fe[5] = fe[6] = fe[7] = fe[8] = fe[9] =  0;
+}
+//A11
+void CalcElem_Navier_Stokes_A11(int const ial[10], double const xc[], double ske[10][10], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
+const double dt, const double t, const double mu, const double lambda, const double kp)
+{
+    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3], i5 = 3 * ial[5], i6 = 3 * ial[6],
+     i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
+    const double x1 = xc[i1 + 0] - xc[i4 + 0],  y1 = xc[i1 + 1] - xc[i4 + 1], z1 = xc[i1 + 2] - xc[i4 + 2],
+                 x2 = xc[i2 + 0] - xc[i4 + 0],  y2 = xc[i2 + 1] - xc[i4 + 1], z2 = xc[i2 + 2] - xc[i4 + 2],
+                 x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
+                 
+    const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
+    const double ve = jac/6.0;
+
+    ske[0][0] = 0;
+    ske[0][1] = 0;
+    ske[0][2] = 0;
+    ske[0][3] = 0;
+    ske[0][4] = 0;
+    ske[0][5] = 0;
+    ske[0][6] = 0;
+    ske[0][7] = 0;
+    ske[0][8] = 0;
+    ske[0][9] = 0;
+    ske[1][0] = 0;
+    ske[1][1] = 0;
+    ske[1][2] = 0;
+    ske[1][3] = 0;
+    ske[1][4] = 0;
+    ske[1][5] = 0;
+    ske[1][6] = 0;
+    ske[1][7] = 0;
+    ske[1][8] = 0;
+    ske[1][9] = 0;
+    ske[2][0] = 0;
+    ske[2][1] = 0;
+    ske[2][2] = 0;
+    ske[2][3] = 0;
+    ske[2][4] = 0;
+    ske[2][5] = 0;
+    ske[2][6] = 0;
+    ske[2][7] = 0;
+    ske[2][8] = 0;
+    ske[2][9] = 0;
+    ske[3][0] = 0;
+    ske[3][1] = 0;
+    ske[3][2] = 0;
+    ske[3][3] = 0;
+    ske[3][4] = 0;
+    ske[3][5] = 0;
+    ske[3][6] = 0;
+    ske[3][7] = 0;
+    ske[3][8] = 0;
+    ske[3][9] = 0;
+    ske[4][0] = 0;
+    ske[4][1] = 0;
+    ske[4][2] = 0;
+    ske[4][3] = 0;
+    ske[4][4] = 0;
+    ske[4][5] = 0;
+    ske[4][6] = 0;
+    ske[4][7] = 0;
+    ske[4][8] = 0;
+    ske[4][9] = 0;
+    ske[5][0] = 0;
+    ske[5][1] = 0;
+    ske[5][2] = 0;
+    ske[5][3] = 0;
+    ske[5][4] = 0;
+    ske[5][5] = 0;
+    ske[5][6] = 0;
+    ske[5][7] = 0;
+    ske[5][8] = 0;
+    ske[5][9] = 0;
+    ske[6][0] = 0;
+    ske[6][1] = 0;
+    ske[6][2] = 0;
+    ske[6][3] = 0;
+    ske[6][4] = 0;
+    ske[6][5] = 0;
+    ske[6][6] = 0;
+    ske[6][7] = 0;
+    ske[6][8] = 0;
+    ske[6][9] = 0;
+    ske[7][0] = 0;
+    ske[7][1] = 0;
+    ske[7][2] = 0;
+    ske[7][3] = 0;
+    ske[7][4] = 0;
+    ske[7][5] = 0;
+    ske[7][6] = 0;
+    ske[7][7] = 0;
+    ske[7][8] = 0;
+    ske[7][9] = 0;
+    ske[8][0] = 0;
+    ske[8][1] = 0;
+    ske[8][2] = 0;
+    ske[8][3] = 0;
+    ske[8][4] = 0;
+    ske[8][5] = 0;
+    ske[8][6] = 0;
+    ske[8][7] = 0;
+    ske[8][8] = 0;
+    ske[8][9] = 0;
+    ske[9][0] = 0;
+    ske[9][1] = 0;
+    ske[9][2] = 0;
+    ske[9][3] = 0;
+    ske[9][4] = 0;
+    ske[9][5] = 0;
+    ske[9][6] = 0;
+    ske[9][7] = 0;
+    ske[9][8] = 0;
+    ske[9][9] = 0;
+
+    fe[0] = fe[1] = fe[2] = fe[3] = fe[4] = fe[5] = fe[6] = fe[7] = fe[8] = fe[9] =  0;
+}
+//A12
+void CalcElem_Navier_Stokes_A12(int const ial[10], double const xc[], double ske[10][10], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
+const double dt, const double t, const double mu, const double lambda, const double kp)
+{
+    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3], i5 = 3 * ial[5], i6 = 3 * ial[6],
+     i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
+    const double x1 = xc[i1 + 0] - xc[i4 + 0],  y1 = xc[i1 + 1] - xc[i4 + 1], z1 = xc[i1 + 2] - xc[i4 + 2],
+                 x2 = xc[i2 + 0] - xc[i4 + 0],  y2 = xc[i2 + 1] - xc[i4 + 1], z2 = xc[i2 + 2] - xc[i4 + 2],
+                 x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
+                 
+    const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
+    const double ve = jac/6.0;
+
+    ske[0][0] = 0;
+    ske[0][1] = 0;
+    ske[0][2] = 0;
+    ske[0][3] = 0;
+    ske[0][4] = 0;
+    ske[0][5] = 0;
+    ske[0][6] = 0;
+    ske[0][7] = 0;
+    ske[0][8] = 0;
+    ske[0][9] = 0;
+    ske[1][0] = 0;
+    ske[1][1] = 0;
+    ske[1][2] = 0;
+    ske[1][3] = 0;
+    ske[1][4] = 0;
+    ske[1][5] = 0;
+    ske[1][6] = 0;
+    ske[1][7] = 0;
+    ske[1][8] = 0;
+    ske[1][9] = 0;
+    ske[2][0] = 0;
+    ske[2][1] = 0;
+    ske[2][2] = 0;
+    ske[2][3] = 0;
+    ske[2][4] = 0;
+    ske[2][5] = 0;
+    ske[2][6] = 0;
+    ske[2][7] = 0;
+    ske[2][8] = 0;
+    ske[2][9] = 0;
+    ske[3][0] = 0;
+    ske[3][1] = 0;
+    ske[3][2] = 0;
+    ske[3][3] = 0;
+    ske[3][4] = 0;
+    ske[3][5] = 0;
+    ske[3][6] = 0;
+    ske[3][7] = 0;
+    ske[3][8] = 0;
+    ske[3][9] = 0;
+    ske[4][0] = 0;
+    ske[4][1] = 0;
+    ske[4][2] = 0;
+    ske[4][3] = 0;
+    ske[4][4] = 0;
+    ske[4][5] = 0;
+    ske[4][6] = 0;
+    ske[4][7] = 0;
+    ske[4][8] = 0;
+    ske[4][9] = 0;
+    ske[5][0] = 0;
+    ske[5][1] = 0;
+    ske[5][2] = 0;
+    ske[5][3] = 0;
+    ske[5][4] = 0;
+    ske[5][5] = 0;
+    ske[5][6] = 0;
+    ske[5][7] = 0;
+    ske[5][8] = 0;
+    ske[5][9] = 0;
+    ske[6][0] = 0;
+    ske[6][1] = 0;
+    ske[6][2] = 0;
+    ske[6][3] = 0;
+    ske[6][4] = 0;
+    ske[6][5] = 0;
+    ske[6][6] = 0;
+    ske[6][7] = 0;
+    ske[6][8] = 0;
+    ske[6][9] = 0;
+    ske[7][0] = 0;
+    ske[7][1] = 0;
+    ske[7][2] = 0;
+    ske[7][3] = 0;
+    ske[7][4] = 0;
+    ske[7][5] = 0;
+    ske[7][6] = 0;
+    ske[7][7] = 0;
+    ske[7][8] = 0;
+    ske[7][9] = 0;
+    ske[8][0] = 0;
+    ske[8][1] = 0;
+    ske[8][2] = 0;
+    ske[8][3] = 0;
+    ske[8][4] = 0;
+    ske[8][5] = 0;
+    ske[8][6] = 0;
+    ske[8][7] = 0;
+    ske[8][8] = 0;
+    ske[8][9] = 0;
+    ske[9][0] = 0;
+    ske[9][1] = 0;
+    ske[9][2] = 0;
+    ske[9][3] = 0;
+    ske[9][4] = 0;
+    ske[9][5] = 0;
+    ske[9][6] = 0;
+    ske[9][7] = 0;
+    ske[9][8] = 0;
+    ske[9][9] = 0;
+
+    fe[0] = fe[1] = fe[2] = fe[3] = fe[4] = fe[5] = fe[6] = fe[7] = fe[8] = fe[9] =  0;
+}
+//A13
+void CalcElem_Navier_Stokes_A13(int const ial[10], double const xc[], double ske[10][10], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
+const double dt, const double t, const double mu, const double lambda, const double kp)
+{
+    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3], i5 = 3 * ial[5], i6 = 3 * ial[6],
+     i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
+    const double x1 = xc[i1 + 0] - xc[i4 + 0],  y1 = xc[i1 + 1] - xc[i4 + 1], z1 = xc[i1 + 2] - xc[i4 + 2],
+                 x2 = xc[i2 + 0] - xc[i4 + 0],  y2 = xc[i2 + 1] - xc[i4 + 1], z2 = xc[i2 + 2] - xc[i4 + 2],
+                 x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
+                 
+    const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
+    const double ve = jac/6.0;
+
+    ske[0][0] = 0;
+    ske[0][1] = 0;
+    ske[0][2] = 0;
+    ske[0][3] = 0;
+    ske[0][4] = 0;
+    ske[0][5] = 0;
+    ske[0][6] = 0;
+    ske[0][7] = 0;
+    ske[0][8] = 0;
+    ske[0][9] = 0;
+    ske[1][0] = 0;
+    ske[1][1] = 0;
+    ske[1][2] = 0;
+    ske[1][3] = 0;
+    ske[1][4] = 0;
+    ske[1][5] = 0;
+    ske[1][6] = 0;
+    ske[1][7] = 0;
+    ske[1][8] = 0;
+    ske[1][9] = 0;
+    ske[2][0] = 0;
+    ske[2][1] = 0;
+    ske[2][2] = 0;
+    ske[2][3] = 0;
+    ske[2][4] = 0;
+    ske[2][5] = 0;
+    ske[2][6] = 0;
+    ske[2][7] = 0;
+    ske[2][8] = 0;
+    ske[2][9] = 0;
+    ske[3][0] = 0;
+    ske[3][1] = 0;
+    ske[3][2] = 0;
+    ske[3][3] = 0;
+    ske[3][4] = 0;
+    ske[3][5] = 0;
+    ske[3][6] = 0;
+    ske[3][7] = 0;
+    ske[3][8] = 0;
+    ske[3][9] = 0;
+    ske[4][0] = 0;
+    ske[4][1] = 0;
+    ske[4][2] = 0;
+    ske[4][3] = 0;
+    ske[4][4] = 0;
+    ske[4][5] = 0;
+    ske[4][6] = 0;
+    ske[4][7] = 0;
+    ske[4][8] = 0;
+    ske[4][9] = 0;
+    ske[5][0] = 0;
+    ske[5][1] = 0;
+    ske[5][2] = 0;
+    ske[5][3] = 0;
+    ske[5][4] = 0;
+    ske[5][5] = 0;
+    ske[5][6] = 0;
+    ske[5][7] = 0;
+    ske[5][8] = 0;
+    ske[5][9] = 0;
+    ske[6][0] = 0;
+    ske[6][1] = 0;
+    ske[6][2] = 0;
+    ske[6][3] = 0;
+    ske[6][4] = 0;
+    ske[6][5] = 0;
+    ske[6][6] = 0;
+    ske[6][7] = 0;
+    ske[6][8] = 0;
+    ske[6][9] = 0;
+    ske[7][0] = 0;
+    ske[7][1] = 0;
+    ske[7][2] = 0;
+    ske[7][3] = 0;
+    ske[7][4] = 0;
+    ske[7][5] = 0;
+    ske[7][6] = 0;
+    ske[7][7] = 0;
+    ske[7][8] = 0;
+    ske[7][9] = 0;
+    ske[8][0] = 0;
+    ske[8][1] = 0;
+    ske[8][2] = 0;
+    ske[8][3] = 0;
+    ske[8][4] = 0;
+    ske[8][5] = 0;
+    ske[8][6] = 0;
+    ske[8][7] = 0;
+    ske[8][8] = 0;
+    ske[8][9] = 0;
+    ske[9][0] = 0;
+    ske[9][1] = 0;
+    ske[9][2] = 0;
+    ske[9][3] = 0;
+    ske[9][4] = 0;
+    ske[9][5] = 0;
+    ske[9][6] = 0;
+    ske[9][7] = 0;
+    ske[9][8] = 0;
+    ske[9][9] = 0;
+
+    fe[0] = fe[1] = fe[2] = fe[3] = fe[4] = fe[5] = fe[6] = fe[7] = fe[8] = fe[9] =  0;
+}
+//A20
+void CalcElem_Navier_Stokes_A20(int const ial[10], double const xc[], double ske[10][4], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
+const double dt, const double t, const double mu, const double lambda, const double kp)
+{
+    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3], i5 = 3 * ial[5], i6 = 3 * ial[6],
+     i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
+    const double x1 = xc[i1 + 0] - xc[i4 + 0],  y1 = xc[i1 + 1] - xc[i4 + 1], z1 = xc[i1 + 2] - xc[i4 + 2],
+                 x2 = xc[i2 + 0] - xc[i4 + 0],  y2 = xc[i2 + 1] - xc[i4 + 1], z2 = xc[i2 + 2] - xc[i4 + 2],
+                 x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
+                 
+    const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
+    const double ve = jac/6.0;
+
+    ske[0][0] = 0;
+    ske[0][1] = 0;
+    ske[0][2] = 0;
+    ske[0][3] = 0;
+    ske[1][0] = 0;
+    ske[1][1] = 0;
+    ske[1][2] = 0;
+    ske[1][3] = 0;
+    ske[2][0] = 0;
+    ske[2][1] = 0;
+    ske[2][2] = 0;
+    ske[2][3] = 0;
+    ske[3][0] = 0;
+    ske[3][1] = 0;
+    ske[3][2] = 0;
+    ske[3][3] = 0;
+    ske[4][0] = 0;
+    ske[4][1] = 0;
+    ske[4][2] = 0;
+    ske[4][3] = 0;
+    ske[5][0] = 0;
+    ske[5][1] = 0;
+    ske[5][2] = 0;
+    ske[5][3] = 0;
+    ske[6][0] = 0;
+    ske[6][1] = 0;
+    ske[6][2] = 0;
+    ske[6][3] = 0;
+    ske[7][0] = 0;
+    ske[7][1] = 0;
+    ske[7][2] = 0;
+    ske[7][3] = 0;
+    ske[8][0] = 0;
+    ske[8][1] = 0;
+    ske[8][2] = 0;
+    ske[8][3] = 0;
+    ske[9][0] = 0;
+    ske[9][1] = 0;
+    ske[9][2] = 0;
+    ske[9][3] = 0;
+
+    fe[0] = fe[1] = fe[2] = fe[3] = fe[4] = fe[5] = fe[6] = fe[7] = fe[8] = fe[9] =  0;
+}
+//A21
+void CalcElem_Navier_Stokes_A21(int const ial[10], double const xc[], double ske[10][10], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
+const double dt, const double t, const double mu, const double lambda, const double kp)
+{
+    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3], i5 = 3 * ial[5], i6 = 3 * ial[6],
+     i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
+    const double x1 = xc[i1 + 0] - xc[i4 + 0],  y1 = xc[i1 + 1] - xc[i4 + 1], z1 = xc[i1 + 2] - xc[i4 + 2],
+                 x2 = xc[i2 + 0] - xc[i4 + 0],  y2 = xc[i2 + 1] - xc[i4 + 1], z2 = xc[i2 + 2] - xc[i4 + 2],
+                 x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
+                 
+    const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
+    const double ve = jac/6.0;
+
+    ske[0][0] = 0;
+    ske[0][1] = 0;
+    ske[0][2] = 0;
+    ske[0][3] = 0;
+    ske[0][4] = 0;
+    ske[0][5] = 0;
+    ske[0][6] = 0;
+    ske[0][7] = 0;
+    ske[0][8] = 0;
+    ske[0][9] = 0;
+    ske[1][0] = 0;
+    ske[1][1] = 0;
+    ske[1][2] = 0;
+    ske[1][3] = 0;
+    ske[1][4] = 0;
+    ske[1][5] = 0;
+    ske[1][6] = 0;
+    ske[1][7] = 0;
+    ske[1][8] = 0;
+    ske[1][9] = 0;
+    ske[2][0] = 0;
+    ske[2][1] = 0;
+    ske[2][2] = 0;
+    ske[2][3] = 0;
+    ske[2][4] = 0;
+    ske[2][5] = 0;
+    ske[2][6] = 0;
+    ske[2][7] = 0;
+    ske[2][8] = 0;
+    ske[2][9] = 0;
+    ske[3][0] = 0;
+    ske[3][1] = 0;
+    ske[3][2] = 0;
+    ske[3][3] = 0;
+    ske[3][4] = 0;
+    ske[3][5] = 0;
+    ske[3][6] = 0;
+    ske[3][7] = 0;
+    ske[3][8] = 0;
+    ske[3][9] = 0;
+    ske[4][0] = 0;
+    ske[4][1] = 0;
+    ske[4][2] = 0;
+    ske[4][3] = 0;
+    ske[4][4] = 0;
+    ske[4][5] = 0;
+    ske[4][6] = 0;
+    ske[4][7] = 0;
+    ske[4][8] = 0;
+    ske[4][9] = 0;
+    ske[5][0] = 0;
+    ske[5][1] = 0;
+    ske[5][2] = 0;
+    ske[5][3] = 0;
+    ske[5][4] = 0;
+    ske[5][5] = 0;
+    ske[5][6] = 0;
+    ske[5][7] = 0;
+    ske[5][8] = 0;
+    ske[5][9] = 0;
+    ske[6][0] = 0;
+    ske[6][1] = 0;
+    ske[6][2] = 0;
+    ske[6][3] = 0;
+    ske[6][4] = 0;
+    ske[6][5] = 0;
+    ske[6][6] = 0;
+    ske[6][7] = 0;
+    ske[6][8] = 0;
+    ske[6][9] = 0;
+    ske[7][0] = 0;
+    ske[7][1] = 0;
+    ske[7][2] = 0;
+    ske[7][3] = 0;
+    ske[7][4] = 0;
+    ske[7][5] = 0;
+    ske[7][6] = 0;
+    ske[7][7] = 0;
+    ske[7][8] = 0;
+    ske[7][9] = 0;
+    ske[8][0] = 0;
+    ske[8][1] = 0;
+    ske[8][2] = 0;
+    ske[8][3] = 0;
+    ske[8][4] = 0;
+    ske[8][5] = 0;
+    ske[8][6] = 0;
+    ske[8][7] = 0;
+    ske[8][8] = 0;
+    ske[8][9] = 0;
+    ske[9][0] = 0;
+    ske[9][1] = 0;
+    ske[9][2] = 0;
+    ske[9][3] = 0;
+    ske[9][4] = 0;
+    ske[9][5] = 0;
+    ske[9][6] = 0;
+    ske[9][7] = 0;
+    ske[9][8] = 0;
+    ske[9][9] = 0;
+
+    fe[0] = fe[1] = fe[2] = fe[3] = fe[4] = fe[5] = fe[6] = fe[7] = fe[8] = fe[9] =  0;
+}
+//A22
+void CalcElem_Navier_Stokes_A22(int const ial[10], double const xc[], double ske[10][10], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
+const double dt, const double t, const double mu, const double lambda, const double kp)
+{
+    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3], i5 = 3 * ial[5], i6 = 3 * ial[6],
+     i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
+    const double x1 = xc[i1 + 0] - xc[i4 + 0],  y1 = xc[i1 + 1] - xc[i4 + 1], z1 = xc[i1 + 2] - xc[i4 + 2],
+                 x2 = xc[i2 + 0] - xc[i4 + 0],  y2 = xc[i2 + 1] - xc[i4 + 1], z2 = xc[i2 + 2] - xc[i4 + 2],
+                 x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
+                 
+    const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
+    const double ve = jac/6.0;
+
+    ske[0][0] = 0;
+    ske[0][1] = 0;
+    ske[0][2] = 0;
+    ske[0][3] = 0;
+    ske[0][4] = 0;
+    ske[0][5] = 0;
+    ske[0][6] = 0;
+    ske[0][7] = 0;
+    ske[0][8] = 0;
+    ske[0][9] = 0;
+    ske[1][0] = 0;
+    ske[1][1] = 0;
+    ske[1][2] = 0;
+    ske[1][3] = 0;
+    ske[1][4] = 0;
+    ske[1][5] = 0;
+    ske[1][6] = 0;
+    ske[1][7] = 0;
+    ske[1][8] = 0;
+    ske[1][9] = 0;
+    ske[2][0] = 0;
+    ske[2][1] = 0;
+    ske[2][2] = 0;
+    ske[2][3] = 0;
+    ske[2][4] = 0;
+    ske[2][5] = 0;
+    ske[2][6] = 0;
+    ske[2][7] = 0;
+    ske[2][8] = 0;
+    ske[2][9] = 0;
+    ske[3][0] = 0;
+    ske[3][1] = 0;
+    ske[3][2] = 0;
+    ske[3][3] = 0;
+    ske[3][4] = 0;
+    ske[3][5] = 0;
+    ske[3][6] = 0;
+    ske[3][7] = 0;
+    ske[3][8] = 0;
+    ske[3][9] = 0;
+    ske[4][0] = 0;
+    ske[4][1] = 0;
+    ske[4][2] = 0;
+    ske[4][3] = 0;
+    ske[4][4] = 0;
+    ske[4][5] = 0;
+    ske[4][6] = 0;
+    ske[4][7] = 0;
+    ske[4][8] = 0;
+    ske[4][9] = 0;
+    ske[5][0] = 0;
+    ske[5][1] = 0;
+    ske[5][2] = 0;
+    ske[5][3] = 0;
+    ske[5][4] = 0;
+    ske[5][5] = 0;
+    ske[5][6] = 0;
+    ske[5][7] = 0;
+    ske[5][8] = 0;
+    ske[5][9] = 0;
+    ske[6][0] = 0;
+    ske[6][1] = 0;
+    ske[6][2] = 0;
+    ske[6][3] = 0;
+    ske[6][4] = 0;
+    ske[6][5] = 0;
+    ske[6][6] = 0;
+    ske[6][7] = 0;
+    ske[6][8] = 0;
+    ske[6][9] = 0;
+    ske[7][0] = 0;
+    ske[7][1] = 0;
+    ske[7][2] = 0;
+    ske[7][3] = 0;
+    ske[7][4] = 0;
+    ske[7][5] = 0;
+    ske[7][6] = 0;
+    ske[7][7] = 0;
+    ske[7][8] = 0;
+    ske[7][9] = 0;
+    ske[8][0] = 0;
+    ske[8][1] = 0;
+    ske[8][2] = 0;
+    ske[8][3] = 0;
+    ske[8][4] = 0;
+    ske[8][5] = 0;
+    ske[8][6] = 0;
+    ske[8][7] = 0;
+    ske[8][8] = 0;
+    ske[8][9] = 0;
+    ske[9][0] = 0;
+    ske[9][1] = 0;
+    ske[9][2] = 0;
+    ske[9][3] = 0;
+    ske[9][4] = 0;
+    ske[9][5] = 0;
+    ske[9][6] = 0;
+    ske[9][7] = 0;
+    ske[9][8] = 0;
+    ske[9][9] = 0;
+
+    fe[0] = fe[1] = fe[2] = fe[3] = fe[4] = fe[5] = fe[6] = fe[7] = fe[8] = fe[9] =  0;
+}
+//A23
+void CalcElem_Navier_Stokes_A23(int const ial[10], double const xc[], double ske[10][10], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
+const double dt, const double t, const double mu, const double lambda, const double kp)
+{
+    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3], i5 = 3 * ial[5], i6 = 3 * ial[6],
+     i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
+    const double x1 = xc[i1 + 0] - xc[i4 + 0],  y1 = xc[i1 + 1] - xc[i4 + 1], z1 = xc[i1 + 2] - xc[i4 + 2],
+                 x2 = xc[i2 + 0] - xc[i4 + 0],  y2 = xc[i2 + 1] - xc[i4 + 1], z2 = xc[i2 + 2] - xc[i4 + 2],
+                 x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
+                 
+    const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
+    const double ve = jac/6.0;
+
+    ske[0][0] = 0;
+    ske[0][1] = 0;
+    ske[0][2] = 0;
+    ske[0][3] = 0;
+    ske[0][4] = 0;
+    ske[0][5] = 0;
+    ske[0][6] = 0;
+    ske[0][7] = 0;
+    ske[0][8] = 0;
+    ske[0][9] = 0;
+    ske[1][0] = 0;
+    ske[1][1] = 0;
+    ske[1][2] = 0;
+    ske[1][3] = 0;
+    ske[1][4] = 0;
+    ske[1][5] = 0;
+    ske[1][6] = 0;
+    ske[1][7] = 0;
+    ske[1][8] = 0;
+    ske[1][9] = 0;
+    ske[2][0] = 0;
+    ske[2][1] = 0;
+    ske[2][2] = 0;
+    ske[2][3] = 0;
+    ske[2][4] = 0;
+    ske[2][5] = 0;
+    ske[2][6] = 0;
+    ske[2][7] = 0;
+    ske[2][8] = 0;
+    ske[2][9] = 0;
+    ske[3][0] = 0;
+    ske[3][1] = 0;
+    ske[3][2] = 0;
+    ske[3][3] = 0;
+    ske[3][4] = 0;
+    ske[3][5] = 0;
+    ske[3][6] = 0;
+    ske[3][7] = 0;
+    ske[3][8] = 0;
+    ske[3][9] = 0;
+    ske[4][0] = 0;
+    ske[4][1] = 0;
+    ske[4][2] = 0;
+    ske[4][3] = 0;
+    ske[4][4] = 0;
+    ske[4][5] = 0;
+    ske[4][6] = 0;
+    ske[4][7] = 0;
+    ske[4][8] = 0;
+    ske[4][9] = 0;
+    ske[5][0] = 0;
+    ske[5][1] = 0;
+    ske[5][2] = 0;
+    ske[5][3] = 0;
+    ske[5][4] = 0;
+    ske[5][5] = 0;
+    ske[5][6] = 0;
+    ske[5][7] = 0;
+    ske[5][8] = 0;
+    ske[5][9] = 0;
+    ske[6][0] = 0;
+    ske[6][1] = 0;
+    ske[6][2] = 0;
+    ske[6][3] = 0;
+    ske[6][4] = 0;
+    ske[6][5] = 0;
+    ske[6][6] = 0;
+    ske[6][7] = 0;
+    ske[6][8] = 0;
+    ske[6][9] = 0;
+    ske[7][0] = 0;
+    ske[7][1] = 0;
+    ske[7][2] = 0;
+    ske[7][3] = 0;
+    ske[7][4] = 0;
+    ske[7][5] = 0;
+    ske[7][6] = 0;
+    ske[7][7] = 0;
+    ske[7][8] = 0;
+    ske[7][9] = 0;
+    ske[8][0] = 0;
+    ske[8][1] = 0;
+    ske[8][2] = 0;
+    ske[8][3] = 0;
+    ske[8][4] = 0;
+    ske[8][5] = 0;
+    ske[8][6] = 0;
+    ske[8][7] = 0;
+    ske[8][8] = 0;
+    ske[8][9] = 0;
+    ske[9][0] = 0;
+    ske[9][1] = 0;
+    ske[9][2] = 0;
+    ske[9][3] = 0;
+    ske[9][4] = 0;
+    ske[9][5] = 0;
+    ske[9][6] = 0;
+    ske[9][7] = 0;
+    ske[9][8] = 0;
+    ske[9][9] = 0;
+
+    fe[0] = fe[1] = fe[2] = fe[3] = fe[4] = fe[5] = fe[6] = fe[7] = fe[8] = fe[9] =  0;
+}
+//A30
+void CalcElem_Navier_Stokes_A30(int const ial[10], double const xc[], double ske[10][4], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
+const double dt, const double t, const double mu, const double lambda, const double kp)
+{
+    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3], i5 = 3 * ial[5], i6 = 3 * ial[6],
+     i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
+    const double x1 = xc[i1 + 0] - xc[i4 + 0],  y1 = xc[i1 + 1] - xc[i4 + 1], z1 = xc[i1 + 2] - xc[i4 + 2],
+                 x2 = xc[i2 + 0] - xc[i4 + 0],  y2 = xc[i2 + 1] - xc[i4 + 1], z2 = xc[i2 + 2] - xc[i4 + 2],
+                 x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
+                 
+    const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
+    const double ve = jac/6.0;
+
+    ske[0][0] = 0;
+    ske[0][1] = 0;
+    ske[0][2] = 0;
+    ske[0][3] = 0;
+    ske[1][0] = 0;
+    ske[1][1] = 0;
+    ske[1][2] = 0;
+    ske[1][3] = 0;
+    ske[2][0] = 0;
+    ske[2][1] = 0;
+    ske[2][2] = 0;
+    ske[2][3] = 0;
+    ske[3][0] = 0;
+    ske[3][1] = 0;
+    ske[3][2] = 0;
+    ske[3][3] = 0;
+    ske[4][0] = 0;
+    ske[4][1] = 0;
+    ske[4][2] = 0;
+    ske[4][3] = 0;
+    ske[5][0] = 0;
+    ske[5][1] = 0;
+    ske[5][2] = 0;
+    ske[5][3] = 0;
+    ske[6][0] = 0;
+    ske[6][1] = 0;
+    ske[6][2] = 0;
+    ske[6][3] = 0;
+    ske[7][0] = 0;
+    ske[7][1] = 0;
+    ske[7][2] = 0;
+    ske[7][3] = 0;
+    ske[8][0] = 0;
+    ske[8][1] = 0;
+    ske[8][2] = 0;
+    ske[8][3] = 0;
+    ske[9][0] = 0;
+    ske[9][1] = 0;
+    ske[9][2] = 0;
+    ske[9][3] = 0;
+
+    fe[0] = fe[1] = fe[2] = fe[3] = fe[4] = fe[5] = fe[6] = fe[7] = fe[8] = fe[9] =  0;
+}
+//A31
+void CalcElem_Navier_Stokes_A31(int const ial[10], double const xc[], double ske[10][10], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
+const double dt, const double t, const double mu, const double lambda, const double kp)
+{
+    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3], i5 = 3 * ial[5], i6 = 3 * ial[6],
+     i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
+    const double x1 = xc[i1 + 0] - xc[i4 + 0],  y1 = xc[i1 + 1] - xc[i4 + 1], z1 = xc[i1 + 2] - xc[i4 + 2],
+                 x2 = xc[i2 + 0] - xc[i4 + 0],  y2 = xc[i2 + 1] - xc[i4 + 1], z2 = xc[i2 + 2] - xc[i4 + 2],
+                 x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
+                 
+    const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
+    const double ve = jac/6.0;
+
+    ske[0][0] = 0;
+    ske[0][1] = 0;
+    ske[0][2] = 0;
+    ske[0][3] = 0;
+    ske[0][4] = 0;
+    ske[0][5] = 0;
+    ske[0][6] = 0;
+    ske[0][7] = 0;
+    ske[0][8] = 0;
+    ske[0][9] = 0;
+    ske[1][0] = 0;
+    ske[1][1] = 0;
+    ske[1][2] = 0;
+    ske[1][3] = 0;
+    ske[1][4] = 0;
+    ske[1][5] = 0;
+    ske[1][6] = 0;
+    ske[1][7] = 0;
+    ske[1][8] = 0;
+    ske[1][9] = 0;
+    ske[2][0] = 0;
+    ske[2][1] = 0;
+    ske[2][2] = 0;
+    ske[2][3] = 0;
+    ske[2][4] = 0;
+    ske[2][5] = 0;
+    ske[2][6] = 0;
+    ske[2][7] = 0;
+    ske[2][8] = 0;
+    ske[2][9] = 0;
+    ske[3][0] = 0;
+    ske[3][1] = 0;
+    ske[3][2] = 0;
+    ske[3][3] = 0;
+    ske[3][4] = 0;
+    ske[3][5] = 0;
+    ske[3][6] = 0;
+    ske[3][7] = 0;
+    ske[3][8] = 0;
+    ske[3][9] = 0;
+    ske[4][0] = 0;
+    ske[4][1] = 0;
+    ske[4][2] = 0;
+    ske[4][3] = 0;
+    ske[4][4] = 0;
+    ske[4][5] = 0;
+    ske[4][6] = 0;
+    ske[4][7] = 0;
+    ske[4][8] = 0;
+    ske[4][9] = 0;
+    ske[5][0] = 0;
+    ske[5][1] = 0;
+    ske[5][2] = 0;
+    ske[5][3] = 0;
+    ske[5][4] = 0;
+    ske[5][5] = 0;
+    ske[5][6] = 0;
+    ske[5][7] = 0;
+    ske[5][8] = 0;
+    ske[5][9] = 0;
+    ske[6][0] = 0;
+    ske[6][1] = 0;
+    ske[6][2] = 0;
+    ske[6][3] = 0;
+    ske[6][4] = 0;
+    ske[6][5] = 0;
+    ske[6][6] = 0;
+    ske[6][7] = 0;
+    ske[6][8] = 0;
+    ske[6][9] = 0;
+    ske[7][0] = 0;
+    ske[7][1] = 0;
+    ske[7][2] = 0;
+    ske[7][3] = 0;
+    ske[7][4] = 0;
+    ske[7][5] = 0;
+    ske[7][6] = 0;
+    ske[7][7] = 0;
+    ske[7][8] = 0;
+    ske[7][9] = 0;
+    ske[8][0] = 0;
+    ske[8][1] = 0;
+    ske[8][2] = 0;
+    ske[8][3] = 0;
+    ske[8][4] = 0;
+    ske[8][5] = 0;
+    ske[8][6] = 0;
+    ske[8][7] = 0;
+    ske[8][8] = 0;
+    ske[8][9] = 0;
+    ske[9][0] = 0;
+    ske[9][1] = 0;
+    ske[9][2] = 0;
+    ske[9][3] = 0;
+    ske[9][4] = 0;
+    ske[9][5] = 0;
+    ske[9][6] = 0;
+    ske[9][7] = 0;
+    ske[9][8] = 0;
+    ske[9][9] = 0;
+
+    fe[0] = fe[1] = fe[2] = fe[3] = fe[4] = fe[5] = fe[6] = fe[7] = fe[8] = fe[9] =  0;
+}
+//A32
+void CalcElem_Navier_Stokes_A32(int const ial[10], double const xc[], double ske[10][10], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
+const double dt, const double t, const double mu, const double lambda, const double kp)
+{
+    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3], i5 = 3 * ial[5], i6 = 3 * ial[6],
+     i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
+    const double x1 = xc[i1 + 0] - xc[i4 + 0],  y1 = xc[i1 + 1] - xc[i4 + 1], z1 = xc[i1 + 2] - xc[i4 + 2],
+                 x2 = xc[i2 + 0] - xc[i4 + 0],  y2 = xc[i2 + 1] - xc[i4 + 1], z2 = xc[i2 + 2] - xc[i4 + 2],
+                 x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
+                 
+    const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
+    const double ve = jac/6.0;
+
+    ske[0][0] = 0;
+    ske[0][1] = 0;
+    ske[0][2] = 0;
+    ske[0][3] = 0;
+    ske[0][4] = 0;
+    ske[0][5] = 0;
+    ske[0][6] = 0;
+    ske[0][7] = 0;
+    ske[0][8] = 0;
+    ske[0][9] = 0;
+    ske[1][0] = 0;
+    ske[1][1] = 0;
+    ske[1][2] = 0;
+    ske[1][3] = 0;
+    ske[1][4] = 0;
+    ske[1][5] = 0;
+    ske[1][6] = 0;
+    ske[1][7] = 0;
+    ske[1][8] = 0;
+    ske[1][9] = 0;
+    ske[2][0] = 0;
+    ske[2][1] = 0;
+    ske[2][2] = 0;
+    ske[2][3] = 0;
+    ske[2][4] = 0;
+    ske[2][5] = 0;
+    ske[2][6] = 0;
+    ske[2][7] = 0;
+    ske[2][8] = 0;
+    ske[2][9] = 0;
+    ske[3][0] = 0;
+    ske[3][1] = 0;
+    ske[3][2] = 0;
+    ske[3][3] = 0;
+    ske[3][4] = 0;
+    ske[3][5] = 0;
+    ske[3][6] = 0;
+    ske[3][7] = 0;
+    ske[3][8] = 0;
+    ske[3][9] = 0;
+    ske[4][0] = 0;
+    ske[4][1] = 0;
+    ske[4][2] = 0;
+    ske[4][3] = 0;
+    ske[4][4] = 0;
+    ske[4][5] = 0;
+    ske[4][6] = 0;
+    ske[4][7] = 0;
+    ske[4][8] = 0;
+    ske[4][9] = 0;
+    ske[5][0] = 0;
+    ske[5][1] = 0;
+    ske[5][2] = 0;
+    ske[5][3] = 0;
+    ske[5][4] = 0;
+    ske[5][5] = 0;
+    ske[5][6] = 0;
+    ske[5][7] = 0;
+    ske[5][8] = 0;
+    ske[5][9] = 0;
+    ske[6][0] = 0;
+    ske[6][1] = 0;
+    ske[6][2] = 0;
+    ske[6][3] = 0;
+    ske[6][4] = 0;
+    ske[6][5] = 0;
+    ske[6][6] = 0;
+    ske[6][7] = 0;
+    ske[6][8] = 0;
+    ske[6][9] = 0;
+    ske[7][0] = 0;
+    ske[7][1] = 0;
+    ske[7][2] = 0;
+    ske[7][3] = 0;
+    ske[7][4] = 0;
+    ske[7][5] = 0;
+    ske[7][6] = 0;
+    ske[7][7] = 0;
+    ske[7][8] = 0;
+    ske[7][9] = 0;
+    ske[8][0] = 0;
+    ske[8][1] = 0;
+    ske[8][2] = 0;
+    ske[8][3] = 0;
+    ske[8][4] = 0;
+    ske[8][5] = 0;
+    ske[8][6] = 0;
+    ske[8][7] = 0;
+    ske[8][8] = 0;
+    ske[8][9] = 0;
+    ske[9][0] = 0;
+    ske[9][1] = 0;
+    ske[9][2] = 0;
+    ske[9][3] = 0;
+    ske[9][4] = 0;
+    ske[9][5] = 0;
+    ske[9][6] = 0;
+    ske[9][7] = 0;
+    ske[9][8] = 0;
+    ske[9][9] = 0;
+
+    fe[0] = fe[1] = fe[2] = fe[3] = fe[4] = fe[5] = fe[6] = fe[7] = fe[8] = fe[9] =  0;
+}
+//A33
+void CalcElem_Navier_Stokes_A33(int const ial[10], double const xc[], double ske[10][10], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
+const double dt, const double t, const double mu, const double lambda, const double kp)
+{
+    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3], i5 = 3 * ial[5], i6 = 3 * ial[6],
+     i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
+    const double x1 = xc[i1 + 0] - xc[i4 + 0],  y1 = xc[i1 + 1] - xc[i4 + 1], z1 = xc[i1 + 2] - xc[i4 + 2],
+                 x2 = xc[i2 + 0] - xc[i4 + 0],  y2 = xc[i2 + 1] - xc[i4 + 1], z2 = xc[i2 + 2] - xc[i4 + 2],
+                 x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
+                 
+    const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
+    const double ve = jac/6.0;
+
+    ske[0][0] = 0;
+    ske[0][1] = 0;
+    ske[0][2] = 0;
+    ske[0][3] = 0;
+    ske[0][4] = 0;
+    ske[0][5] = 0;
+    ske[0][6] = 0;
+    ske[0][7] = 0;
+    ske[0][8] = 0;
+    ske[0][9] = 0;
+    ske[1][0] = 0;
+    ske[1][1] = 0;
+    ske[1][2] = 0;
+    ske[1][3] = 0;
+    ske[1][4] = 0;
+    ske[1][5] = 0;
+    ske[1][6] = 0;
+    ske[1][7] = 0;
+    ske[1][8] = 0;
+    ske[1][9] = 0;
+    ske[2][0] = 0;
+    ske[2][1] = 0;
+    ske[2][2] = 0;
+    ske[2][3] = 0;
+    ske[2][4] = 0;
+    ske[2][5] = 0;
+    ske[2][6] = 0;
+    ske[2][7] = 0;
+    ske[2][8] = 0;
+    ske[2][9] = 0;
+    ske[3][0] = 0;
+    ske[3][1] = 0;
+    ske[3][2] = 0;
+    ske[3][3] = 0;
+    ske[3][4] = 0;
+    ske[3][5] = 0;
+    ske[3][6] = 0;
+    ske[3][7] = 0;
+    ske[3][8] = 0;
+    ske[3][9] = 0;
+    ske[4][0] = 0;
+    ske[4][1] = 0;
+    ske[4][2] = 0;
+    ske[4][3] = 0;
+    ske[4][4] = 0;
+    ske[4][5] = 0;
+    ske[4][6] = 0;
+    ske[4][7] = 0;
+    ske[4][8] = 0;
+    ske[4][9] = 0;
+    ske[5][0] = 0;
+    ske[5][1] = 0;
+    ske[5][2] = 0;
+    ske[5][3] = 0;
+    ske[5][4] = 0;
+    ske[5][5] = 0;
+    ske[5][6] = 0;
+    ske[5][7] = 0;
+    ske[5][8] = 0;
+    ske[5][9] = 0;
+    ske[6][0] = 0;
+    ske[6][1] = 0;
+    ske[6][2] = 0;
+    ske[6][3] = 0;
+    ske[6][4] = 0;
+    ske[6][5] = 0;
+    ske[6][6] = 0;
+    ske[6][7] = 0;
+    ske[6][8] = 0;
+    ske[6][9] = 0;
+    ske[7][0] = 0;
+    ske[7][1] = 0;
+    ske[7][2] = 0;
+    ske[7][3] = 0;
+    ske[7][4] = 0;
+    ske[7][5] = 0;
+    ske[7][6] = 0;
+    ske[7][7] = 0;
+    ske[7][8] = 0;
+    ske[7][9] = 0;
+    ske[8][0] = 0;
+    ske[8][1] = 0;
+    ske[8][2] = 0;
+    ske[8][3] = 0;
+    ske[8][4] = 0;
+    ske[8][5] = 0;
+    ske[8][6] = 0;
+    ske[8][7] = 0;
+    ske[8][8] = 0;
+    ske[8][9] = 0;
+    ske[9][0] = 0;
+    ske[9][1] = 0;
+    ske[9][2] = 0;
+    ske[9][3] = 0;
+    ske[9][4] = 0;
+    ske[9][5] = 0;
+    ske[9][6] = 0;
+    ske[9][7] = 0;
+    ske[9][8] = 0;
+    ske[9][9] = 0;
+
+    fe[0] = fe[1] = fe[2] = fe[3] = fe[4] = fe[5] = fe[6] = fe[7] = fe[8] = fe[9] =  0;
+}
 
 /*
 void CalcElem_heat_equation_crank_nichelson(int const ial[4], double const xc[], double ske[4][4], double fe[4], 
