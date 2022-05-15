@@ -25,6 +25,7 @@ void CalcElem(int const ial[4], double const xc[], double ske[4][4], double fe[4
                  x5 = xc[i2 + 0] - xc[i4 + 0],  y5 = xc[i2 + 1] - xc[i4 + 1], z5 = xc[i2 + 2] - xc[i4 + 2],
                  x6 = xc[i4 + 0] - xc[i3 + 0],  y6 = xc[i4 + 1] - xc[i3 + 1], z6 = xc[i4 + 2] - xc[i3 + 2];
     const double jac = fabs(x3*(y1*z2-y2*z1)+y3*(x2*z1-x1*z2)+z3*(x1*y2-y1*x2));
+    
 
     ske[0][0] = (1/(6*jac)) * ((x4*x4+y4*y4+z4*z4)*(x5*x5+y5*y5+z5*z5)-(x4*x5+y4*y5+z4*z5)*(x4*x5+y4*y5+z4*z5));
     ske[0][1] = (1/(6*jac)) * ((x2*x6+y2*y6+z2*z6)*(x4*x6+y4*y6+z4*z6)-(x2*x4+y2*y4+z2*z4)*(x6*x6+y6*y6+z6*z6));
@@ -93,9 +94,21 @@ const double dt, const double t, const double mu, const double lambda, const dou
                  x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
                  
     const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
-    const double ve = jac/6.0;
+    //coefficients for derivatives
+    const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
+                 b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
+                 c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
 
-    ske[0][0] = 0;
+    ske[0][0] = (jac/dt)*0.0167+jac*((a1+a2+a3)*(2.8969e-07)-3*(a1+a2+a3)*0.0167)*u_old_m.at(ial[0])+jac*(-(b1+b2+b3)*(-2.8969e-07)-3*(b1+b2+b3)*0.0167)*v_old_m.at(ial[0])+jac*(-(c1+c2+c3)*(-2.8969e-07)-3*(c1+c2+c3)*0.0167)*w_old_m.at(ial[0])
+                               +jac*((a1+a2+a3)*(0.0028)-a1*0.0056)*u_old_m.at(ial[1])+jac*((a1+a2+a3)*(0.0028)-a1*0.0056)*v_old_m.at(ial[1])+jac*((a1+a2+a3)*(0.0028)-a1*0.0056)*w_old_m.at(ial[1])
+                               +jac*((a1+a2+a3)*(0.0028)-b2*0.0056)*u_old_m.at(ial[2])+jac*((a1+a2+a3)*(0.0028)-b2*0.0056)*v_old_m.at(ial[2])+jac*((a1+a2+a3)*(0.0028)-b2*0.0056)*w_old_m.at(ial[2])
+                               +jac*((a1+a2+a3)*(0.0028)-c3*0.0056)*u_old_m.at(ial[3])+jac*((a1+a2+a3)*(0.0028)-c3*0.0056)*v_old_m.at(ial[3])+jac*((a1+a2+a3)*(0.0028)-c3*0.0056)*w_old_m.at(ial[3])
+                               +jac*(-(a1+a2+a3)*0.0111+0.0222*a1-0.0111*a2-0.0111*a3)*u_old_m.at(ial[4])+jac*(-(a1+a2+a3)*0.0111+0.0222*b1-0.0111*b2-0.0111*b3)*v_old_m.at(ial[4])+jac*(-(a1+a2+a3)*0.0111+0.0222*c1-0.0111*c2-0.0111*c3)*w_old_m.at(ial[4])
+                               +jac*(-(a1+a2+a3)*0.0056+0.0111*a1+0.0111*a2)*u_old_m.at(ial[5])+jac*(-(a1+a2+a3)*0.0056+0.0111*b1+0.0111*b2)*v_old_m.at(ial[5])+jac*(-(a1+a2+a3)*0.0056+0.0111*c1+0.0111*c2)*w_old_m.at(ial[5])
+                               +jac*(-(a1+a2+a3)*0.0111-0.0111*a1+0.0222*a2-0.0111*a3)*u_old_m.at(ial[6])+jac*(-(a1+a2+a3)*0.0111-0.0111*b1+0.0222*b2-0.0111*b3)*v_old_m.at(ial[6])+jac*(-(a1+a2+a3)*0.0111-0.0111*b1+0.0222*b2-0.0111*b3)*w_old_m.at(ial[6])
+                               +jac*(-(a1+a2+a3)*0.0111-0.0111*a1+0.0111*a2-0.0222*a3)*u_old_m.at(ial[7])+jac*(-(a1+a2+a3)*0.0111-0.0111*b1+0.0111*b2-0.0222*b3)*v_old_m.at(ial[7])+jac*(-(a1+a2+a3)*0.0111-0.0111*c1+0.0111*c2-0.0222*c3)*w_old_m.at(ial[7])
+                               +jac*(-(a1+a2+a3)*0.0056+0.0111*a1+0.0111*a3)*u_old_m.at(ial[8])+jac*(-(a1+a2+a3)*0.0056+0.0111*b1+0.0111*b3)*v_old_m.at(ial[8])+jac*(-(a1+a2+a3)*0.0056+0.0111*c1+0.0111*c3)*w_old_m.at(ial[8])
+                               +jac*(-(a1+a2+a3)*0.0056+0.0111*a2+0.0111*a3)*u_old_m.at(ial[9])+jac*(-(a1+a2+a3)*0.0056)*v_old_m.at(ial[9]+0.0111*b2+0.0111*b3)+jac*(-(a1+a2+a3)*0.0056+0.0111*c2+0.0111*c3)*w_old_m.at(ial[9]);
     ske[0][1] = 0;
     ske[0][2] = 0;
     ske[0][3] = 0;
@@ -126,7 +139,10 @@ const double dt, const double t, const double mu, const double lambda, const dou
                  x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
                  
     const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
-    const double ve = jac/6.0;
+    //coefficients for derivatives
+    const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
+                 b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
+                 c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
 
     ske[0][0] = 0;
     ske[0][1] = 0;
@@ -182,7 +198,10 @@ const double dt, const double t, const double mu, const double lambda, const dou
                  x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
                  
     const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
-    const double ve = jac/6.0;
+    //coefficients for derivatives
+    const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
+                 b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
+                 c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
 
     ske[0][0] = 0;
     ske[0][1] = 0;
@@ -239,7 +258,10 @@ const double dt, const double t, const double mu, const double lambda, const dou
                  x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
                  
     const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
-    const double ve = jac/6.0;
+    //coefficients for derivatives
+    const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
+                 b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
+                 c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
 
     ske[0][0] = 0;
     ske[0][1] = 0;
@@ -295,7 +317,10 @@ const double dt, const double t, const double mu, const double lambda, const dou
                  x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
                  
     const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
-    const double ve = jac/6.0;
+    //coefficients for derivatives
+    const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
+                 b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
+                 c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
 
     ske[0][0] = 0;
     ske[0][1] = 0;
@@ -351,7 +376,10 @@ const double dt, const double t, const double mu, const double lambda, const dou
                  x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
                  
     const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
-    const double ve = jac/6.0;
+    //coefficients for derivatives
+    const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
+                 b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
+                 c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
 
     ske[0][0] = 0;
     ske[0][1] = 0;
@@ -467,7 +495,10 @@ const double dt, const double t, const double mu, const double lambda, const dou
                  x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
                  
     const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
-    const double ve = jac/6.0;
+    //coefficients for derivatives
+    const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
+                 b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
+                 c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
 
     ske[0][0] = 0;
     ske[0][1] = 0;
@@ -583,7 +614,10 @@ const double dt, const double t, const double mu, const double lambda, const dou
                  x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
                  
     const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
-    const double ve = jac/6.0;
+    //coefficients for derivatives
+    const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
+                 b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
+                 c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
 
     ske[0][0] = 0;
     ske[0][1] = 0;
@@ -699,7 +733,10 @@ const double dt, const double t, const double mu, const double lambda, const dou
                  x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
                  
     const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
-    const double ve = jac/6.0;
+    //coefficients for derivatives
+    const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
+                 b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
+                 c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
 
     ske[0][0] = 0;
     ske[0][1] = 0;
@@ -755,7 +792,10 @@ const double dt, const double t, const double mu, const double lambda, const dou
                  x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
                  
     const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
-    const double ve = jac/6.0;
+    //coefficients for derivatives
+    const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
+                 b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
+                 c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
 
     ske[0][0] = 0;
     ske[0][1] = 0;
@@ -871,7 +911,10 @@ const double dt, const double t, const double mu, const double lambda, const dou
                  x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
                  
     const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
-    const double ve = jac/6.0;
+    //coefficients for derivatives
+    const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
+                 b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
+                 c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
 
     ske[0][0] = 0;
     ske[0][1] = 0;
@@ -987,7 +1030,10 @@ const double dt, const double t, const double mu, const double lambda, const dou
                  x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
                  
     const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
-    const double ve = jac/6.0;
+    //coefficients for derivatives
+    const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
+                 b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
+                 c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
 
     ske[0][0] = 0;
     ske[0][1] = 0;
@@ -1103,7 +1149,10 @@ const double dt, const double t, const double mu, const double lambda, const dou
                  x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
                  
     const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
-    const double ve = jac/6.0;
+    //coefficients for derivatives
+    const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
+                 b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
+                 c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
 
     ske[0][0] = 0;
     ske[0][1] = 0;
@@ -1159,7 +1208,10 @@ const double dt, const double t, const double mu, const double lambda, const dou
                  x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
                  
     const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
-    const double ve = jac/6.0;
+    //coefficients for derivatives
+    const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
+                 b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
+                 c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
 
     ske[0][0] = 0;
     ske[0][1] = 0;
@@ -1275,7 +1327,10 @@ const double dt, const double t, const double mu, const double lambda, const dou
                  x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
                  
     const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
-    const double ve = jac/6.0;
+    //coefficients for derivatives
+    const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
+                 b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
+                 c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
 
     ske[0][0] = 0;
     ske[0][1] = 0;
@@ -1391,7 +1446,10 @@ const double dt, const double t, const double mu, const double lambda, const dou
                  x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
                  
     const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
-    const double ve = jac/6.0;
+    //coefficients for derivatives
+    const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
+                 b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
+                 c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
 
     ske[0][0] = 0;
     ske[0][1] = 0;
