@@ -12,7 +12,7 @@
 using namespace std;
 
 Mesh::Mesh(int ndim, int nvert_e, int ndof_e)
-    : _nelem(0), _nvert_e(nvert_e), _ndof_e(ndof_e), _nnode(0), _ndim(ndim), _ia(0), _xc(0)
+    : _nelem(0), _nvert_e(nvert_e), _ndof_e(ndof_e), _nnode(0), _ndim(ndim), _ia(0), _xc(0), _dummy(0)
 {
 }
 

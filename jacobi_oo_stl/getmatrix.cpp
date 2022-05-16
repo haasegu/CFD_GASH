@@ -2701,7 +2701,7 @@ void FEM_Matrix::Skalar2VectorMatrix(int ndof_v)
     this->Debug();
     cout << "\n########################\n";
     if (1 == ndof_v) return;
-    assert(4 == ndof_v);
+    //assert(4 == ndof_v);
 
     auto old_id = _id;
     auto old_ik = _ik;

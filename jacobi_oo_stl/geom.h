@@ -303,7 +303,7 @@ private:
 };
 
 /**
- * 2D finite element mesh of the square consiting of linear triangular elements.
+ * 2D finite element mesh consiting of linear triangular elements.
  * 
  
  */
