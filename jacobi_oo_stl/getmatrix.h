@@ -1,5 +1,4 @@
-#ifndef GETMATRIX_FILE
-#define GETMATRIX_FILE
+#pragma once
 
 #include "geom3.h"
 #include <cassert>
@@ -969,8 +968,5 @@ class BisectIntDirichlet: public BisectInterpolation
 //void AddElem(int const ial[4], double const ske[4][4], double const fe[4],
              //int const id[], int const ik[], double sk[], double f[]);
 
-
-
-#endif
 
 
