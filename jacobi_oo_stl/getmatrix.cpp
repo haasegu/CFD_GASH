@@ -2606,7 +2606,7 @@ void CRS_Matrix1::readBinary(const std::string &file)
 
 
 FEM_Matrix::FEM_Matrix(Mesh const &mesh, int ndof_v)
-    : CRS_Matrix1(), _mesh(mesh), _ndof_v(ndof_v)
+    : CRS_Matrix1(), _mesh(mesh), _ndof_v(ndof_v), _ia_matrix(_mesh.GetConnectivity())
 {
     Derive_Matrix_Pattern();
     Skalar2VectorMatrix(ndof_v);

@@ -291,7 +291,7 @@ protected:
 
 private:
     int _nelem;         //!< number elements
-    int _nvert_e;       //!< number of vertices per element
+    int _nvert_e;       //!< number of geometric vertices per element
     int _ndof_e;        //!< degrees of freedom (d.o.f.) per element
     int _nnode;         //!< number nodes/vertices
     int _ndim;          //!< space dimension of the problem (1, 2, or 3)
