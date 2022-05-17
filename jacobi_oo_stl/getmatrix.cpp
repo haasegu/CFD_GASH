@@ -2623,7 +2623,9 @@ void FEM_Matrix::Derive_Matrix_Pattern_fast()
     auto tstart = clock();
     int const nelem(_mesh.Nelems());
     int const ndof_e(_mesh.NdofsElement());
-    auto const &ia(_mesh.GetConnectivity());
+    //auto const &ia(_mesh.GetConnectivity());
+    auto const &ia(GetConnectivity());
+    assert(ndof_e * nelem==static_cast<int>(ia.size()));
 //  Determine the number of matrix rows
     _nrows = *max_element(ia.cbegin(), ia.cbegin() + ndof_e * nelem);
     ++_nrows;                                 // node numberng: 0 ... nnode-1

@@ -106,27 +106,76 @@ void Mesh::Write_ascii_matlab(std::string const &fname, std::vector<double> cons
 
 vector<vector<int>> Mesh::Node2NodeGraph_2() const
 {
-    vector<vector<int>> v2v(_nnode, vector<int>(0));    // stores the vertex to vertex connections
+    return ::Node2NodeGraph(Nelems(),NdofsElement(),GetConnectivity());
+    //return ::Node2NodeGraph(Nnodes(),Nelems(),NdofsElement(),_ia);
+    
+    //vector<vector<int>> v2v(_nnode, vector<int>(0));    // stores the vertex to vertex connections
+
+    //////--------------
+    //vector<int> cnt(_nnode,0);
+    //for (size_t i = 0; i < _ia.size(); ++i)  ++cnt[_ia[i]]; // determine number of entries per vertex
+    //for (size_t k = 0; k < v2v.size(); ++k)
+    //{
+        //v2v[k].resize(_nvert_e * cnt[k]);              //    and allocate the memory for that vertex
+        //cnt[k] = 0;
+    //}
+    //////--------------
+
+    //for (int e = 0; e < _nelem; ++e)
+    //{
+        //int const basis = e * _nvert_e;                  // start of vertex connectivity of element e
+        //for (int k = 0; k < _nvert_e; ++k)
+        //{
+            //int const v = _ia[basis + k];
+            //for (int l = 0; l < _nvert_e; ++l)
+            //{
+                //v2v[v][cnt[v]] = _ia[basis + l];
+                //++cnt[v];
+            //}
+        //}
+    //}
+    //// finally  cnt[v]==v2v[v].size()  has to hold for all v!
+
+    //// guarantee unique, ascending sorted entries per vertex
+    //for (size_t v = 0; v < v2v.size(); ++v)
+    //{
+        //sort(v2v[v].begin(), v2v[v].end());
+        //auto ip = unique(v2v[v].begin(), v2v[v].end());
+        //v2v[v].erase(ip, v2v[v].end());
+        ////v2v[v].shrink_to_fit();       // automatically done when copied at return
+    //}
+
+    //return v2v;
+}
+
+
+
+vector<vector<int>> Node2NodeGraph(int const nelem, int const ndof_e,
+                    vector<int> const &ia)
+{
+    assert(nelem*ndof_e==static_cast<int>(ia.size()));
+    int const nnode = *max_element(cbegin(ia),cend(ia)) +1;
+    vector<vector<int>> v2v(nnode, vector<int>(0));    // stores the vertex to vertex connections
 
     ////--------------
-    vector<int> cnt(_nnode,0);
-    for (size_t i = 0; i < _ia.size(); ++i)  ++cnt[_ia[i]]; // determine number of entries per vertex
+    vector<int> cnt(nnode,0);
+    for (size_t i = 0; i < ia.size(); ++i)  ++cnt[ia[i]]; // determine number of entries per vertex
     for (size_t k = 0; k < v2v.size(); ++k)
     {
-        v2v[k].resize(_nvert_e * cnt[k]);              //    and allocate the memory for that vertex
+        v2v[k].resize(ndof_e * cnt[k]);              //    and allocate the memory for that vertex
         cnt[k] = 0;
     }
     ////--------------
 
-    for (int e = 0; e < _nelem; ++e)
+    for (int e = 0; e < nelem; ++e)
     {
-        int const basis = e * _nvert_e;                  // start of vertex connectivity of element e
-        for (int k = 0; k < _nvert_e; ++k)
+        int const basis = e * ndof_e;                  // start of vertex connectivity of element e
+        for (int k = 0; k < ndof_e; ++k)
         {
-            int const v = _ia[basis + k];
-            for (int l = 0; l < _nvert_e; ++l)
+            int const v = ia[basis + k];
+            for (int l = 0; l < ndof_e; ++l)
             {
-                v2v[v][cnt[v]] = _ia[basis + l];
+                v2v[v][cnt[v]] = ia[basis + l];
                 ++cnt[v];
             }
         }

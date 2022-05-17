@@ -673,7 +673,7 @@ class FEM_Matrix: public CRS_Matrix1
      * Access/Change connectivity information (g1,g2,g3, ..., gn)_i regarding matrix
      * @return connectivity vector [nelems*ndofs].
      */
-       std::vector<int>& GetConnectivityMatrix()
+       std::vector<int>& GetConnectivity()
        {
            return _ia_matrix;
        }
@@ -682,10 +682,15 @@ class FEM_Matrix: public CRS_Matrix1
      * Access connectivity information (g1,g2,g3, ..., gn)_i regarding matrix
      * @return connectivity vector [nelems*ndofs].
      */       
-       const std::vector<int>& GetConnectivityMatrix() const
+       const std::vector<int>& GetConnectivity() const
        {
            return _ia_matrix;
-       }       
+       }
+       
+    //std::vector<std::vector<int>> Dof2DofGraph() const
+    //{
+        //return ::Node2NodeGraph(mesh.Nelems(),mesh.NdofsElement(),GetConnectivity());
+    //}
        
     /**
      * Global number of degrees of freedom (dof) for each finite element.
