@@ -84,6 +84,10 @@ void CalcElem_Masse(int const ial[4], double const xc[], double const cm, double
 
 // The following functions are added by Salman Ahmad. 
 
+//double B11(int const ial[10], double x, double  y,double  z, const std::vector<double> &u_old_m){
+	//return (1-x-y-z)*u_old_m.at(ial[9])-4*(1-x-y-z);
+	//}
+
 //A00
 void CalcElem_Navier_Stokes_A00(int const ial[4], double const xc[], double ske[4][4], double fe[4], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
 const double dt, const double t, const double mu, const double lambda, const double kp)
@@ -98,6 +102,24 @@ const double dt, const double t, const double mu, const double lambda, const dou
     const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
                  b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
                  c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
+                 
+    const double r0_n = r_old_n.at(ial[0]), r0_m = r_old_m.at(ial[0]),
+                 r1_n = r_old_n.at(ial[1]), r1_m = r_old_m.at(ial[1]),
+                 r2_n = r_old_n.at(ial[2]), r2_m = r_old_m.at(ial[2]),
+                 r3_n = r_old_n.at(ial[3]), r3_m = r_old_m.at(ial[3]);
+     
+    const double u0_n = u_old_n.at(ial[0]), u0_m = u_old_m.at(ial[0]), v0_n = v_old_n.at(ial[0]), v0_m = v_old_m.at(ial[0]), w0_n = w_old_n.at(ial[0]), w0_m = w_old_m.at(ial[0]),
+                 u1_n = u_old_n.at(ial[1]), u1_m = u_old_m.at(ial[1]), v1_n = v_old_n.at(ial[1]), v1_m = v_old_m.at(ial[1]), w1_n = w_old_n.at(ial[1]), w1_m = w_old_m.at(ial[1]),
+                 u2_n = u_old_n.at(ial[2]), u2_m = u_old_m.at(ial[2]), v2_n = v_old_n.at(ial[2]), v2_m = v_old_m.at(ial[2]), w2_n = w_old_n.at(ial[2]), w2_m = w_old_m.at(ial[2]),
+                 u3_n = u_old_n.at(ial[3]), u3_m = u_old_m.at(ial[3]), v3_n = v_old_n.at(ial[3]), v3_m = v_old_m.at(ial[3]), w3_n = w_old_n.at(ial[3]), w3_m = w_old_m.at(ial[3]),
+                 u4_n = u_old_n.at(ial[4]), u4_m = u_old_m.at(ial[4]), v4_n = v_old_n.at(ial[4]), v4_m = v_old_m.at(ial[4]), w4_n = w_old_n.at(ial[4]), w4_m = w_old_m.at(ial[4]),
+                 u5_n = u_old_n.at(ial[5]), u5_m = u_old_m.at(ial[5]), v5_n = v_old_n.at(ial[5]), v5_m = v_old_m.at(ial[5]), w5_n = w_old_n.at(ial[5]), w5_m = w_old_m.at(ial[5]),
+                 u6_n = u_old_n.at(ial[6]), u6_m = u_old_m.at(ial[6]), v6_n = v_old_n.at(ial[6]), v6_m = v_old_m.at(ial[6]), w6_n = w_old_n.at(ial[6]), w6_m = w_old_m.at(ial[6]),
+                 u7_n = u_old_n.at(ial[7]), u7_m = u_old_m.at(ial[7]), v7_n = v_old_n.at(ial[7]), v7_m = v_old_m.at(ial[7]), w7_n = w_old_n.at(ial[7]), w7_m = w_old_m.at(ial[7]),
+                 u8_n = u_old_n.at(ial[8]), u8_m = u_old_m.at(ial[8]), v8_n = v_old_n.at(ial[8]), v8_m = v_old_m.at(ial[8]), w8_n = w_old_n.at(ial[8]), w8_m = w_old_m.at(ial[8]),
+                 u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
+		
+	double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
 
     ske[0][0] = (jac/dt)*0.0167+jac*((a1+a2+a3)*(2.8969e-07)-0.0167*(a1+a2+a3))*u_old_m.at(ial[0])+jac*(-(b1+b2+b3)*(-2.8969e-07)-0.0167*(b1+b2+b3))*v_old_m.at(ial[0])+jac*(-(c1+c2+c3)*(-2.8969e-07)-0.0167*(c1+c2+c3))*w_old_m.at(ial[0])
                                +jac*((a1+a2+a3)*(0.0028)+a1*0.0028)*u_old_m.at(ial[1])+jac*((b1+b2+b3)*(0.0028)+b1*0.0028)*v_old_m.at(ial[1])+jac*((c1+c2+c3)*(0.0028)+c1*0.0028)*w_old_m.at(ial[1])
@@ -276,8 +298,11 @@ const double dt, const double t, const double mu, const double lambda, const dou
                                +jac*(a3*0.0111-0.0111*a1-0.0111*a2-0.0056*a3)*u_old_m.at(ial[7])+jac*(b3*0.0111-0.0111*b1-0.0111*b2-0.0056*b3)*v_old_m.at(ial[7])+jac*(c3*0.0111-0.0111*c1-0.0111*c2-0.0056*c3)*w_old_m.at(ial[7])
                                +jac*(a3*0.0111+0.0111*a1+0.0056*a3)*u_old_m.at(ial[8])+jac*(b3*0.0111+0.0111*b1+0.0056*b3)*v_old_m.at(ial[8])+jac*(c3*0.0111+0.0111*c1+0.0056*c3)*w_old_m.at(ial[8])
                                +jac*(a3*0.0111+0.0111*a2+0.0111*a3)*u_old_m.at(ial[9])+jac*(b3*0.0111+0.0111*b2+0.0111*b3)*v_old_m.at(ial[9])+jac*(c3*0.0111+0.0111*c2+0.0111*c3)*w_old_m.at(ial[9]);
-
-    fe[0] = fe[1] = fe[2]= fe[3] =  0;
+     
+    fe[0] = 0.01878132*(B0_0(a,a,a) +B0_0(b,a,a) +B0_0(a,b,a) +B0_0(a,a,b)) +0.01224884*(B0_0(c,c,c) +B0_0(d,c,c) +B0_0(c,d,c) +B0_0(c,c,d))+0.007091003*(B0_0(f,e,e) + B0_0(e,f,e) +B0_0(e,e,f) +B0_0(e,f,f)+ B0_0(f,e,f) +B0_0(f,f,e));
+    fe[1] = 0.01878132*(B0_1(a,a,a) +B0_1(b,a,a) +B0_1(a,b,a) +B0_1(a,a,b)) +0.01224884*(B0_1(c,c,c) +B0_1(d,c,c) +B0_1(c,d,c) +B0_1(c,c,d))+0.007091003*(B0_1(f,e,e) + B0_1(e,f,e) +B0_1(e,e,f) +B0_1(e,f,f)+ B0_1(f,e,f) +B0_1(f,f,e));
+    fe[2] = 0.01878132*(B0_2(a,a,a) +B0_2(b,a,a) +B0_2(a,b,a) +B0_2(a,a,b)) +0.01224884*(B0_2(c,c,c) +B0_2(d,c,c) +B0_2(c,d,c) +B0_2(c,c,d))+0.007091003*(B0_2(f,e,e) + B0_2(e,f,e) +B0_2(e,e,f) +B0_2(e,f,f)+ B0_2(f,e,f) +B0_2(f,f,e));
+    fe[3] = 0.01878132*(B0_3(a,a,a) +B0_3(b,a,a) +B0_3(a,b,a) +B0_3(a,a,b)) +0.01224884*(B0_3(c,c,c) +B0_3(d,c,c) +B0_3(c,d,c) +B0_3(c,c,d))+0.007091003*(B0_3(f,e,e) + B0_3(e,f,e) +B0_3(e,e,f) +B0_3(e,f,f)+ B0_3(f,e,f) +B0_3(f,f,e));
 }
 
 //A01
