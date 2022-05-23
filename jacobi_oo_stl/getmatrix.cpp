@@ -320,47 +320,70 @@ const double dt, const double t, const double mu, const double lambda, const dou
     const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
                  b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
                  c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
+                 
+     const double u0_n = u_old_n.at(ial[0]), u0_m = u_old_m.at(ial[0]), v0_n = v_old_n.at(ial[0]), v0_m = v_old_m.at(ial[0]), w0_n = w_old_n.at(ial[0]), w0_m = w_old_m.at(ial[0]),
+                 u1_n = u_old_n.at(ial[1]), u1_m = u_old_m.at(ial[1]), v1_n = v_old_n.at(ial[1]), v1_m = v_old_m.at(ial[1]), w1_n = w_old_n.at(ial[1]), w1_m = w_old_m.at(ial[1]),
+                 u2_n = u_old_n.at(ial[2]), u2_m = u_old_m.at(ial[2]), v2_n = v_old_n.at(ial[2]), v2_m = v_old_m.at(ial[2]), w2_n = w_old_n.at(ial[2]), w2_m = w_old_m.at(ial[2]),
+                 u3_n = u_old_n.at(ial[3]), u3_m = u_old_m.at(ial[3]), v3_n = v_old_n.at(ial[3]), v3_m = v_old_m.at(ial[3]), w3_n = w_old_n.at(ial[3]), w3_m = w_old_m.at(ial[3]),
+                 u4_n = u_old_n.at(ial[4]), u4_m = u_old_m.at(ial[4]), v4_n = v_old_n.at(ial[4]), v4_m = v_old_m.at(ial[4]), w4_n = w_old_n.at(ial[4]), w4_m = w_old_m.at(ial[4]),
+                 u5_n = u_old_n.at(ial[5]), u5_m = u_old_m.at(ial[5]), v5_n = v_old_n.at(ial[5]), v5_m = v_old_m.at(ial[5]), w5_n = w_old_n.at(ial[5]), w5_m = w_old_m.at(ial[5]),
+                 u6_n = u_old_n.at(ial[6]), u6_m = u_old_m.at(ial[6]), v6_n = v_old_n.at(ial[6]), v6_m = v_old_m.at(ial[6]), w6_n = w_old_n.at(ial[6]), w6_m = w_old_m.at(ial[6]),
+                 u7_n = u_old_n.at(ial[7]), u7_m = u_old_m.at(ial[7]), v7_n = v_old_n.at(ial[7]), v7_m = v_old_m.at(ial[7]), w7_n = w_old_n.at(ial[7]), w7_m = w_old_m.at(ial[7]),
+                 u8_n = u_old_n.at(ial[8]), u8_m = u_old_m.at(ial[8]), v8_n = v_old_n.at(ial[8]), v8_m = v_old_m.at(ial[8]), w8_n = w_old_n.at(ial[8]), w8_m = w_old_m.at(ial[8]),
+                 u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
+               
+     double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
+     /*            
+      for(int i=0; i<=3; ++i)
+      {
+		  for(int j=0; j<=9; ++j)
+		  {
+			  int ij;
+			  ske[i][j]=A01_ij(a,a,a);
+		  }
+	  }*/
+	 
 
-    ske[0][0] = 0;
-    ske[0][1] = 0;
-    ske[0][2] = 0;
-    ske[0][3] = 0;
-    ske[0][4] = 0;
-    ske[0][5] = 0;
-    ske[0][6] = 0;
-    ske[0][7] = 0;
-    ske[0][8] = 0;
-    ske[0][9] = 0;
-    ske[1][0] = 0;
-    ske[1][1] = 0;
-    ske[1][2] = 0;
-    ske[1][3] = 0;
-    ske[1][4] = 0;
-    ske[1][5] = 0;
-    ske[1][6] = 0;
-    ske[1][7] = 0;
-    ske[1][8] = 0;
-    ske[1][9] = 0;
-    ske[2][0] = 0;
-    ske[2][1] = 0;
-    ske[2][2] = 0;
-    ske[2][3] = 0;
-    ske[2][4] = 0;
-    ske[2][5] = 0;
-    ske[2][6] = 0;
-    ske[2][7] = 0;
-    ske[2][8] = 0;
-    ske[2][9] = 0;
-    ske[3][0] = 0;
-    ske[3][1] = 0;
-    ske[3][2] = 0;
-    ske[3][3] = 0;
-    ske[3][4] = 0;
-    ske[3][5] = 0;
-    ske[3][6] = 0;
-    ske[3][7] = 0;
-    ske[3][8] = 0;
-    ske[3][9] = 0;
+    ske[0][0] = 0.01878132*(A01_00(a,a,a) +A01_00(b,a,a) +A01_00(a,b,a) +A01_00(a,a,b)) +0.01224884*(A01_00(c,c,c) +A01_00(d,c,c) +A01_00(c,d,c) +A01_00(c,c,d))+0.007091003*(A01_00(f,e,e) + A01_00(e,f,e) +A01_00(e,e,f) +A01_00(e,f,f)+ A01_00(f,e,f) +A01_00(f,f,e));
+    ske[0][1] = 0.01878132*(A01_01(a,a,a) +A01_01(b,a,a) +A01_01(a,b,a) +A01_01(a,a,b)) +0.01224884*(A01_01(c,c,c) +A01_01(d,c,c) +A01_01(c,d,c) +A01_01(c,c,d))+0.007091003*(A01_01(f,e,e) + A01_01(e,f,e) +A01_01(e,e,f) +A01_01(e,f,f)+ A01_01(f,e,f) +A01_01(f,f,e));
+    ske[0][2] = 0.01878132*(A01_02(a,a,a) +A01_02(b,a,a) +A01_02(a,b,a) +A01_02(a,a,b)) +0.01224884*(A01_02(c,c,c) +A01_02(d,c,c) +A01_02(c,d,c) +A01_02(c,c,d))+0.007091003*(A01_02(f,e,e) + A01_02(e,f,e) +A01_02(e,e,f) +A01_02(e,f,f)+ A01_02(f,e,f) +A01_02(f,f,e));
+    ske[0][3] = 0.01878132*(A01_03(a,a,a) +A01_03(b,a,a) +A01_03(a,b,a) +A01_03(a,a,b)) +0.01224884*(A01_03(c,c,c) +A01_03(d,c,c) +A01_03(c,d,c) +A01_03(c,c,d))+0.007091003*(A01_03(f,e,e) + A01_03(e,f,e) +A01_03(e,e,f) +A01_03(e,f,f)+ A01_03(f,e,f) +A01_03(f,f,e));
+    ske[0][4] = 0.01878132*(A01_04(a,a,a) +A01_04(b,a,a) +A01_04(a,b,a) +A01_04(a,a,b)) +0.01224884*(A01_04(c,c,c) +A01_04(d,c,c) +A01_04(c,d,c) +A01_04(c,c,d))+0.007091003*(A01_04(f,e,e) + A01_04(e,f,e) +A01_04(e,e,f) +A01_04(e,f,f)+ A01_04(f,e,f) +A01_04(f,f,e));
+    ske[0][5] = 0.01878132*(A01_05(a,a,a) +A01_05(b,a,a) +A01_05(a,b,a) +A01_05(a,a,b)) +0.01224884*(A01_05(c,c,c) +A01_05(d,c,c) +A01_05(c,d,c) +A01_05(c,c,d))+0.007091003*(A01_05(f,e,e) + A01_05(e,f,e) +A01_05(e,e,f) +A01_05(e,f,f)+ A01_05(f,e,f) +A01_05(f,f,e));
+    ske[0][6] = 0.01878132*(A01_06(a,a,a) +A01_06(b,a,a) +A01_06(a,b,a) +A01_06(a,a,b)) +0.01224884*(A01_06(c,c,c) +A01_06(d,c,c) +A01_06(c,d,c) +A01_06(c,c,d))+0.007091003*(A01_06(f,e,e) + A01_06(e,f,e) +A01_06(e,e,f) +A01_06(e,f,f)+ A01_06(f,e,f) +A01_06(f,f,e));
+    ske[0][7] = 0.01878132*(A01_07(a,a,a) +A01_07(b,a,a) +A01_07(a,b,a) +A01_07(a,a,b)) +0.01224884*(A01_07(c,c,c) +A01_07(d,c,c) +A01_07(c,d,c) +A01_07(c,c,d))+0.007091003*(A01_07(f,e,e) + A01_07(e,f,e) +A01_07(e,e,f) +A01_07(e,f,f)+ A01_07(f,e,f) +A01_07(f,f,e));
+    ske[0][8] = 0.01878132*(A01_08(a,a,a) +A01_08(b,a,a) +A01_08(a,b,a) +A01_08(a,a,b)) +0.01224884*(A01_08(c,c,c) +A01_08(d,c,c) +A01_08(c,d,c) +A01_08(c,c,d))+0.007091003*(A01_08(f,e,e) + A01_08(e,f,e) +A01_08(e,e,f) +A01_08(e,f,f)+ A01_08(f,e,f) +A01_08(f,f,e));
+    ske[0][9] = 0.01878132*(A01_09(a,a,a) +A01_09(b,a,a) +A01_09(a,b,a) +A01_09(a,a,b)) +0.01224884*(A01_09(c,c,c) +A01_09(d,c,c) +A01_09(c,d,c) +A01_09(c,c,d))+0.007091003*(A01_09(f,e,e) + A01_09(e,f,e) +A01_09(e,e,f) +A01_09(e,f,f)+ A01_09(f,e,f) +A01_09(f,f,e));
+    ske[1][0] = 0.01878132*(A01_10(a,a,a) +A01_10(b,a,a) +A01_10(a,b,a) +A01_10(a,a,b)) +0.01224884*(A01_10(c,c,c) +A01_10(d,c,c) +A01_10(c,d,c) +A01_10(c,c,d))+0.007091003*(A01_10(f,e,e) + A01_10(e,f,e) +A01_10(e,e,f) +A01_10(e,f,f)+ A01_10(f,e,f) +A01_10(f,f,e));
+    ske[1][1] = 0.01878132*(A01_11(a,a,a) +A01_11(b,a,a) +A01_11(a,b,a) +A01_11(a,a,b)) +0.01224884*(A01_11(c,c,c) +A01_11(d,c,c) +A01_11(c,d,c) +A01_11(c,c,d))+0.007091003*(A01_11(f,e,e) + A01_11(e,f,e) +A01_11(e,e,f) +A01_11(e,f,f)+ A01_11(f,e,f) +A01_11(f,f,e));
+    ske[1][2] = 0.01878132*(A01_12(a,a,a) +A01_12(b,a,a) +A01_12(a,b,a) +A01_12(a,a,b)) +0.01224884*(A01_12(c,c,c) +A01_12(d,c,c) +A01_12(c,d,c) +A01_12(c,c,d))+0.007091003*(A01_12(f,e,e) + A01_12(e,f,e) +A01_12(e,e,f) +A01_12(e,f,f)+ A01_12(f,e,f) +A01_12(f,f,e));
+    ske[1][3] = 0.01878132*(A01_13(a,a,a) +A01_13(b,a,a) +A01_13(a,b,a) +A01_13(a,a,b)) +0.01224884*(A01_13(c,c,c) +A01_13(d,c,c) +A01_13(c,d,c) +A01_13(c,c,d))+0.007091003*(A01_13(f,e,e) + A01_13(e,f,e) +A01_13(e,e,f) +A01_13(e,f,f)+ A01_13(f,e,f) +A01_13(f,f,e));
+    ske[1][4] = 0.01878132*(A01_14(a,a,a) +A01_14(b,a,a) +A01_14(a,b,a) +A01_14(a,a,b)) +0.01224884*(A01_14(c,c,c) +A01_14(d,c,c) +A01_14(c,d,c) +A01_14(c,c,d))+0.007091003*(A01_14(f,e,e) + A01_14(e,f,e) +A01_14(e,e,f) +A01_14(e,f,f)+ A01_14(f,e,f) +A01_14(f,f,e));
+    ske[1][5] = 0.01878132*(A01_15(a,a,a) +A01_15(b,a,a) +A01_15(a,b,a) +A01_15(a,a,b)) +0.01224884*(A01_15(c,c,c) +A01_15(d,c,c) +A01_15(c,d,c) +A01_15(c,c,d))+0.007091003*(A01_15(f,e,e) + A01_15(e,f,e) +A01_15(e,e,f) +A01_15(e,f,f)+ A01_15(f,e,f) +A01_15(f,f,e));
+    ske[1][6] = 0.01878132*(A01_16(a,a,a) +A01_16(b,a,a) +A01_16(a,b,a) +A01_16(a,a,b)) +0.01224884*(A01_16(c,c,c) +A01_16(d,c,c) +A01_16(c,d,c) +A01_16(c,c,d))+0.007091003*(A01_16(f,e,e) + A01_16(e,f,e) +A01_16(e,e,f) +A01_16(e,f,f)+ A01_16(f,e,f) +A01_16(f,f,e));
+    ske[1][7] = 0.01878132*(A01_17(a,a,a) +A01_17(b,a,a) +A01_17(a,b,a) +A01_17(a,a,b)) +0.01224884*(A01_17(c,c,c) +A01_17(d,c,c) +A01_17(c,d,c) +A01_17(c,c,d))+0.007091003*(A01_17(f,e,e) + A01_17(e,f,e) +A01_17(e,e,f) +A01_17(e,f,f)+ A01_17(f,e,f) +A01_17(f,f,e));
+    ske[1][8] = 0.01878132*(A01_18(a,a,a) +A01_18(b,a,a) +A01_18(a,b,a) +A01_18(a,a,b)) +0.01224884*(A01_18(c,c,c) +A01_18(d,c,c) +A01_18(c,d,c) +A01_18(c,c,d))+0.007091003*(A01_18(f,e,e) + A01_18(e,f,e) +A01_18(e,e,f) +A01_18(e,f,f)+ A01_18(f,e,f) +A01_18(f,f,e));
+    ske[1][9] = 0.01878132*(A01_19(a,a,a) +A01_19(b,a,a) +A01_19(a,b,a) +A01_19(a,a,b)) +0.01224884*(A01_19(c,c,c) +A01_19(d,c,c) +A01_19(c,d,c) +A01_19(c,c,d))+0.007091003*(A01_19(f,e,e) + A01_19(e,f,e) +A01_19(e,e,f) +A01_19(e,f,f)+ A01_19(f,e,f) +A01_19(f,f,e));
+    ske[2][0] = 0.01878132*(A01_20(a,a,a) +A01_20(b,a,a) +A01_20(a,b,a) +A01_20(a,a,b)) +0.01224884*(A01_20(c,c,c) +A01_20(d,c,c) +A01_20(c,d,c) +A01_20(c,c,d))+0.007091003*(A01_20(f,e,e) + A01_20(e,f,e) +A01_20(e,e,f) +A01_20(e,f,f)+ A01_20(f,e,f) +A01_20(f,f,e));
+    ske[2][1] = 0.01878132*(A01_21(a,a,a) +A01_21(b,a,a) +A01_21(a,b,a) +A01_21(a,a,b)) +0.01224884*(A01_21(c,c,c) +A01_21(d,c,c) +A01_21(c,d,c) +A01_21(c,c,d))+0.007091003*(A01_21(f,e,e) + A01_21(e,f,e) +A01_21(e,e,f) +A01_21(e,f,f)+ A01_21(f,e,f) +A01_21(f,f,e));
+    ske[2][2] = 0.01878132*(A01_22(a,a,a) +A01_22(b,a,a) +A01_22(a,b,a) +A01_22(a,a,b)) +0.01224884*(A01_22(c,c,c) +A01_22(d,c,c) +A01_22(c,d,c) +A01_22(c,c,d))+0.007091003*(A01_22(f,e,e) + A01_22(e,f,e) +A01_22(e,e,f) +A01_22(e,f,f)+ A01_22(f,e,f) +A01_22(f,f,e));
+    ske[2][3] = 0.01878132*(A01_23(a,a,a) +A01_23(b,a,a) +A01_23(a,b,a) +A01_23(a,a,b)) +0.01224884*(A01_23(c,c,c) +A01_23(d,c,c) +A01_23(c,d,c) +A01_23(c,c,d))+0.007091003*(A01_23(f,e,e) + A01_23(e,f,e) +A01_23(e,e,f) +A01_23(e,f,f)+ A01_23(f,e,f) +A01_23(f,f,e));
+    ske[2][4] = 0.01878132*(A01_24(a,a,a) +A01_24(b,a,a) +A01_24(a,b,a) +A01_24(a,a,b)) +0.01224884*(A01_24(c,c,c) +A01_24(d,c,c) +A01_24(c,d,c) +A01_24(c,c,d))+0.007091003*(A01_24(f,e,e) + A01_24(e,f,e) +A01_24(e,e,f) +A01_24(e,f,f)+ A01_24(f,e,f) +A01_24(f,f,e));
+    ske[2][5] = 0.01878132*(A01_25(a,a,a) +A01_25(b,a,a) +A01_25(a,b,a) +A01_25(a,a,b)) +0.01224884*(A01_25(c,c,c) +A01_25(d,c,c) +A01_25(c,d,c) +A01_25(c,c,d))+0.007091003*(A01_25(f,e,e) + A01_25(e,f,e) +A01_25(e,e,f) +A01_25(e,f,f)+ A01_25(f,e,f) +A01_25(f,f,e));
+    ske[2][6] = 0.01878132*(A01_26(a,a,a) +A01_26(b,a,a) +A01_26(a,b,a) +A01_26(a,a,b)) +0.01224884*(A01_26(c,c,c) +A01_26(d,c,c) +A01_26(c,d,c) +A01_26(c,c,d))+0.007091003*(A01_26(f,e,e) + A01_26(e,f,e) +A01_26(e,e,f) +A01_26(e,f,f)+ A01_26(f,e,f) +A01_26(f,f,e));
+    ske[2][7] = 0.01878132*(A01_27(a,a,a) +A01_27(b,a,a) +A01_27(a,b,a) +A01_27(a,a,b)) +0.01224884*(A01_27(c,c,c) +A01_27(d,c,c) +A01_27(c,d,c) +A01_27(c,c,d))+0.007091003*(A01_27(f,e,e) + A01_27(e,f,e) +A01_27(e,e,f) +A01_27(e,f,f)+ A01_27(f,e,f) +A01_27(f,f,e));
+    ske[2][8] = 0.01878132*(A01_28(a,a,a) +A01_28(b,a,a) +A01_28(a,b,a) +A01_28(a,a,b)) +0.01224884*(A01_28(c,c,c) +A01_28(d,c,c) +A01_28(c,d,c) +A01_28(c,c,d))+0.007091003*(A01_28(f,e,e) + A01_28(e,f,e) +A01_28(e,e,f) +A01_28(e,f,f)+ A01_28(f,e,f) +A01_28(f,f,e));
+    ske[2][9] = 0.01878132*(A01_29(a,a,a) +A01_29(b,a,a) +A01_29(a,b,a) +A01_29(a,a,b)) +0.01224884*(A01_29(c,c,c) +A01_29(d,c,c) +A01_29(c,d,c) +A01_29(c,c,d))+0.007091003*(A01_29(f,e,e) + A01_29(e,f,e) +A01_29(e,e,f) +A01_29(e,f,f)+ A01_29(f,e,f) +A01_29(f,f,e));
+    ske[3][0] = 0.01878132*(A01_30(a,a,a) +A01_30(b,a,a) +A01_30(a,b,a) +A01_30(a,a,b)) +0.01224884*(A01_30(c,c,c) +A01_30(d,c,c) +A01_30(c,d,c) +A01_30(c,c,d))+0.007091003*(A01_30(f,e,e) + A01_30(e,f,e) +A01_30(e,e,f) +A01_30(e,f,f)+ A01_30(f,e,f) +A01_30(f,f,e));
+    ske[3][1] = 0.01878132*(A01_31(a,a,a) +A01_31(b,a,a) +A01_31(a,b,a) +A01_31(a,a,b)) +0.01224884*(A01_31(c,c,c) +A01_31(d,c,c) +A01_31(c,d,c) +A01_31(c,c,d))+0.007091003*(A01_31(f,e,e) + A01_31(e,f,e) +A01_31(e,e,f) +A01_31(e,f,f)+ A01_31(f,e,f) +A01_31(f,f,e));
+    ske[3][2] = 0.01878132*(A01_32(a,a,a) +A01_32(b,a,a) +A01_32(a,b,a) +A01_32(a,a,b)) +0.01224884*(A01_32(c,c,c) +A01_32(d,c,c) +A01_32(c,d,c) +A01_32(c,c,d))+0.007091003*(A01_32(f,e,e) + A01_32(e,f,e) +A01_32(e,e,f) +A01_32(e,f,f)+ A01_32(f,e,f) +A01_32(f,f,e));
+    ske[3][3] = 0.01878132*(A01_33(a,a,a) +A01_33(b,a,a) +A01_33(a,b,a) +A01_33(a,a,b)) +0.01224884*(A01_33(c,c,c) +A01_33(d,c,c) +A01_33(c,d,c) +A01_33(c,c,d))+0.007091003*(A01_33(f,e,e) + A01_33(e,f,e) +A01_33(e,e,f) +A01_33(e,f,f)+ A01_33(f,e,f) +A01_33(f,f,e));
+    ske[3][4] = 0.01878132*(A01_34(a,a,a) +A01_34(b,a,a) +A01_34(a,b,a) +A01_34(a,a,b)) +0.01224884*(A01_34(c,c,c) +A01_34(d,c,c) +A01_34(c,d,c) +A01_34(c,c,d))+0.007091003*(A01_34(f,e,e) + A01_34(e,f,e) +A01_34(e,e,f) +A01_34(e,f,f)+ A01_34(f,e,f) +A01_34(f,f,e));
+    ske[3][5] = 0.01878132*(A01_35(a,a,a) +A01_35(b,a,a) +A01_35(a,b,a) +A01_35(a,a,b)) +0.01224884*(A01_35(c,c,c) +A01_35(d,c,c) +A01_35(c,d,c) +A01_35(c,c,d))+0.007091003*(A01_35(f,e,e) + A01_35(e,f,e) +A01_35(e,e,f) +A01_35(e,f,f)+ A01_35(f,e,f) +A01_35(f,f,e));
+    ske[3][6] = 0.01878132*(A01_36(a,a,a) +A01_36(b,a,a) +A01_36(a,b,a) +A01_36(a,a,b)) +0.01224884*(A01_36(c,c,c) +A01_36(d,c,c) +A01_36(c,d,c) +A01_36(c,c,d))+0.007091003*(A01_36(f,e,e) + A01_36(e,f,e) +A01_36(e,e,f) +A01_36(e,f,f)+ A01_36(f,e,f) +A01_36(f,f,e));
+    ske[3][7] = 0.01878132*(A01_37(a,a,a) +A01_37(b,a,a) +A01_37(a,b,a) +A01_37(a,a,b)) +0.01224884*(A01_37(c,c,c) +A01_37(d,c,c) +A01_37(c,d,c) +A01_37(c,c,d))+0.007091003*(A01_37(f,e,e) + A01_37(e,f,e) +A01_37(e,e,f) +A01_37(e,f,f)+ A01_37(f,e,f) +A01_37(f,f,e));
+    ske[3][8] = 0.01878132*(A01_38(a,a,a) +A01_38(b,a,a) +A01_38(a,b,a) +A01_38(a,a,b)) +0.01224884*(A01_38(c,c,c) +A01_38(d,c,c) +A01_38(c,d,c) +A01_38(c,c,d))+0.007091003*(A01_38(f,e,e) + A01_38(e,f,e) +A01_38(e,e,f) +A01_38(e,f,f)+ A01_38(f,e,f) +A01_38(f,f,e));
+    ske[3][9] = 0.01878132*(A01_39(a,a,a) +A01_39(b,a,a) +A01_39(a,b,a) +A01_39(a,a,b)) +0.01224884*(A01_39(c,c,c) +A01_39(d,c,c) +A01_39(c,d,c) +A01_39(c,c,d))+0.007091003*(A01_39(f,e,e) + A01_39(e,f,e) +A01_39(e,e,f) +A01_39(e,f,f)+ A01_39(f,e,f) +A01_39(f,f,e));
 
     fe[0] = fe[1] = fe[2]= fe[3] =  0;
 }
@@ -379,6 +402,19 @@ const double dt, const double t, const double mu, const double lambda, const dou
     const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
                  b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
                  c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
+                 
+     const double u0_n = u_old_n.at(ial[0]), u0_m = u_old_m.at(ial[0]), v0_n = v_old_n.at(ial[0]), v0_m = v_old_m.at(ial[0]), w0_n = w_old_n.at(ial[0]), w0_m = w_old_m.at(ial[0]),
+                 u1_n = u_old_n.at(ial[1]), u1_m = u_old_m.at(ial[1]), v1_n = v_old_n.at(ial[1]), v1_m = v_old_m.at(ial[1]), w1_n = w_old_n.at(ial[1]), w1_m = w_old_m.at(ial[1]),
+                 u2_n = u_old_n.at(ial[2]), u2_m = u_old_m.at(ial[2]), v2_n = v_old_n.at(ial[2]), v2_m = v_old_m.at(ial[2]), w2_n = w_old_n.at(ial[2]), w2_m = w_old_m.at(ial[2]),
+                 u3_n = u_old_n.at(ial[3]), u3_m = u_old_m.at(ial[3]), v3_n = v_old_n.at(ial[3]), v3_m = v_old_m.at(ial[3]), w3_n = w_old_n.at(ial[3]), w3_m = w_old_m.at(ial[3]),
+                 u4_n = u_old_n.at(ial[4]), u4_m = u_old_m.at(ial[4]), v4_n = v_old_n.at(ial[4]), v4_m = v_old_m.at(ial[4]), w4_n = w_old_n.at(ial[4]), w4_m = w_old_m.at(ial[4]),
+                 u5_n = u_old_n.at(ial[5]), u5_m = u_old_m.at(ial[5]), v5_n = v_old_n.at(ial[5]), v5_m = v_old_m.at(ial[5]), w5_n = w_old_n.at(ial[5]), w5_m = w_old_m.at(ial[5]),
+                 u6_n = u_old_n.at(ial[6]), u6_m = u_old_m.at(ial[6]), v6_n = v_old_n.at(ial[6]), v6_m = v_old_m.at(ial[6]), w6_n = w_old_n.at(ial[6]), w6_m = w_old_m.at(ial[6]),
+                 u7_n = u_old_n.at(ial[7]), u7_m = u_old_m.at(ial[7]), v7_n = v_old_n.at(ial[7]), v7_m = v_old_m.at(ial[7]), w7_n = w_old_n.at(ial[7]), w7_m = w_old_m.at(ial[7]),
+                 u8_n = u_old_n.at(ial[8]), u8_m = u_old_m.at(ial[8]), v8_n = v_old_n.at(ial[8]), v8_m = v_old_m.at(ial[8]), w8_n = w_old_n.at(ial[8]), w8_m = w_old_m.at(ial[8]),
+                 u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
+                 
+     double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
 
     ske[0][0] = 0;
     ske[0][1] = 0;
@@ -439,6 +475,19 @@ const double dt, const double t, const double mu, const double lambda, const dou
     const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
                  b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
                  c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
+                 
+    const double u0_n = u_old_n.at(ial[0]), u0_m = u_old_m.at(ial[0]), v0_n = v_old_n.at(ial[0]), v0_m = v_old_m.at(ial[0]), w0_n = w_old_n.at(ial[0]), w0_m = w_old_m.at(ial[0]),
+                 u1_n = u_old_n.at(ial[1]), u1_m = u_old_m.at(ial[1]), v1_n = v_old_n.at(ial[1]), v1_m = v_old_m.at(ial[1]), w1_n = w_old_n.at(ial[1]), w1_m = w_old_m.at(ial[1]),
+                 u2_n = u_old_n.at(ial[2]), u2_m = u_old_m.at(ial[2]), v2_n = v_old_n.at(ial[2]), v2_m = v_old_m.at(ial[2]), w2_n = w_old_n.at(ial[2]), w2_m = w_old_m.at(ial[2]),
+                 u3_n = u_old_n.at(ial[3]), u3_m = u_old_m.at(ial[3]), v3_n = v_old_n.at(ial[3]), v3_m = v_old_m.at(ial[3]), w3_n = w_old_n.at(ial[3]), w3_m = w_old_m.at(ial[3]),
+                 u4_n = u_old_n.at(ial[4]), u4_m = u_old_m.at(ial[4]), v4_n = v_old_n.at(ial[4]), v4_m = v_old_m.at(ial[4]), w4_n = w_old_n.at(ial[4]), w4_m = w_old_m.at(ial[4]),
+                 u5_n = u_old_n.at(ial[5]), u5_m = u_old_m.at(ial[5]), v5_n = v_old_n.at(ial[5]), v5_m = v_old_m.at(ial[5]), w5_n = w_old_n.at(ial[5]), w5_m = w_old_m.at(ial[5]),
+                 u6_n = u_old_n.at(ial[6]), u6_m = u_old_m.at(ial[6]), v6_n = v_old_n.at(ial[6]), v6_m = v_old_m.at(ial[6]), w6_n = w_old_n.at(ial[6]), w6_m = w_old_m.at(ial[6]),
+                 u7_n = u_old_n.at(ial[7]), u7_m = u_old_m.at(ial[7]), v7_n = v_old_n.at(ial[7]), v7_m = v_old_m.at(ial[7]), w7_n = w_old_n.at(ial[7]), w7_m = w_old_m.at(ial[7]),
+                 u8_n = u_old_n.at(ial[8]), u8_m = u_old_m.at(ial[8]), v8_n = v_old_n.at(ial[8]), v8_m = v_old_m.at(ial[8]), w8_n = w_old_n.at(ial[8]), w8_m = w_old_m.at(ial[8]),
+                 u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
+                 
+    double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
 
     ske[0][0] = 0;
     ske[0][1] = 0;
@@ -498,6 +547,19 @@ const double dt, const double t, const double mu, const double lambda, const dou
     const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
                  b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
                  c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
+                 
+     const double u0_n = u_old_n.at(ial[0]), u0_m = u_old_m.at(ial[0]), v0_n = v_old_n.at(ial[0]), v0_m = v_old_m.at(ial[0]), w0_n = w_old_n.at(ial[0]), w0_m = w_old_m.at(ial[0]),
+                 u1_n = u_old_n.at(ial[1]), u1_m = u_old_m.at(ial[1]), v1_n = v_old_n.at(ial[1]), v1_m = v_old_m.at(ial[1]), w1_n = w_old_n.at(ial[1]), w1_m = w_old_m.at(ial[1]),
+                 u2_n = u_old_n.at(ial[2]), u2_m = u_old_m.at(ial[2]), v2_n = v_old_n.at(ial[2]), v2_m = v_old_m.at(ial[2]), w2_n = w_old_n.at(ial[2]), w2_m = w_old_m.at(ial[2]),
+                 u3_n = u_old_n.at(ial[3]), u3_m = u_old_m.at(ial[3]), v3_n = v_old_n.at(ial[3]), v3_m = v_old_m.at(ial[3]), w3_n = w_old_n.at(ial[3]), w3_m = w_old_m.at(ial[3]),
+                 u4_n = u_old_n.at(ial[4]), u4_m = u_old_m.at(ial[4]), v4_n = v_old_n.at(ial[4]), v4_m = v_old_m.at(ial[4]), w4_n = w_old_n.at(ial[4]), w4_m = w_old_m.at(ial[4]),
+                 u5_n = u_old_n.at(ial[5]), u5_m = u_old_m.at(ial[5]), v5_n = v_old_n.at(ial[5]), v5_m = v_old_m.at(ial[5]), w5_n = w_old_n.at(ial[5]), w5_m = w_old_m.at(ial[5]),
+                 u6_n = u_old_n.at(ial[6]), u6_m = u_old_m.at(ial[6]), v6_n = v_old_n.at(ial[6]), v6_m = v_old_m.at(ial[6]), w6_n = w_old_n.at(ial[6]), w6_m = w_old_m.at(ial[6]),
+                 u7_n = u_old_n.at(ial[7]), u7_m = u_old_m.at(ial[7]), v7_n = v_old_n.at(ial[7]), v7_m = v_old_m.at(ial[7]), w7_n = w_old_n.at(ial[7]), w7_m = w_old_m.at(ial[7]),
+                 u8_n = u_old_n.at(ial[8]), u8_m = u_old_m.at(ial[8]), v8_n = v_old_n.at(ial[8]), v8_m = v_old_m.at(ial[8]), w8_n = w_old_n.at(ial[8]), w8_m = w_old_m.at(ial[8]),
+                 u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
+                 
+     double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
 
     ske[0][0] = 0;
     ske[0][1] = 0;
@@ -557,6 +619,19 @@ const double dt, const double t, const double mu, const double lambda, const dou
     const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
                  b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
                  c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
+                 
+    const double u0_n = u_old_n.at(ial[0]), u0_m = u_old_m.at(ial[0]), v0_n = v_old_n.at(ial[0]), v0_m = v_old_m.at(ial[0]), w0_n = w_old_n.at(ial[0]), w0_m = w_old_m.at(ial[0]),
+                 u1_n = u_old_n.at(ial[1]), u1_m = u_old_m.at(ial[1]), v1_n = v_old_n.at(ial[1]), v1_m = v_old_m.at(ial[1]), w1_n = w_old_n.at(ial[1]), w1_m = w_old_m.at(ial[1]),
+                 u2_n = u_old_n.at(ial[2]), u2_m = u_old_m.at(ial[2]), v2_n = v_old_n.at(ial[2]), v2_m = v_old_m.at(ial[2]), w2_n = w_old_n.at(ial[2]), w2_m = w_old_m.at(ial[2]),
+                 u3_n = u_old_n.at(ial[3]), u3_m = u_old_m.at(ial[3]), v3_n = v_old_n.at(ial[3]), v3_m = v_old_m.at(ial[3]), w3_n = w_old_n.at(ial[3]), w3_m = w_old_m.at(ial[3]),
+                 u4_n = u_old_n.at(ial[4]), u4_m = u_old_m.at(ial[4]), v4_n = v_old_n.at(ial[4]), v4_m = v_old_m.at(ial[4]), w4_n = w_old_n.at(ial[4]), w4_m = w_old_m.at(ial[4]),
+                 u5_n = u_old_n.at(ial[5]), u5_m = u_old_m.at(ial[5]), v5_n = v_old_n.at(ial[5]), v5_m = v_old_m.at(ial[5]), w5_n = w_old_n.at(ial[5]), w5_m = w_old_m.at(ial[5]),
+                 u6_n = u_old_n.at(ial[6]), u6_m = u_old_m.at(ial[6]), v6_n = v_old_n.at(ial[6]), v6_m = v_old_m.at(ial[6]), w6_n = w_old_n.at(ial[6]), w6_m = w_old_m.at(ial[6]),
+                 u7_n = u_old_n.at(ial[7]), u7_m = u_old_m.at(ial[7]), v7_n = v_old_n.at(ial[7]), v7_m = v_old_m.at(ial[7]), w7_n = w_old_n.at(ial[7]), w7_m = w_old_m.at(ial[7]),
+                 u8_n = u_old_n.at(ial[8]), u8_m = u_old_m.at(ial[8]), v8_n = v_old_n.at(ial[8]), v8_m = v_old_m.at(ial[8]), w8_n = w_old_n.at(ial[8]), w8_m = w_old_m.at(ial[8]),
+                 u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
+                 
+    double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
 
     ske[0][0] = 0;
     ske[0][1] = 0;
@@ -676,6 +751,18 @@ const double dt, const double t, const double mu, const double lambda, const dou
     const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
                  b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
                  c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
+     const double u0_n = u_old_n.at(ial[0]), u0_m = u_old_m.at(ial[0]), v0_n = v_old_n.at(ial[0]), v0_m = v_old_m.at(ial[0]), w0_n = w_old_n.at(ial[0]), w0_m = w_old_m.at(ial[0]),
+                 u1_n = u_old_n.at(ial[1]), u1_m = u_old_m.at(ial[1]), v1_n = v_old_n.at(ial[1]), v1_m = v_old_m.at(ial[1]), w1_n = w_old_n.at(ial[1]), w1_m = w_old_m.at(ial[1]),
+                 u2_n = u_old_n.at(ial[2]), u2_m = u_old_m.at(ial[2]), v2_n = v_old_n.at(ial[2]), v2_m = v_old_m.at(ial[2]), w2_n = w_old_n.at(ial[2]), w2_m = w_old_m.at(ial[2]),
+                 u3_n = u_old_n.at(ial[3]), u3_m = u_old_m.at(ial[3]), v3_n = v_old_n.at(ial[3]), v3_m = v_old_m.at(ial[3]), w3_n = w_old_n.at(ial[3]), w3_m = w_old_m.at(ial[3]),
+                 u4_n = u_old_n.at(ial[4]), u4_m = u_old_m.at(ial[4]), v4_n = v_old_n.at(ial[4]), v4_m = v_old_m.at(ial[4]), w4_n = w_old_n.at(ial[4]), w4_m = w_old_m.at(ial[4]),
+                 u5_n = u_old_n.at(ial[5]), u5_m = u_old_m.at(ial[5]), v5_n = v_old_n.at(ial[5]), v5_m = v_old_m.at(ial[5]), w5_n = w_old_n.at(ial[5]), w5_m = w_old_m.at(ial[5]),
+                 u6_n = u_old_n.at(ial[6]), u6_m = u_old_m.at(ial[6]), v6_n = v_old_n.at(ial[6]), v6_m = v_old_m.at(ial[6]), w6_n = w_old_n.at(ial[6]), w6_m = w_old_m.at(ial[6]),
+                 u7_n = u_old_n.at(ial[7]), u7_m = u_old_m.at(ial[7]), v7_n = v_old_n.at(ial[7]), v7_m = v_old_m.at(ial[7]), w7_n = w_old_n.at(ial[7]), w7_m = w_old_m.at(ial[7]),
+                 u8_n = u_old_n.at(ial[8]), u8_m = u_old_m.at(ial[8]), v8_n = v_old_n.at(ial[8]), v8_m = v_old_m.at(ial[8]), w8_n = w_old_n.at(ial[8]), w8_m = w_old_m.at(ial[8]),
+                 u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
+                 
+     double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
 
     ske[0][0] = 0;
     ske[0][1] = 0;
@@ -795,6 +882,8 @@ const double dt, const double t, const double mu, const double lambda, const dou
     const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
                  b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
                  c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
+                 
+     double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
 
     ske[0][0] = 0;
     ske[0][1] = 0;
@@ -914,6 +1003,18 @@ const double dt, const double t, const double mu, const double lambda, const dou
     const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
                  b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
                  c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
+     const double u0_n = u_old_n.at(ial[0]), u0_m = u_old_m.at(ial[0]), v0_n = v_old_n.at(ial[0]), v0_m = v_old_m.at(ial[0]), w0_n = w_old_n.at(ial[0]), w0_m = w_old_m.at(ial[0]),
+                 u1_n = u_old_n.at(ial[1]), u1_m = u_old_m.at(ial[1]), v1_n = v_old_n.at(ial[1]), v1_m = v_old_m.at(ial[1]), w1_n = w_old_n.at(ial[1]), w1_m = w_old_m.at(ial[1]),
+                 u2_n = u_old_n.at(ial[2]), u2_m = u_old_m.at(ial[2]), v2_n = v_old_n.at(ial[2]), v2_m = v_old_m.at(ial[2]), w2_n = w_old_n.at(ial[2]), w2_m = w_old_m.at(ial[2]),
+                 u3_n = u_old_n.at(ial[3]), u3_m = u_old_m.at(ial[3]), v3_n = v_old_n.at(ial[3]), v3_m = v_old_m.at(ial[3]), w3_n = w_old_n.at(ial[3]), w3_m = w_old_m.at(ial[3]),
+                 u4_n = u_old_n.at(ial[4]), u4_m = u_old_m.at(ial[4]), v4_n = v_old_n.at(ial[4]), v4_m = v_old_m.at(ial[4]), w4_n = w_old_n.at(ial[4]), w4_m = w_old_m.at(ial[4]),
+                 u5_n = u_old_n.at(ial[5]), u5_m = u_old_m.at(ial[5]), v5_n = v_old_n.at(ial[5]), v5_m = v_old_m.at(ial[5]), w5_n = w_old_n.at(ial[5]), w5_m = w_old_m.at(ial[5]),
+                 u6_n = u_old_n.at(ial[6]), u6_m = u_old_m.at(ial[6]), v6_n = v_old_n.at(ial[6]), v6_m = v_old_m.at(ial[6]), w6_n = w_old_n.at(ial[6]), w6_m = w_old_m.at(ial[6]),
+                 u7_n = u_old_n.at(ial[7]), u7_m = u_old_m.at(ial[7]), v7_n = v_old_n.at(ial[7]), v7_m = v_old_m.at(ial[7]), w7_n = w_old_n.at(ial[7]), w7_m = w_old_m.at(ial[7]),
+                 u8_n = u_old_n.at(ial[8]), u8_m = u_old_m.at(ial[8]), v8_n = v_old_n.at(ial[8]), v8_m = v_old_m.at(ial[8]), w8_n = w_old_n.at(ial[8]), w8_m = w_old_m.at(ial[8]),
+                 u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
+                 
+     double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
 
     ske[0][0] = 0;
     ske[0][1] = 0;
@@ -973,6 +1074,18 @@ const double dt, const double t, const double mu, const double lambda, const dou
     const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
                  b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
                  c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
+    const double u0_n = u_old_n.at(ial[0]), u0_m = u_old_m.at(ial[0]), v0_n = v_old_n.at(ial[0]), v0_m = v_old_m.at(ial[0]), w0_n = w_old_n.at(ial[0]), w0_m = w_old_m.at(ial[0]),
+                 u1_n = u_old_n.at(ial[1]), u1_m = u_old_m.at(ial[1]), v1_n = v_old_n.at(ial[1]), v1_m = v_old_m.at(ial[1]), w1_n = w_old_n.at(ial[1]), w1_m = w_old_m.at(ial[1]),
+                 u2_n = u_old_n.at(ial[2]), u2_m = u_old_m.at(ial[2]), v2_n = v_old_n.at(ial[2]), v2_m = v_old_m.at(ial[2]), w2_n = w_old_n.at(ial[2]), w2_m = w_old_m.at(ial[2]),
+                 u3_n = u_old_n.at(ial[3]), u3_m = u_old_m.at(ial[3]), v3_n = v_old_n.at(ial[3]), v3_m = v_old_m.at(ial[3]), w3_n = w_old_n.at(ial[3]), w3_m = w_old_m.at(ial[3]),
+                 u4_n = u_old_n.at(ial[4]), u4_m = u_old_m.at(ial[4]), v4_n = v_old_n.at(ial[4]), v4_m = v_old_m.at(ial[4]), w4_n = w_old_n.at(ial[4]), w4_m = w_old_m.at(ial[4]),
+                 u5_n = u_old_n.at(ial[5]), u5_m = u_old_m.at(ial[5]), v5_n = v_old_n.at(ial[5]), v5_m = v_old_m.at(ial[5]), w5_n = w_old_n.at(ial[5]), w5_m = w_old_m.at(ial[5]),
+                 u6_n = u_old_n.at(ial[6]), u6_m = u_old_m.at(ial[6]), v6_n = v_old_n.at(ial[6]), v6_m = v_old_m.at(ial[6]), w6_n = w_old_n.at(ial[6]), w6_m = w_old_m.at(ial[6]),
+                 u7_n = u_old_n.at(ial[7]), u7_m = u_old_m.at(ial[7]), v7_n = v_old_n.at(ial[7]), v7_m = v_old_m.at(ial[7]), w7_n = w_old_n.at(ial[7]), w7_m = w_old_m.at(ial[7]),
+                 u8_n = u_old_n.at(ial[8]), u8_m = u_old_m.at(ial[8]), v8_n = v_old_n.at(ial[8]), v8_m = v_old_m.at(ial[8]), w8_n = w_old_n.at(ial[8]), w8_m = w_old_m.at(ial[8]),
+                 u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
+                 
+    double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
 
     ske[0][0] = 0;
     ske[0][1] = 0;
@@ -1092,6 +1205,18 @@ const double dt, const double t, const double mu, const double lambda, const dou
     const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
                  b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
                  c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
+    const double u0_n = u_old_n.at(ial[0]), u0_m = u_old_m.at(ial[0]), v0_n = v_old_n.at(ial[0]), v0_m = v_old_m.at(ial[0]), w0_n = w_old_n.at(ial[0]), w0_m = w_old_m.at(ial[0]),
+                 u1_n = u_old_n.at(ial[1]), u1_m = u_old_m.at(ial[1]), v1_n = v_old_n.at(ial[1]), v1_m = v_old_m.at(ial[1]), w1_n = w_old_n.at(ial[1]), w1_m = w_old_m.at(ial[1]),
+                 u2_n = u_old_n.at(ial[2]), u2_m = u_old_m.at(ial[2]), v2_n = v_old_n.at(ial[2]), v2_m = v_old_m.at(ial[2]), w2_n = w_old_n.at(ial[2]), w2_m = w_old_m.at(ial[2]),
+                 u3_n = u_old_n.at(ial[3]), u3_m = u_old_m.at(ial[3]), v3_n = v_old_n.at(ial[3]), v3_m = v_old_m.at(ial[3]), w3_n = w_old_n.at(ial[3]), w3_m = w_old_m.at(ial[3]),
+                 u4_n = u_old_n.at(ial[4]), u4_m = u_old_m.at(ial[4]), v4_n = v_old_n.at(ial[4]), v4_m = v_old_m.at(ial[4]), w4_n = w_old_n.at(ial[4]), w4_m = w_old_m.at(ial[4]),
+                 u5_n = u_old_n.at(ial[5]), u5_m = u_old_m.at(ial[5]), v5_n = v_old_n.at(ial[5]), v5_m = v_old_m.at(ial[5]), w5_n = w_old_n.at(ial[5]), w5_m = w_old_m.at(ial[5]),
+                 u6_n = u_old_n.at(ial[6]), u6_m = u_old_m.at(ial[6]), v6_n = v_old_n.at(ial[6]), v6_m = v_old_m.at(ial[6]), w6_n = w_old_n.at(ial[6]), w6_m = w_old_m.at(ial[6]),
+                 u7_n = u_old_n.at(ial[7]), u7_m = u_old_m.at(ial[7]), v7_n = v_old_n.at(ial[7]), v7_m = v_old_m.at(ial[7]), w7_n = w_old_n.at(ial[7]), w7_m = w_old_m.at(ial[7]),
+                 u8_n = u_old_n.at(ial[8]), u8_m = u_old_m.at(ial[8]), v8_n = v_old_n.at(ial[8]), v8_m = v_old_m.at(ial[8]), w8_n = w_old_n.at(ial[8]), w8_m = w_old_m.at(ial[8]),
+                 u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
+                 
+    double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
 
     ske[0][0] = 0;
     ske[0][1] = 0;
@@ -1211,6 +1336,18 @@ const double dt, const double t, const double mu, const double lambda, const dou
     const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
                  b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
                  c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
+    const double u0_n = u_old_n.at(ial[0]), u0_m = u_old_m.at(ial[0]), v0_n = v_old_n.at(ial[0]), v0_m = v_old_m.at(ial[0]), w0_n = w_old_n.at(ial[0]), w0_m = w_old_m.at(ial[0]),
+                 u1_n = u_old_n.at(ial[1]), u1_m = u_old_m.at(ial[1]), v1_n = v_old_n.at(ial[1]), v1_m = v_old_m.at(ial[1]), w1_n = w_old_n.at(ial[1]), w1_m = w_old_m.at(ial[1]),
+                 u2_n = u_old_n.at(ial[2]), u2_m = u_old_m.at(ial[2]), v2_n = v_old_n.at(ial[2]), v2_m = v_old_m.at(ial[2]), w2_n = w_old_n.at(ial[2]), w2_m = w_old_m.at(ial[2]),
+                 u3_n = u_old_n.at(ial[3]), u3_m = u_old_m.at(ial[3]), v3_n = v_old_n.at(ial[3]), v3_m = v_old_m.at(ial[3]), w3_n = w_old_n.at(ial[3]), w3_m = w_old_m.at(ial[3]),
+                 u4_n = u_old_n.at(ial[4]), u4_m = u_old_m.at(ial[4]), v4_n = v_old_n.at(ial[4]), v4_m = v_old_m.at(ial[4]), w4_n = w_old_n.at(ial[4]), w4_m = w_old_m.at(ial[4]),
+                 u5_n = u_old_n.at(ial[5]), u5_m = u_old_m.at(ial[5]), v5_n = v_old_n.at(ial[5]), v5_m = v_old_m.at(ial[5]), w5_n = w_old_n.at(ial[5]), w5_m = w_old_m.at(ial[5]),
+                 u6_n = u_old_n.at(ial[6]), u6_m = u_old_m.at(ial[6]), v6_n = v_old_n.at(ial[6]), v6_m = v_old_m.at(ial[6]), w6_n = w_old_n.at(ial[6]), w6_m = w_old_m.at(ial[6]),
+                 u7_n = u_old_n.at(ial[7]), u7_m = u_old_m.at(ial[7]), v7_n = v_old_n.at(ial[7]), v7_m = v_old_m.at(ial[7]), w7_n = w_old_n.at(ial[7]), w7_m = w_old_m.at(ial[7]),
+                 u8_n = u_old_n.at(ial[8]), u8_m = u_old_m.at(ial[8]), v8_n = v_old_n.at(ial[8]), v8_m = v_old_m.at(ial[8]), w8_n = w_old_n.at(ial[8]), w8_m = w_old_m.at(ial[8]),
+                 u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
+                 
+    double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
 
     ske[0][0] = 0;
     ske[0][1] = 0;
@@ -1330,6 +1467,18 @@ const double dt, const double t, const double mu, const double lambda, const dou
     const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
                  b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
                  c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
+    const double u0_n = u_old_n.at(ial[0]), u0_m = u_old_m.at(ial[0]), v0_n = v_old_n.at(ial[0]), v0_m = v_old_m.at(ial[0]), w0_n = w_old_n.at(ial[0]), w0_m = w_old_m.at(ial[0]),
+                 u1_n = u_old_n.at(ial[1]), u1_m = u_old_m.at(ial[1]), v1_n = v_old_n.at(ial[1]), v1_m = v_old_m.at(ial[1]), w1_n = w_old_n.at(ial[1]), w1_m = w_old_m.at(ial[1]),
+                 u2_n = u_old_n.at(ial[2]), u2_m = u_old_m.at(ial[2]), v2_n = v_old_n.at(ial[2]), v2_m = v_old_m.at(ial[2]), w2_n = w_old_n.at(ial[2]), w2_m = w_old_m.at(ial[2]),
+                 u3_n = u_old_n.at(ial[3]), u3_m = u_old_m.at(ial[3]), v3_n = v_old_n.at(ial[3]), v3_m = v_old_m.at(ial[3]), w3_n = w_old_n.at(ial[3]), w3_m = w_old_m.at(ial[3]),
+                 u4_n = u_old_n.at(ial[4]), u4_m = u_old_m.at(ial[4]), v4_n = v_old_n.at(ial[4]), v4_m = v_old_m.at(ial[4]), w4_n = w_old_n.at(ial[4]), w4_m = w_old_m.at(ial[4]),
+                 u5_n = u_old_n.at(ial[5]), u5_m = u_old_m.at(ial[5]), v5_n = v_old_n.at(ial[5]), v5_m = v_old_m.at(ial[5]), w5_n = w_old_n.at(ial[5]), w5_m = w_old_m.at(ial[5]),
+                 u6_n = u_old_n.at(ial[6]), u6_m = u_old_m.at(ial[6]), v6_n = v_old_n.at(ial[6]), v6_m = v_old_m.at(ial[6]), w6_n = w_old_n.at(ial[6]), w6_m = w_old_m.at(ial[6]),
+                 u7_n = u_old_n.at(ial[7]), u7_m = u_old_m.at(ial[7]), v7_n = v_old_n.at(ial[7]), v7_m = v_old_m.at(ial[7]), w7_n = w_old_n.at(ial[7]), w7_m = w_old_m.at(ial[7]),
+                 u8_n = u_old_n.at(ial[8]), u8_m = u_old_m.at(ial[8]), v8_n = v_old_n.at(ial[8]), v8_m = v_old_m.at(ial[8]), w8_n = w_old_n.at(ial[8]), w8_m = w_old_m.at(ial[8]),
+                 u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
+                 
+    double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
 
     ske[0][0] = 0;
     ske[0][1] = 0;
@@ -1389,6 +1538,18 @@ const double dt, const double t, const double mu, const double lambda, const dou
     const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
                  b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
                  c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
+     const double u0_n = u_old_n.at(ial[0]), u0_m = u_old_m.at(ial[0]), v0_n = v_old_n.at(ial[0]), v0_m = v_old_m.at(ial[0]), w0_n = w_old_n.at(ial[0]), w0_m = w_old_m.at(ial[0]),
+                 u1_n = u_old_n.at(ial[1]), u1_m = u_old_m.at(ial[1]), v1_n = v_old_n.at(ial[1]), v1_m = v_old_m.at(ial[1]), w1_n = w_old_n.at(ial[1]), w1_m = w_old_m.at(ial[1]),
+                 u2_n = u_old_n.at(ial[2]), u2_m = u_old_m.at(ial[2]), v2_n = v_old_n.at(ial[2]), v2_m = v_old_m.at(ial[2]), w2_n = w_old_n.at(ial[2]), w2_m = w_old_m.at(ial[2]),
+                 u3_n = u_old_n.at(ial[3]), u3_m = u_old_m.at(ial[3]), v3_n = v_old_n.at(ial[3]), v3_m = v_old_m.at(ial[3]), w3_n = w_old_n.at(ial[3]), w3_m = w_old_m.at(ial[3]),
+                 u4_n = u_old_n.at(ial[4]), u4_m = u_old_m.at(ial[4]), v4_n = v_old_n.at(ial[4]), v4_m = v_old_m.at(ial[4]), w4_n = w_old_n.at(ial[4]), w4_m = w_old_m.at(ial[4]),
+                 u5_n = u_old_n.at(ial[5]), u5_m = u_old_m.at(ial[5]), v5_n = v_old_n.at(ial[5]), v5_m = v_old_m.at(ial[5]), w5_n = w_old_n.at(ial[5]), w5_m = w_old_m.at(ial[5]),
+                 u6_n = u_old_n.at(ial[6]), u6_m = u_old_m.at(ial[6]), v6_n = v_old_n.at(ial[6]), v6_m = v_old_m.at(ial[6]), w6_n = w_old_n.at(ial[6]), w6_m = w_old_m.at(ial[6]),
+                 u7_n = u_old_n.at(ial[7]), u7_m = u_old_m.at(ial[7]), v7_n = v_old_n.at(ial[7]), v7_m = v_old_m.at(ial[7]), w7_n = w_old_n.at(ial[7]), w7_m = w_old_m.at(ial[7]),
+                 u8_n = u_old_n.at(ial[8]), u8_m = u_old_m.at(ial[8]), v8_n = v_old_n.at(ial[8]), v8_m = v_old_m.at(ial[8]), w8_n = w_old_n.at(ial[8]), w8_m = w_old_m.at(ial[8]),
+                 u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
+                 
+     double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
 
     ske[0][0] = 0;
     ske[0][1] = 0;
@@ -1508,6 +1669,19 @@ const double dt, const double t, const double mu, const double lambda, const dou
     const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
                  b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
                  c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
+    
+    const double u0_n = u_old_n.at(ial[0]), u0_m = u_old_m.at(ial[0]), v0_n = v_old_n.at(ial[0]), v0_m = v_old_m.at(ial[0]), w0_n = w_old_n.at(ial[0]), w0_m = w_old_m.at(ial[0]),
+                 u1_n = u_old_n.at(ial[1]), u1_m = u_old_m.at(ial[1]), v1_n = v_old_n.at(ial[1]), v1_m = v_old_m.at(ial[1]), w1_n = w_old_n.at(ial[1]), w1_m = w_old_m.at(ial[1]),
+                 u2_n = u_old_n.at(ial[2]), u2_m = u_old_m.at(ial[2]), v2_n = v_old_n.at(ial[2]), v2_m = v_old_m.at(ial[2]), w2_n = w_old_n.at(ial[2]), w2_m = w_old_m.at(ial[2]),
+                 u3_n = u_old_n.at(ial[3]), u3_m = u_old_m.at(ial[3]), v3_n = v_old_n.at(ial[3]), v3_m = v_old_m.at(ial[3]), w3_n = w_old_n.at(ial[3]), w3_m = w_old_m.at(ial[3]),
+                 u4_n = u_old_n.at(ial[4]), u4_m = u_old_m.at(ial[4]), v4_n = v_old_n.at(ial[4]), v4_m = v_old_m.at(ial[4]), w4_n = w_old_n.at(ial[4]), w4_m = w_old_m.at(ial[4]),
+                 u5_n = u_old_n.at(ial[5]), u5_m = u_old_m.at(ial[5]), v5_n = v_old_n.at(ial[5]), v5_m = v_old_m.at(ial[5]), w5_n = w_old_n.at(ial[5]), w5_m = w_old_m.at(ial[5]),
+                 u6_n = u_old_n.at(ial[6]), u6_m = u_old_m.at(ial[6]), v6_n = v_old_n.at(ial[6]), v6_m = v_old_m.at(ial[6]), w6_n = w_old_n.at(ial[6]), w6_m = w_old_m.at(ial[6]),
+                 u7_n = u_old_n.at(ial[7]), u7_m = u_old_m.at(ial[7]), v7_n = v_old_n.at(ial[7]), v7_m = v_old_m.at(ial[7]), w7_n = w_old_n.at(ial[7]), w7_m = w_old_m.at(ial[7]),
+                 u8_n = u_old_n.at(ial[8]), u8_m = u_old_m.at(ial[8]), v8_n = v_old_n.at(ial[8]), v8_m = v_old_m.at(ial[8]), w8_n = w_old_n.at(ial[8]), w8_m = w_old_m.at(ial[8]),
+                 u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
+                 
+    double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
 
     ske[0][0] = 0;
     ske[0][1] = 0;
@@ -1627,6 +1801,19 @@ const double dt, const double t, const double mu, const double lambda, const dou
     const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
                  b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
                  c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
+     
+     const double u0_n = u_old_n.at(ial[0]), u0_m = u_old_m.at(ial[0]), v0_n = v_old_n.at(ial[0]), v0_m = v_old_m.at(ial[0]), w0_n = w_old_n.at(ial[0]), w0_m = w_old_m.at(ial[0]),
+                 u1_n = u_old_n.at(ial[1]), u1_m = u_old_m.at(ial[1]), v1_n = v_old_n.at(ial[1]), v1_m = v_old_m.at(ial[1]), w1_n = w_old_n.at(ial[1]), w1_m = w_old_m.at(ial[1]),
+                 u2_n = u_old_n.at(ial[2]), u2_m = u_old_m.at(ial[2]), v2_n = v_old_n.at(ial[2]), v2_m = v_old_m.at(ial[2]), w2_n = w_old_n.at(ial[2]), w2_m = w_old_m.at(ial[2]),
+                 u3_n = u_old_n.at(ial[3]), u3_m = u_old_m.at(ial[3]), v3_n = v_old_n.at(ial[3]), v3_m = v_old_m.at(ial[3]), w3_n = w_old_n.at(ial[3]), w3_m = w_old_m.at(ial[3]),
+                 u4_n = u_old_n.at(ial[4]), u4_m = u_old_m.at(ial[4]), v4_n = v_old_n.at(ial[4]), v4_m = v_old_m.at(ial[4]), w4_n = w_old_n.at(ial[4]), w4_m = w_old_m.at(ial[4]),
+                 u5_n = u_old_n.at(ial[5]), u5_m = u_old_m.at(ial[5]), v5_n = v_old_n.at(ial[5]), v5_m = v_old_m.at(ial[5]), w5_n = w_old_n.at(ial[5]), w5_m = w_old_m.at(ial[5]),
+                 u6_n = u_old_n.at(ial[6]), u6_m = u_old_m.at(ial[6]), v6_n = v_old_n.at(ial[6]), v6_m = v_old_m.at(ial[6]), w6_n = w_old_n.at(ial[6]), w6_m = w_old_m.at(ial[6]),
+                 u7_n = u_old_n.at(ial[7]), u7_m = u_old_m.at(ial[7]), v7_n = v_old_n.at(ial[7]), v7_m = v_old_m.at(ial[7]), w7_n = w_old_n.at(ial[7]), w7_m = w_old_m.at(ial[7]),
+                 u8_n = u_old_n.at(ial[8]), u8_m = u_old_m.at(ial[8]), v8_n = v_old_n.at(ial[8]), v8_m = v_old_m.at(ial[8]), w8_n = w_old_n.at(ial[8]), w8_m = w_old_m.at(ial[8]),
+                 u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
+                 
+     double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
 
     ske[0][0] = 0;
     ske[0][1] = 0;
