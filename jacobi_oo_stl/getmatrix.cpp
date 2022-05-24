@@ -306,6 +306,7 @@ const double dt, const double t, const double mu, const double lambda, const dou
 }
 
 //A01
+typedef double (*A01) (double x, double y, double z);
 void CalcElem_Navier_Stokes_A01(int const ial[10], double const xc[], double ske[4][10], double fe[4], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
 const double dt, const double t, const double mu, const double lambda, const double kp)
 {
@@ -333,18 +334,23 @@ const double dt, const double t, const double mu, const double lambda, const dou
                  u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
                
      double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
-     /*            
+     
+      A01 function01[4][10] = {{A01_00,A01_11,A01_02,A01_03,A01_04,A01_05,A01_06,A01_07,A01_08,A01_09},
+		                       {A01_10,A01_11,A01_12,A01_13,A01_14,A01_15,A01_16,A01_17,A01_18,A01_19},
+		                       {A01_20,A01_11,A01_22,A01_23,A01_24,A01_25,A01_26,A01_27,A01_28,A01_29},
+		                       {A01_30,A01_11,A01_32,A01_33,A01_34,A01_35,A01_36,A01_37,A01_38,A01_39}};
+     
+             
       for(int i=0; i<=3; ++i)
       {
 		  for(int j=0; j<=9; ++j)
 		  {
-			  int ij;
-			  ske[i][j]=A01_ij(a,a,a);
+			  ske[i][j]=jac*(0.01878132*(function01[i][j](a,a,a) +function01[i][j](b,a,a) +function01[i][j](a,b,a) +function01[i][j](a,a,b)) +0.01224884*(function01[i][j](c,c,c) +function01[i][j](d,c,c) +function01[i][j](c,d,c) +function01[i][j](c,c,d))
+			            +0.007091003*(function01[i][j](f,e,e) + function01[i][j](e,f,e) +function01[i][j](e,e,f) +function01[i][j](e,f,f)+ function01[i][j](f,e,f) +function01[i][j](f,f,e)));
 		  }
-	  }*/
-	 
+	   }
 
-    ske[0][0] = 0.01878132*(A01_00(a,a,a) +A01_00(b,a,a) +A01_00(a,b,a) +A01_00(a,a,b)) +0.01224884*(A01_00(c,c,c) +A01_00(d,c,c) +A01_00(c,d,c) +A01_00(c,c,d))+0.007091003*(A01_00(f,e,e) + A01_00(e,f,e) +A01_00(e,e,f) +A01_00(e,f,f)+ A01_00(f,e,f) +A01_00(f,f,e));
+    /*ske[0][0] = 0.01878132*(A01_00(a,a,a) +A01_00(b,a,a) +A01_00(a,b,a) +A01_00(a,a,b)) +0.01224884*(A01_00(c,c,c) +A01_00(d,c,c) +A01_00(c,d,c) +A01_00(c,c,d))+0.007091003*(A01_00(f,e,e) + A01_00(e,f,e) +A01_00(e,e,f) +A01_00(e,f,f)+ A01_00(f,e,f) +A01_00(f,f,e));
     ske[0][1] = 0.01878132*(A01_01(a,a,a) +A01_01(b,a,a) +A01_01(a,b,a) +A01_01(a,a,b)) +0.01224884*(A01_01(c,c,c) +A01_01(d,c,c) +A01_01(c,d,c) +A01_01(c,c,d))+0.007091003*(A01_01(f,e,e) + A01_01(e,f,e) +A01_01(e,e,f) +A01_01(e,f,f)+ A01_01(f,e,f) +A01_01(f,f,e));
     ske[0][2] = 0.01878132*(A01_02(a,a,a) +A01_02(b,a,a) +A01_02(a,b,a) +A01_02(a,a,b)) +0.01224884*(A01_02(c,c,c) +A01_02(d,c,c) +A01_02(c,d,c) +A01_02(c,c,d))+0.007091003*(A01_02(f,e,e) + A01_02(e,f,e) +A01_02(e,e,f) +A01_02(e,f,f)+ A01_02(f,e,f) +A01_02(f,f,e));
     ske[0][3] = 0.01878132*(A01_03(a,a,a) +A01_03(b,a,a) +A01_03(a,b,a) +A01_03(a,a,b)) +0.01224884*(A01_03(c,c,c) +A01_03(d,c,c) +A01_03(c,d,c) +A01_03(c,c,d))+0.007091003*(A01_03(f,e,e) + A01_03(e,f,e) +A01_03(e,e,f) +A01_03(e,f,f)+ A01_03(f,e,f) +A01_03(f,f,e));
@@ -385,9 +391,10 @@ const double dt, const double t, const double mu, const double lambda, const dou
     ske[3][8] = 0.01878132*(A01_38(a,a,a) +A01_38(b,a,a) +A01_38(a,b,a) +A01_38(a,a,b)) +0.01224884*(A01_38(c,c,c) +A01_38(d,c,c) +A01_38(c,d,c) +A01_38(c,c,d))+0.007091003*(A01_38(f,e,e) + A01_38(e,f,e) +A01_38(e,e,f) +A01_38(e,f,f)+ A01_38(f,e,f) +A01_38(f,f,e));
     ske[3][9] = 0.01878132*(A01_39(a,a,a) +A01_39(b,a,a) +A01_39(a,b,a) +A01_39(a,a,b)) +0.01224884*(A01_39(c,c,c) +A01_39(d,c,c) +A01_39(c,d,c) +A01_39(c,c,d))+0.007091003*(A01_39(f,e,e) + A01_39(e,f,e) +A01_39(e,e,f) +A01_39(e,f,f)+ A01_39(f,e,f) +A01_39(f,f,e));
 
-    fe[0] = fe[1] = fe[2]= fe[3] =  0;
+    fe[0] = fe[1] = fe[2]= fe[3] =  0;*/
 }
 //A02
+typedef double (*A02) (double x, double y, double z);
 void CalcElem_Navier_Stokes_A02(int const ial[10], double const xc[], double ske[4][10], double fe[4], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
 const double dt, const double t, const double mu, const double lambda, const double kp)
 {
@@ -415,8 +422,23 @@ const double dt, const double t, const double mu, const double lambda, const dou
                  u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
                  
      double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
+     
+     A02 function01[4][10] = { {A01_00,A01_11,A01_02,A01_03,A01_04,A01_05,A01_06,A01_07,A01_08,A01_09},
+		                       {A01_10,A01_11,A01_12,A01_13,A01_14,A01_15,A01_16,A01_17,A01_18,A01_19},
+		                       {A01_20,A01_11,A01_22,A01_23,A01_24,A01_25,A01_26,A01_27,A01_28,A01_29},
+		                       {A01_30,A01_11,A01_32,A01_33,A01_34,A01_35,A01_36,A01_37,A01_38,A01_39}};
+     
+             
+      for(int i=0; i<=3; ++i)
+      {
+		  for(int j=0; j<=9; ++j)
+		  {
+			  ske[i][j]=jac*(0.01878132*(function01[i][j](a,a,a) +function01[i][j](b,a,a) +function01[i][j](a,b,a) +function01[i][j](a,a,b)) +0.01224884*(function01[i][j](c,c,c) +function01[i][j](d,c,c) +function01[i][j](c,d,c) +function01[i][j](c,c,d))
+			            +0.007091003*(function01[i][j](f,e,e) + function01[i][j](e,f,e) +function01[i][j](e,e,f) +function01[i][j](e,f,f)+ function01[i][j](f,e,f) +function01[i][j](f,f,e)));
+		  }
+	   }
 
-    ske[0][0] = 0;
+    /*ske[0][0] = 0;
     ske[0][1] = 0;
     ske[0][2] = 0;
     ske[0][3] = 0;
@@ -457,10 +479,11 @@ const double dt, const double t, const double mu, const double lambda, const dou
     ske[3][8] = 0;
     ske[3][9] = 0;
 
-    fe[0] = fe[1] = fe[2]= fe[3] =  0;
+    fe[0] = fe[1] = fe[2]= fe[3] =  0;*/
 }
 
 //A03
+typedef double (*A03) (double x, double y, double z);
 void CalcElem_Navier_Stokes_A03(int const ial[10], double const xc[], double ske[4][10], double fe[4], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
 const double dt, const double t, const double mu, const double lambda, const double kp)
 {
@@ -488,8 +511,23 @@ const double dt, const double t, const double mu, const double lambda, const dou
                  u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
                  
     double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
+    
+    A03 function03[4][10] = {{A03_00,A03_11,A03_02,A03_03,A03_04,A03_05,A03_06,A03_07,A03_08,A03_09},
+		                     {A03_10,A03_11,A03_12,A03_13,A03_14,A03_15,A03_16,A03_17,A03_18,A03_19},
+		                     {A03_20,A03_11,A03_22,A03_23,A03_24,A03_25,A03_26,A03_27,A03_28,A03_29},
+		                     {A03_30,A03_11,A03_32,A03_33,A03_34,A03_35,A03_36,A03_37,A03_38,A03_39}};
+    
+             
+      for(int i=0; i<=3; ++i)
+      {
+		  for(int j=0; j<=9; ++j)
+		  {
+			  ske[i][j]=jac*(0.01878132*(function03[i][j](a,a,a) +function03[i][j](b,a,a) +function03[i][j](a,b,a) +function03[i][j](a,a,b)) +0.01224884*(function03[i][j](c,c,c) +function03[i][j](d,c,c) +function03[i][j](c,d,c) +function03[i][j](c,c,d))
+			            +0.007091003*(function03[i][j](f,e,e) + function03[i][j](e,f,e) +function03[i][j](e,e,f) +function03[i][j](e,f,f)+ function03[i][j](f,e,f) +function03[i][j](f,f,e)));
+		  }
+	   }
 
-    ske[0][0] = 0;
+    /*ske[0][0] = 0;
     ske[0][1] = 0;
     ske[0][2] = 0;
     ske[0][3] = 0;
@@ -530,9 +568,10 @@ const double dt, const double t, const double mu, const double lambda, const dou
     ske[3][8] = 0;
     ske[3][9] = 0;
 
-    fe[0] = fe[1] = fe[2]= fe[3] =  0;
+    fe[0] = fe[1] = fe[2]= fe[3] =  0;*/
 }
 //A10
+typedef double (*A10) (double x, double y, double z);
 void CalcElem_Navier_Stokes_A10(int const ial[10], double const xc[], double ske[10][4], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
 const double dt, const double t, const double mu, const double lambda, const double kp)
 {
@@ -560,6 +599,21 @@ const double dt, const double t, const double mu, const double lambda, const dou
                  u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
                  
      double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
+     
+     A03 function03[4][10] = {{A03_00,A03_11,A03_02,A03_03,A03_04,A03_05,A03_06,A03_07,A03_08,A03_09},
+		                     {A03_10,A03_11,A03_12,A03_13,A03_14,A03_15,A03_16,A03_17,A03_18,A03_19},
+		                     {A03_20,A03_11,A03_22,A03_23,A03_24,A03_25,A03_26,A03_27,A03_28,A03_29},
+		                     {A03_30,A03_11,A03_32,A03_33,A03_34,A03_35,A03_36,A03_37,A03_38,A03_39}};
+    
+             
+      for(int i=0; i<=3; ++i)
+      {
+		  for(int j=0; j<=9; ++j)
+		  {
+			  ske[i][j]=jac*(0.01878132*(function03[i][j](a,a,a) +function03[i][j](b,a,a) +function03[i][j](a,b,a) +function03[i][j](a,a,b)) +0.01224884*(function03[i][j](c,c,c) +function03[i][j](d,c,c) +function03[i][j](c,d,c) +function03[i][j](c,c,d))
+			            +0.007091003*(function03[i][j](f,e,e) + function03[i][j](e,f,e) +function03[i][j](e,e,f) +function03[i][j](e,f,f)+ function03[i][j](f,e,f) +function03[i][j](f,f,e)));
+		  }
+	   }
 
     ske[0][0] = 0;
     ske[0][1] = 0;
@@ -605,6 +659,7 @@ const double dt, const double t, const double mu, const double lambda, const dou
     fe[0] = fe[1] = fe[2] = fe[3] = fe[4] = fe[5] = fe[6] = fe[7] = fe[8] = fe[9] =  0;
 }
 //A11
+typedef double (*A11) (double x, double y, double z);
 void CalcElem_Navier_Stokes_A11(int const ial[10], double const xc[], double ske[10][10], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
 const double dt, const double t, const double mu, const double lambda, const double kp)
 {
@@ -737,6 +792,7 @@ const double dt, const double t, const double mu, const double lambda, const dou
     fe[0] = fe[1] = fe[2] = fe[3] = fe[4] = fe[5] = fe[6] = fe[7] = fe[8] = fe[9] =  0;
 }
 //A12
+typedef double (*A12) (double x, double y, double z);
 void CalcElem_Navier_Stokes_A12(int const ial[10], double const xc[], double ske[10][10], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
 const double dt, const double t, const double mu, const double lambda, const double kp)
 {
@@ -868,6 +924,7 @@ const double dt, const double t, const double mu, const double lambda, const dou
     fe[0] = fe[1] = fe[2] = fe[3] = fe[4] = fe[5] = fe[6] = fe[7] = fe[8] = fe[9] =  0;
 }
 //A13
+typedef double (*A13) (double x, double y, double z);
 void CalcElem_Navier_Stokes_A13(int const ial[10], double const xc[], double ske[10][10], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
 const double dt, const double t, const double mu, const double lambda, const double kp)
 {
@@ -989,6 +1046,7 @@ const double dt, const double t, const double mu, const double lambda, const dou
     fe[0] = fe[1] = fe[2] = fe[3] = fe[4] = fe[5] = fe[6] = fe[7] = fe[8] = fe[9] =  0;
 }
 //A20
+typedef double (*A20) (double x, double y, double z);
 void CalcElem_Navier_Stokes_A20(int const ial[10], double const xc[], double ske[10][4], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
 const double dt, const double t, const double mu, const double lambda, const double kp)
 {
@@ -1060,6 +1118,7 @@ const double dt, const double t, const double mu, const double lambda, const dou
     fe[0] = fe[1] = fe[2] = fe[3] = fe[4] = fe[5] = fe[6] = fe[7] = fe[8] = fe[9] =  0;
 }
 //A21
+typedef double (*A21) (double x, double y, double z);
 void CalcElem_Navier_Stokes_A21(int const ial[10], double const xc[], double ske[10][10], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
 const double dt, const double t, const double mu, const double lambda, const double kp)
 {
@@ -1191,6 +1250,7 @@ const double dt, const double t, const double mu, const double lambda, const dou
     fe[0] = fe[1] = fe[2] = fe[3] = fe[4] = fe[5] = fe[6] = fe[7] = fe[8] = fe[9] =  0;
 }
 //A22
+typedef double (*A22) (double x, double y, double z);
 void CalcElem_Navier_Stokes_A22(int const ial[10], double const xc[], double ske[10][10], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
 const double dt, const double t, const double mu, const double lambda, const double kp)
 {
@@ -1322,6 +1382,7 @@ const double dt, const double t, const double mu, const double lambda, const dou
     fe[0] = fe[1] = fe[2] = fe[3] = fe[4] = fe[5] = fe[6] = fe[7] = fe[8] = fe[9] =  0;
 }
 //A23
+typedef double (*A23) (double x, double y, double z);
 void CalcElem_Navier_Stokes_A23(int const ial[10], double const xc[], double ske[10][10], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
 const double dt, const double t, const double mu, const double lambda, const double kp)
 {
@@ -1453,6 +1514,7 @@ const double dt, const double t, const double mu, const double lambda, const dou
     fe[0] = fe[1] = fe[2] = fe[3] = fe[4] = fe[5] = fe[6] = fe[7] = fe[8] = fe[9] =  0;
 }
 //A30
+typedef double (*A30) (double x, double y, double z);
 void CalcElem_Navier_Stokes_A30(int const ial[10], double const xc[], double ske[10][4], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
 const double dt, const double t, const double mu, const double lambda, const double kp)
 {
@@ -1524,6 +1586,7 @@ const double dt, const double t, const double mu, const double lambda, const dou
     fe[0] = fe[1] = fe[2] = fe[3] = fe[4] = fe[5] = fe[6] = fe[7] = fe[8] = fe[9] =  0;
 }
 //A31
+typedef double (*A31) (double x, double y, double z);
 void CalcElem_Navier_Stokes_A31(int const ial[10], double const xc[], double ske[10][10], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
 const double dt, const double t, const double mu, const double lambda, const double kp)
 {
@@ -1655,6 +1718,7 @@ const double dt, const double t, const double mu, const double lambda, const dou
     fe[0] = fe[1] = fe[2] = fe[3] = fe[4] = fe[5] = fe[6] = fe[7] = fe[8] = fe[9] =  0;
 }
 //A32
+typedef double (*A32) (double x, double y, double z);
 void CalcElem_Navier_Stokes_A32(int const ial[10], double const xc[], double ske[10][10], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
 const double dt, const double t, const double mu, const double lambda, const double kp)
 {
@@ -1787,6 +1851,7 @@ const double dt, const double t, const double mu, const double lambda, const dou
     fe[0] = fe[1] = fe[2] = fe[3] = fe[4] = fe[5] = fe[6] = fe[7] = fe[8] = fe[9] =  0;
 }
 //A33
+typedef double (*A33) (double x, double y, double z);
 void CalcElem_Navier_Stokes_A33(int const ial[10], double const xc[], double ske[10][10], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
 const double dt, const double t, const double mu, const double lambda, const double kp)
 {
