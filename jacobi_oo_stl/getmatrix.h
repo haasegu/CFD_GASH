@@ -69,8 +69,34 @@ const double dt, const double t, const double mu, const double lambda, const dou
 
 void CalcElem_Navier_Stokes_A31(int const ial[10], double const xc[], double ske[10][10], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
 const double dt, const double t, const double mu, const double lambda, const double kp);
+/*
+class P1_2vec_Const
+{
+	public:
+//	P1_2vec_Const(std::vector<int> const &ial_geom, std::vector<double> const &xc);
+	P1_2vec_Const(int const ial[4], std::vector<double> const &xc,
+	              std::vector<double> const &u_old_n, std::vector<double> const &u_old_m);
+	
+	public:
+	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+                 
+     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     
+     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
+                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
+                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
+                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
+                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
+                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
+                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
+                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
+                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
+                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
 
-
+     double f0x, f1x, f2x, f3x,
+            f0y, f1y, f2y, f3y,
+            f0z, f1z, f2z, f3z;	
+};*/
 
 // First Row-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 inline
@@ -90,12 +116,13 @@ double A00_00(double x, double  y,double  z)
                  u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
                  u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
                  u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
-                 
-     double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
-     
+
      double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
             f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
             f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+                             
+     // ----
+     double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
             
      
      double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
@@ -44311,35 +44338,6 @@ class FEM_Matrix: public CRS_Matrix1
        void AddElem_3(int const ial[4], double const ske[4][4], double const fe[4], std::vector<double> &f);
        
     /**
-     * @return geometric mesh
-     */
-       Mesh const& GetMesh() const
-       { return _mesh; }
-       
-    /**
-     * Access/Change connectivity information (g1,g2,g3, ..., gn)_i regarding matrix
-     * @return connectivity vector [nelems*ndofs].
-     */
-       std::vector<int>& GetConnectivity()
-       {
-           return _ia_matrix;
-       }
-
-    /**
-     * Access connectivity information (g1,g2,g3, ..., gn)_i regarding matrix
-     * @return connectivity vector [nelems*ndofs].
-     */       
-       const std::vector<int>& GetConnectivity() const
-       {
-           return _ia_matrix;
-       }
-       
-    //std::vector<std::vector<int>> Dof2DofGraph() const
-    //{
-        //return ::Node2NodeGraph(mesh.Nelems(),mesh.NdofsElement(),GetConnectivity());
-    //}
-       
-    /**
      * Global number of degrees of freedom (dof) for each finite element.
      * @return degrees of freedom per element.
      */
@@ -44359,8 +44357,6 @@ class FEM_Matrix: public CRS_Matrix1
     private:
        Mesh const & _mesh;      //!< reference to discretization
        int  const _ndof_v;      //!< degrees of freedom per vertex (vector valued problems)
-       std::vector<int> _ia_matrix;     //!< element connectivity regarding the matrix entries
-
 
 };
 

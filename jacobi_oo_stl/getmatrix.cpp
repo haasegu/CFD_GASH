@@ -12,6 +12,47 @@
 #include <vector>
 using namespace std;
 
+/*
+P1_2vec_Const::P1_2vec_Const(int const ial[4], std::vector<double> const &xc, 
+      std::vector<double> const &u_old_n, std::vector<double> const &u_old_m)
+// no member intitialization here
+{
+    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3];
+    const double x1 = xc[i1 + 0] - xc[i4 + 0],  y1 = xc[i1 + 1] - xc[i4 + 1], z1 = xc[i1 + 2] - xc[i4 + 2],
+                 x2 = xc[i2 + 0] - xc[i4 + 0],  y2 = xc[i2 + 1] - xc[i4 + 1], z2 = xc[i2 + 2] - xc[i4 + 2],
+                 x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
+                 
+    jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
+    //coefficients for derivatives
+     a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
+                 b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
+                 c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
+                 
+    r0_n = r_old_n.at(ial[0]), r0_m = r_old_m.at(ial[0]),
+                 r1_n = r_old_n.at(ial[1]), r1_m = r_old_m.at(ial[1]),
+                 r2_n = r_old_n.at(ial[2]), r2_m = r_old_m.at(ial[2]),
+                 r3_n = r_old_n.at(ial[3]), r3_m = r_old_m.at(ial[3]);
+     
+    u0_n = u_old_n.at(ial[0]), u0_m = u_old_m.at(ial[0]), v0_n = v_old_n.at(ial[0]), v0_m = v_old_m.at(ial[0]), w0_n = w_old_n.at(ial[0]), w0_m = w_old_m.at(ial[0]),
+                 u1_n = u_old_n.at(ial[1]), u1_m = u_old_m.at(ial[1]), v1_n = v_old_n.at(ial[1]), v1_m = v_old_m.at(ial[1]), w1_n = w_old_n.at(ial[1]), w1_m = w_old_m.at(ial[1]),
+                 u2_n = u_old_n.at(ial[2]), u2_m = u_old_m.at(ial[2]), v2_n = v_old_n.at(ial[2]), v2_m = v_old_m.at(ial[2]), w2_n = w_old_n.at(ial[2]), w2_m = w_old_m.at(ial[2]),
+                 u3_n = u_old_n.at(ial[3]), u3_m = u_old_m.at(ial[3]), v3_n = v_old_n.at(ial[3]), v3_m = v_old_m.at(ial[3]), w3_n = w_old_n.at(ial[3]), w3_m = w_old_m.at(ial[3]),
+                 u4_n = u_old_n.at(ial[4]), u4_m = u_old_m.at(ial[4]), v4_n = v_old_n.at(ial[4]), v4_m = v_old_m.at(ial[4]), w4_n = w_old_n.at(ial[4]), w4_m = w_old_m.at(ial[4]),
+                 u5_n = u_old_n.at(ial[5]), u5_m = u_old_m.at(ial[5]), v5_n = v_old_n.at(ial[5]), v5_m = v_old_m.at(ial[5]), w5_n = w_old_n.at(ial[5]), w5_m = w_old_m.at(ial[5]),
+                 u6_n = u_old_n.at(ial[6]), u6_m = u_old_m.at(ial[6]), v6_n = v_old_n.at(ial[6]), v6_m = v_old_m.at(ial[6]), w6_n = w_old_n.at(ial[6]), w6_m = w_old_m.at(ial[6]),
+                 u7_n = u_old_n.at(ial[7]), u7_m = u_old_m.at(ial[7]), v7_n = v_old_n.at(ial[7]), v7_m = v_old_m.at(ial[7]), w7_n = w_old_n.at(ial[7]), w7_m = w_old_m.at(ial[7]),
+                 u8_n = u_old_n.at(ial[8]), u8_m = u_old_m.at(ial[8]), v8_n = v_old_n.at(ial[8]), v8_m = v_old_m.at(ial[8]), w8_n = w_old_n.at(ial[8]), w8_m = w_old_m.at(ial[8]),
+                 u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
+		
+//	double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;	
+	
+	
+    f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+    f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+    f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;	
+}*/
+
+
 //  general routine for lin. triangular elements
 
 void CalcElem(int const ial[4], double const xc[], double ske[4][4], double fe[4])
@@ -3288,7 +3329,7 @@ void CRS_Matrix1::readBinary(const std::string &file)
 
 
 FEM_Matrix::FEM_Matrix(Mesh const &mesh, int ndof_v)
-    : CRS_Matrix1(), _mesh(mesh), _ndof_v(ndof_v), _ia_matrix(_mesh.GetConnectivity())
+    : CRS_Matrix1(), _mesh(mesh), _ndof_v(ndof_v)
 {
     Derive_Matrix_Pattern();
     Skalar2VectorMatrix(ndof_v);
@@ -3305,9 +3346,7 @@ void FEM_Matrix::Derive_Matrix_Pattern_fast()
     auto tstart = clock();
     int const nelem(_mesh.Nelems());
     int const ndof_e(_mesh.NdofsElement());
-    //auto const &ia(_mesh.GetConnectivity());
-    auto const &ia(GetConnectivity());
-    assert(ndof_e * nelem==static_cast<int>(ia.size()));
+    auto const &ia(_mesh.GetConnectivity());
 //  Determine the number of matrix rows
     _nrows = *max_element(ia.cbegin(), ia.cbegin() + ndof_e * nelem);
     ++_nrows;                                 // node numberng: 0 ... nnode-1
@@ -3412,7 +3451,7 @@ void FEM_Matrix::Skalar2VectorMatrix(int ndof_v)
     this->Debug();
     cout << "\n########################\n";
     if (1 == ndof_v) return;
-    //assert(4 == ndof_v);
+    assert(4 == ndof_v);
 
     auto old_id = _id;
     auto old_ik = _ik;
