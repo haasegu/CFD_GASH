@@ -89,6 +89,8 @@ void CalcElem_Masse(int const ial[4], double const xc[], double const cm, double
 	//}
 
 //A00
+typedef double (*A00) (double x, double y, double z);
+typedef double (*B0) (double x, double y, double z);
 void CalcElem_Navier_Stokes_A00(int const ial[4], double const xc[], double ske[4][4], double fe[4], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
 const double dt, const double t, const double mu, const double lambda, const double kp)
 {
@@ -120,8 +122,31 @@ const double dt, const double t, const double mu, const double lambda, const dou
                  u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
 		
 	double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
+	
+	A00 function00[4][10] = {{A00_00,A00_01,A00_02,A00_03},
+		                     {A00_10,A00_11,A00_12,A00_13},
+		                     {A00_20,A00_21,A00_22,A00_23},
+		                     {A00_30,A00_31,A00_32,A00_33}};
+     
+       B0 function0[4] = {B0_0,B0_1,B0_2,B0_3};
+             
+      for(int i=0; i<=3; ++i)
+      {
+		  for(int j=0; j<=9; ++j)
+		  {
+			  ske[i][j]=jac*(0.01878132*(function00[i][j](a,a,a) +function00[i][j](b,a,a) +function00[i][j](a,b,a) +function00[i][j](a,a,b)) +0.01224884*(function00[i][j](c,c,c) +function00[i][j](d,c,c) +function00[i][j](c,d,c) +function00[i][j](c,c,d))
+			            +0.007091003*(function00[i][j](f,e,e) + function00[i][j](e,f,e) +function00[i][j](e,e,f) +function00[i][j](e,f,f)+ function00[i][j](f,e,f) +function00[i][j](f,f,e)));
+		  }
+	   }
+	
+	for(int i=0; i<=9; ++i)
+      {
+			  fe[i]=jac*(0.01878132*(function0[i](a,a,a) +function0[i](b,a,a) +function0[i](a,b,a) +function0[i](a,a,b)) +0.01224884*(function0[i](c,c,c) +function0[i](d,c,c) +function0[i](c,d,c) +function0[i](c,c,d))
+			            +0.007091003*(function0[i](f,e,e) + function0[i](e,f,e) +function0[i](e,e,f) +function0[i](e,f,f)+ function0[i](f,e,f) +function0[i](f,f,e)));
+	   }
+	
 
-    ske[0][0] = (jac/dt)*0.0167+jac*((a1+a2+a3)*(2.8969e-07)-0.0167*(a1+a2+a3))*u_old_m.at(ial[0])+jac*(-(b1+b2+b3)*(-2.8969e-07)-0.0167*(b1+b2+b3))*v_old_m.at(ial[0])+jac*(-(c1+c2+c3)*(-2.8969e-07)-0.0167*(c1+c2+c3))*w_old_m.at(ial[0])
+    /*ske[0][0] = (jac/dt)*0.0167+jac*((a1+a2+a3)*(2.8969e-07)-0.0167*(a1+a2+a3))*u_old_m.at(ial[0])+jac*(-(b1+b2+b3)*(-2.8969e-07)-0.0167*(b1+b2+b3))*v_old_m.at(ial[0])+jac*(-(c1+c2+c3)*(-2.8969e-07)-0.0167*(c1+c2+c3))*w_old_m.at(ial[0])
                                +jac*((a1+a2+a3)*(0.0028)+a1*0.0028)*u_old_m.at(ial[1])+jac*((b1+b2+b3)*(0.0028)+b1*0.0028)*v_old_m.at(ial[1])+jac*((c1+c2+c3)*(0.0028)+c1*0.0028)*w_old_m.at(ial[1])
                                +jac*((a1+a2+a3)*(0.0028)-a2*0.0028)*u_old_m.at(ial[2])+jac*((b1+b2+b3)*(0.0028)-b2*0.0028)*v_old_m.at(ial[2])+jac*((c1+c2+c3)*(0.0028)-c2*0.0028)*w_old_m.at(ial[2])
                                +jac*((a1+a2+a3)*(0.0028)-a3*0.0028)*u_old_m.at(ial[3])+jac*((b1+b2+b3)*(0.0028)-c3*0.0028)*v_old_m.at(ial[3])+jac*((c1+c2+c3)*(0.0028)-c3*0.0028)*w_old_m.at(ial[3])
@@ -302,7 +327,7 @@ const double dt, const double t, const double mu, const double lambda, const dou
     fe[0] = 0.01878132*(B0_0(a,a,a) +B0_0(b,a,a) +B0_0(a,b,a) +B0_0(a,a,b)) +0.01224884*(B0_0(c,c,c) +B0_0(d,c,c) +B0_0(c,d,c) +B0_0(c,c,d))+0.007091003*(B0_0(f,e,e) + B0_0(e,f,e) +B0_0(e,e,f) +B0_0(e,f,f)+ B0_0(f,e,f) +B0_0(f,f,e));
     fe[1] = 0.01878132*(B0_1(a,a,a) +B0_1(b,a,a) +B0_1(a,b,a) +B0_1(a,a,b)) +0.01224884*(B0_1(c,c,c) +B0_1(d,c,c) +B0_1(c,d,c) +B0_1(c,c,d))+0.007091003*(B0_1(f,e,e) + B0_1(e,f,e) +B0_1(e,e,f) +B0_1(e,f,f)+ B0_1(f,e,f) +B0_1(f,f,e));
     fe[2] = 0.01878132*(B0_2(a,a,a) +B0_2(b,a,a) +B0_2(a,b,a) +B0_2(a,a,b)) +0.01224884*(B0_2(c,c,c) +B0_2(d,c,c) +B0_2(c,d,c) +B0_2(c,c,d))+0.007091003*(B0_2(f,e,e) + B0_2(e,f,e) +B0_2(e,e,f) +B0_2(e,f,f)+ B0_2(f,e,f) +B0_2(f,f,e));
-    fe[3] = 0.01878132*(B0_3(a,a,a) +B0_3(b,a,a) +B0_3(a,b,a) +B0_3(a,a,b)) +0.01224884*(B0_3(c,c,c) +B0_3(d,c,c) +B0_3(c,d,c) +B0_3(c,c,d))+0.007091003*(B0_3(f,e,e) + B0_3(e,f,e) +B0_3(e,e,f) +B0_3(e,f,f)+ B0_3(f,e,f) +B0_3(f,f,e));
+    fe[3] = 0.01878132*(B0_3(a,a,a) +B0_3(b,a,a) +B0_3(a,b,a) +B0_3(a,a,b)) +0.01224884*(B0_3(c,c,c) +B0_3(d,c,c) +B0_3(c,d,c) +B0_3(c,c,d))+0.007091003*(B0_3(f,e,e) + B0_3(e,f,e) +B0_3(e,e,f) +B0_3(e,f,f)+ B0_3(f,e,f) +B0_3(f,f,e));*/
 }
 
 //A01
@@ -335,10 +360,10 @@ const double dt, const double t, const double mu, const double lambda, const dou
                
      double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
      
-      A01 function01[4][10] = {{A01_00,A01_11,A01_02,A01_03,A01_04,A01_05,A01_06,A01_07,A01_08,A01_09},
+      A01 function01[4][10] = {{A01_00,A01_01,A01_02,A01_03,A01_04,A01_05,A01_06,A01_07,A01_08,A01_09},
 		                       {A01_10,A01_11,A01_12,A01_13,A01_14,A01_15,A01_16,A01_17,A01_18,A01_19},
-		                       {A01_20,A01_11,A01_22,A01_23,A01_24,A01_25,A01_26,A01_27,A01_28,A01_29},
-		                       {A01_30,A01_11,A01_32,A01_33,A01_34,A01_35,A01_36,A01_37,A01_38,A01_39}};
+		                       {A01_20,A01_21,A01_22,A01_23,A01_24,A01_25,A01_26,A01_27,A01_28,A01_29},
+		                       {A01_30,A01_31,A01_32,A01_33,A01_34,A01_35,A01_36,A01_37,A01_38,A01_39}};
      
              
       for(int i=0; i<=3; ++i)
@@ -512,10 +537,10 @@ const double dt, const double t, const double mu, const double lambda, const dou
                  
     double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
     
-    A03 function03[4][10] = {{A03_00,A03_11,A03_02,A03_03,A03_04,A03_05,A03_06,A03_07,A03_08,A03_09},
+    A03 function03[4][10] = {{A03_00,A03_01,A03_02,A03_03,A03_04,A03_05,A03_06,A03_07,A03_08,A03_09},
 		                     {A03_10,A03_11,A03_12,A03_13,A03_14,A03_15,A03_16,A03_17,A03_18,A03_19},
-		                     {A03_20,A03_11,A03_22,A03_23,A03_24,A03_25,A03_26,A03_27,A03_28,A03_29},
-		                     {A03_30,A03_11,A03_32,A03_33,A03_34,A03_35,A03_36,A03_37,A03_38,A03_39}};
+		                     {A03_20,A03_21,A03_22,A03_23,A03_24,A03_25,A03_26,A03_27,A03_28,A03_29},
+		                     {A03_30,A03_31,A03_32,A03_33,A03_34,A03_35,A03_36,A03_37,A03_38,A03_39}};
     
              
       for(int i=0; i<=3; ++i)
@@ -857,15 +882,15 @@ const double dt, const double t, const double mu, const double lambda, const dou
      double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
      
      A12 function12[10][10] = {{A12_00,A12_01,A12_02,A12_03,A12_04,A12_05,A12_06,A12_07,A12_08,A12_09},
-		                      {A12_10,A12_11,A12_12,A12_13,A12_14,A12_15,A12_16,A12_17,A12_18,A12_19},
-		                      {A12_20,A12_21,A12_22,A12_23,A12_24,A12_25,A12_26,A12_27,A12_28,A12_29},
-		                      {A12_30,A12_31,A12_32,A12_33,A12_34,A12_35,A12_36,A12_37,A12_38,A12_39},
-		                      {A12_40,A12_41,A12_42,A12_43,A12_44,A12_45,A12_46,A12_47,A12_48,A12_49},
-		                      {A12_50,A12_51,A12_52,A12_53,A12_54,A12_55,A12_56,A12_57,A12_58,A12_59},
-		                      {A12_60,A12_61,A12_62,A12_63,A12_64,A12_65,A12_66,A12_67,A12_68,A12_69},
-		                      {A12_70,A12_71,A12_72,A12_73,A12_74,A12_75,A12_76,A12_77,A12_78,A12_79},
-		                      {A12_80,A12_81,A12_82,A12_83,A12_84,A12_85,A12_86,A12_87,A12_88,A12_89},
-		                      {A12_90,A12_91,A12_92,A12_93,A12_94,A12_95,A12_96,A12_97,A12_98,A12_99}};
+		                       {A12_10,A12_11,A12_12,A12_13,A12_14,A12_15,A12_16,A12_17,A12_18,A12_19},
+		                       {A12_20,A12_21,A12_22,A12_23,A12_24,A12_25,A12_26,A12_27,A12_28,A12_29},
+		                       {A12_30,A12_31,A12_32,A12_33,A12_34,A12_35,A12_36,A12_37,A12_38,A12_39},
+		                       {A12_40,A12_41,A12_42,A12_43,A12_44,A12_45,A12_46,A12_47,A12_48,A12_49},
+		                       {A12_50,A12_51,A12_52,A12_53,A12_54,A12_55,A12_56,A12_57,A12_58,A12_59},
+		                       {A12_60,A12_61,A12_62,A12_63,A12_64,A12_65,A12_66,A12_67,A12_68,A12_69},
+		                       {A12_70,A12_71,A12_72,A12_73,A12_74,A12_75,A12_76,A12_77,A12_78,A12_79},
+		                       {A12_80,A12_81,A12_82,A12_83,A12_84,A12_85,A12_86,A12_87,A12_88,A12_89},
+		                       {A12_90,A12_91,A12_92,A12_93,A12_94,A12_95,A12_96,A12_97,A12_98,A12_99}};
              
       for(int i=0; i<=9; ++i)
       {
@@ -997,16 +1022,16 @@ const double dt, const double t, const double mu, const double lambda, const dou
                  c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
                  
      double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
-     A13 function13[10][10] = {{A13_00,A13_01,A13_02,A11_03,A13_04,A13_05,A13_06,A13_07,A13_08,A13_09},
-		                       {A13_10,A13_11,A13_12,A11_13,A13_14,A13_15,A13_16,A13_17,A13_18,A13_19},
-		                       {A13_20,A13_21,A13_22,A11_23,A13_24,A13_25,A13_26,A13_27,A13_28,A13_29},
-		                       {A13_30,A13_31,A13_32,A11_33,A13_34,A13_35,A13_36,A13_37,A13_38,A13_39},
-		                       {A13_40,A13_41,A13_42,A11_43,A13_44,A13_45,A13_46,A13_47,A13_48,A13_49},
-		                       {A13_50,A13_51,A13_52,A11_53,A13_54,A13_55,A13_56,A13_57,A13_58,A13_59},
-		                       {A13_60,A13_61,A13_62,A11_63,A13_64,A13_65,A13_66,A13_67,A13_68,A13_69},
-		                       {A13_70,A13_71,A13_72,A11_73,A11_74,A13_75,A13_76,A13_77,A13_78,A13_79},
-		                       {A13_80,A13_81,A13_82,A11_83,A11_84,A13_85,A13_86,A13_87,A13_88,A13_89},
-		                       {A13_90,A13_91,A13_92,A11_93,A13_94,A13_95,A13_96,A13_97,A13_98,A13_99}};
+     A13 function13[10][10] = {{A13_00,A13_01,A13_02,A13_03,A13_04,A13_05,A13_06,A13_07,A13_08,A13_09},
+		                       {A13_10,A13_11,A13_12,A13_13,A13_14,A13_15,A13_16,A13_17,A13_18,A13_19},
+		                       {A13_20,A13_21,A13_22,A13_23,A13_24,A13_25,A13_26,A13_27,A13_28,A13_29},
+		                       {A13_30,A13_31,A13_32,A13_33,A13_34,A13_35,A13_36,A13_37,A13_38,A13_39},
+		                       {A13_40,A13_41,A13_42,A13_43,A13_44,A13_45,A13_46,A13_47,A13_48,A13_49},
+		                       {A13_50,A13_51,A13_52,A13_53,A13_54,A13_55,A13_56,A13_57,A13_58,A13_59},
+		                       {A13_60,A13_61,A13_62,A13_63,A13_64,A13_65,A13_66,A13_67,A13_68,A13_69},
+		                       {A13_70,A13_71,A13_72,A13_73,A13_74,A13_75,A13_76,A13_77,A13_78,A13_79},
+		                       {A13_80,A13_81,A13_82,A13_83,A13_84,A13_85,A13_86,A13_87,A13_88,A13_89},
+		                       {A13_90,A13_91,A13_92,A13_93,A13_94,A13_95,A13_96,A13_97,A13_98,A13_99}};
             
       for(int i=0; i<=9; ++i)
       {

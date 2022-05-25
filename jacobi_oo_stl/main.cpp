@@ -128,14 +128,15 @@ int main(int , char **)
     
     
     
-    double t=0.5, dt = 0.5, c = 0.2;
-    for (int k = 0; k < t/dt; ++k)
+    double t=0.5, dt = 0.5, mu = 0.1, lambda = 0.1, kp = 0.5;
+    for (int n = 0; n <= t/dt; ++n)
     {
 	vector<double> r_old_m(SK1.Nrows(),0.0);
     vector<double> u_old_m(SK1.Nrows(),0.0);
     vector<double> v_old_m(SK1.Nrows(),0.0);
     vector<double> w_old_m(SK1.Nrows(),0.0);
-    for(int n=0; n<=3; ++n){
+    
+    for(int m=0; m<=3; ++m){
     //SK1.CalculateLaplace_heat_equation(fv, u_old, dt, t, c);
     SK1.CalculateLaplace(fv);
     SK1.Debug();
@@ -175,7 +176,7 @@ int main(int , char **)
 		cout << "Error in solution." << endl;
 	}
 }
-	auto s = std::to_string(k);
+	auto s = std::to_string(n);
 
     mesh.Write_ascii_paraview("uv"+s+".vtk", uv);
     mesh.Visualize_paraview(uv);
