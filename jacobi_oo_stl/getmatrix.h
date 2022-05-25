@@ -1,5 +1,4 @@
-#ifndef GETMATRIX_FILE
-#define GETMATRIX_FILE
+#pragma once
 
 #include "geom3.h"
 #include <cassert>
@@ -44312,6 +44311,35 @@ class FEM_Matrix: public CRS_Matrix1
        void AddElem_3(int const ial[4], double const ske[4][4], double const fe[4], std::vector<double> &f);
        
     /**
+     * @return geometric mesh
+     */
+       Mesh const& GetMesh() const
+       { return _mesh; }
+       
+    /**
+     * Access/Change connectivity information (g1,g2,g3, ..., gn)_i regarding matrix
+     * @return connectivity vector [nelems*ndofs].
+     */
+       std::vector<int>& GetConnectivity()
+       {
+           return _ia_matrix;
+       }
+
+    /**
+     * Access connectivity information (g1,g2,g3, ..., gn)_i regarding matrix
+     * @return connectivity vector [nelems*ndofs].
+     */       
+       const std::vector<int>& GetConnectivity() const
+       {
+           return _ia_matrix;
+       }
+       
+    //std::vector<std::vector<int>> Dof2DofGraph() const
+    //{
+        //return ::Node2NodeGraph(mesh.Nelems(),mesh.NdofsElement(),GetConnectivity());
+    //}
+       
+    /**
      * Global number of degrees of freedom (dof) for each finite element.
      * @return degrees of freedom per element.
      */
@@ -44331,6 +44359,8 @@ class FEM_Matrix: public CRS_Matrix1
     private:
        Mesh const & _mesh;      //!< reference to discretization
        int  const _ndof_v;      //!< degrees of freedom per vertex (vector valued problems)
+       std::vector<int> _ia_matrix;     //!< element connectivity regarding the matrix entries
+
 
 };
 
@@ -44590,8 +44620,5 @@ class BisectIntDirichlet: public BisectInterpolation
 //void AddElem(int const ial[4], double const ske[4][4], double const fe[4],
              //int const id[], int const ik[], double sk[], double f[]);
 
-
-
-#endif
 
 

@@ -3288,7 +3288,7 @@ void CRS_Matrix1::readBinary(const std::string &file)
 
 
 FEM_Matrix::FEM_Matrix(Mesh const &mesh, int ndof_v)
-    : CRS_Matrix1(), _mesh(mesh), _ndof_v(ndof_v)
+    : CRS_Matrix1(), _mesh(mesh), _ndof_v(ndof_v), _ia_matrix(_mesh.GetConnectivity())
 {
     Derive_Matrix_Pattern();
     Skalar2VectorMatrix(ndof_v);
@@ -3305,7 +3305,9 @@ void FEM_Matrix::Derive_Matrix_Pattern_fast()
     auto tstart = clock();
     int const nelem(_mesh.Nelems());
     int const ndof_e(_mesh.NdofsElement());
-    auto const &ia(_mesh.GetConnectivity());
+    //auto const &ia(_mesh.GetConnectivity());
+    auto const &ia(GetConnectivity());
+    assert(ndof_e * nelem==static_cast<int>(ia.size()));
 //  Determine the number of matrix rows
     _nrows = *max_element(ia.cbegin(), ia.cbegin() + ndof_e * nelem);
     ++_nrows;                                 // node numberng: 0 ... nnode-1
@@ -3410,7 +3412,7 @@ void FEM_Matrix::Skalar2VectorMatrix(int ndof_v)
     this->Debug();
     cout << "\n########################\n";
     if (1 == ndof_v) return;
-    assert(4 == ndof_v);
+    //assert(4 == ndof_v);
 
     auto old_id = _id;
     auto old_ik = _ik;

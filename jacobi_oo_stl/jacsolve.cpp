@@ -6,7 +6,7 @@
 #include <cassert>
 #include <cmath>
 #include <iostream>
-#include <colamd.h>
+#include <suitesparse/colamd.h>
 #include <vector>
 
 using namespace std;

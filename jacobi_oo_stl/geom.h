@@ -291,7 +291,7 @@ protected:
 
 private:
     int _nelem;         //!< number elements
-    int _nvert_e;       //!< number of vertices per element
+    int _nvert_e;       //!< number of geometric vertices per element
     int _ndof_e;        //!< degrees of freedom (d.o.f.) per element
     int _nnode;         //!< number nodes/vertices
     int _ndim;          //!< space dimension of the problem (1, 2, or 3)
@@ -302,8 +302,23 @@ private:
     const std::vector<int> _dummy; //!< empty dummy vector
 };
 
+/*
+ * Determines all node to node connections from the element connectivity @p ia.
+ * 
+ * @param[in] nnode   global number of degrees of freedom
+ * @param[in] nelem   number of elements
+ * @param[in] ndof_e  degrees of freedom per element
+ * @param[in] ia      element connectivity [nelem*ndof_e]
+ * @return vector[k][] containing all connections of vertex k, including to itself. * name: unknown
+ * 
+ */
+//std::vector<std::vector<int>> Node2NodeGraph(int nnode, int nelem, int ndof_e,
+std::vector<std::vector<int>> Node2NodeGraph(int nelem, int ndof_e,
+                                            std::vector<int> const &ia);
+
+
 /**
- * 2D finite element mesh of the square consiting of linear triangular elements.
+ * 2D finite element mesh consiting of linear triangular elements.
  * 
  
  */
