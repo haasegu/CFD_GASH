@@ -35834,34 +35834,31 @@ double A31_99(double x, double  y,double  z)
  inline
 double A32_00(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g0=f0*(2*f0-1);//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
                  
    return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g0*g0+mu*(g0z*g0y)+2*(mu+lambda)*(g0z*g0y);
 }		
@@ -35869,315 +35866,288 @@ double A32_00(double x, double  y,double  z)
 inline
 double A32_01(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g0=f0*(2*f0-1), g1=f1*(2*f1-1);//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g1z = c1*(4*x - 1);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                  
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g1*g0+mu*(g1z*g0y)+2*(mu+lambda)*(g1z*g0y);
 }		
  inline
 double A32_02(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c2, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g0=f0*(2*f0-1),  g2=f2*(2*f2-1);//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g2z = c2*(4*y - 1);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+               
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g2*g0+mu*(g2z*g0y)+2*(mu+lambda)*(g2z*g0y);
 }	 
 inline
 double A32_03(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g0=f0*(2*f0-1), g3=f3*(2*f3-1);//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g3z = c3*(4*z - 1);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                   
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g3*g0+mu*(g3z*g0y)+2*(mu+lambda)*(g3z*g0y);
 }	
 inline
 double A32_04(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g0=f0*(2*f0-1), g4=4*f0*f1;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                   
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g4*g0+mu*(g4z*g0y)+2*(mu+lambda)*(g4z*g0y);
 }	
 inline
 double A32_05(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g0=f0*(2*f0-1), g5=4*f1*f2;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g5z = 4*c2*x + 4*c1*y;//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+              
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g5*g0+mu*(g5z*g0y)+2*(mu+lambda)*(g5z*g0y);
 }	
 inline
 double A32_06(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g0=f0*(2*f0-1), g6=4*f0*f2;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+               
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g6*g0+mu*(g6z*g0y)+2*(mu+lambda)*(g6z*g0y);
 }	
 inline
 double A32_07(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g0=f0*(2*f0-1), g7=4*f0*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+               
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g7*g0+mu*(g7z*g0y)+2*(mu+lambda)*(g7z*g0y);
 }	
 inline
 double A32_08(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g0=f0*(2*f0-1), g8=4*f1*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g8z = 4*c3*x + 4*c1*z;//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g8*g0+mu*(g8z*g0y)+2*(mu+lambda)*(g8z*g0y);
 }	
 inline
 double A32_09(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g0=f0*(2*f0-1), g9=4*f2*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g9z = 4*c3*y + 4*c2*z;//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+              
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g9*g0+mu*(g9z*g0y)+2*(mu+lambda)*(g9z*g0y);
 }	
@@ -36185,35 +36155,32 @@ double A32_09(double x, double  y,double  z)
  inline
 double A32_10(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g1=f1*(2*f1-1), g0=f0*(2*f0-1);//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                  
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g0*g1+mu*(g0z*g1y)+2*(mu+lambda)*(g0z*g1y);
 }		
@@ -36221,315 +36188,288 @@ double A32_10(double x, double  y,double  z)
 inline
 double A32_11(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g1=f1*(2*f1-1);//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g1z = c1*(4*x - 1);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                   
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g1*g1+mu*(g1z*g1y)+2*(mu+lambda)*(g1z*g1y);
 }		
  inline
 double A32_12(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c2, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g1=f1*(2*f1-1), g2=f2*(2*f2-1);//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g2z = c2*(4*y - 1);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                  
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g2*g1+mu*(g2z*g1y)+2*(mu+lambda)*(g2z*g1y);
 }	
 inline
 double A32_13(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g1=f1*(2*f1-1), g3=f3*(2*f3-1);//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g3z = c3*(4*z - 1);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g3*g1+mu*(g3z*g1y)+2*(mu+lambda)*(g3z*g1y);
 }	
 inline
 double A32_14(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g1=f1*(2*f1-1), g4=4*f0*f1;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                   
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g4*g1+mu*(g4z*g1y)+2*(mu+lambda)*(g4z*g1y);
 }	
 inline
 double A32_15(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g1=f1*(2*f1-1), g5=4*f1*f2;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g5z = 4*c2*x + 4*c1*y;//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+              
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g5*g1+mu*(g5z*g1y)+2*(mu+lambda)*(g5z*g1y);
 }	
 inline
 double A32_16(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g6=4*f0*f2, g1=f1*(2*f1-1);//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                  
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g6*g1+mu*(g6z*g1y)+2*(mu+lambda)*(g6z*g1y);
 }	
 inline
 double A32_17(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g7=4*f0*f3, g1=f1*(2*f1-1);//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g7*g1+mu*(g7z*g1y)+2*(mu+lambda)*(g7z*g1y);
 }	
 inline
 double A32_18(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g8=4*f1*f3, g1=f1*(2*f1-1);//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g8z = 4*c3*x + 4*c1*z;//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+              
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g8*g1+mu*(g8z*g1y)+2*(mu+lambda)*(g8z*g1y);
 }	
 inline
 double A32_19(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g9=4*f2*f3, g1=f1*(2*f1-1);//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g9z = 4*c3*y + 4*c2*z;//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                     
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g9*g1+mu*(g9z*g1y)+2*(mu+lambda)*(g9z*g1y);
 }	
@@ -36537,35 +36477,32 @@ double A32_19(double x, double  y,double  z)
  inline
 double A32_20(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g2=f2*(2*f2-1), g0=f0*(2*f0-1);//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                      
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g0*g2+mu*(g0z*g2y)+2*(mu+lambda)*(g0z*g2y);
 }	 	
@@ -36573,315 +36510,288 @@ double A32_20(double x, double  y,double  z)
 inline
 double A32_21(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g2=f2*(2*f2-1), g1=f1*(2*f1-1);//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g1z = c1*(4*x - 1);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                      
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g1*g2+mu*(g1z*g2y)+2*(mu+lambda)*(g1z*g2y);
 }		
  inline
 double A32_22(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c2, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g2=f2*(2*f2-1);//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g2z = c2*(4*y - 1);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                     
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g2*g2+mu*(g2z*g2y)+2*(mu+lambda)*(g2z*g2y);
 }	 
 inline
 double A32_23(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g2=f2*(2*f2-1), g3=f3*(2*f3-1);//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g3z = c3*(4*z - 1);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                     
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g3*g2+mu*(g3z*g2y)+2*(mu+lambda)*(g3z*g2y);
 }	
 inline
 double A32_24(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g2=f2*(2*f2-1), g4=4*f0*f1;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                   
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g4*g2+mu*(g4z*g2y)+2*(mu+lambda)*(g4z*g2y);
 }	
 inline
 double A32_25(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g2=f2*(2*f2-1), g5=4*f1*f2;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g5z = 4*c2*x + 4*c1*y;//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                      
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g5*g2+mu*(g5z*g2y)+2*(mu+lambda)*(g5z*g2y);
 }	
 inline
 double A32_26(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g2=f2*(2*f2-1), g6=4*f0*f2;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                    
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g6*g2+mu*(g6z*g2y)+2*(mu+lambda)*(g6z*g2y);
 }	 
 inline
 double A32_27(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g2=f2*(2*f2-1), g7=4*f0*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                  
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g7*g2+mu*(g7z*g2y)+2*(mu+lambda)*(g7z*g2y);
 }	
 inline
 double A32_28(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g2=f2*(2*f2-1), g8=4*f1*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g8z = 4*c3*x + 4*c1*z;//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                  
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g8*g2+mu*(g8z*g2y)+2*(mu+lambda)*(g8z*g2y);
 }	
 inline
 double A32_29(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g2=f2*(2*f2-1), g9=4*f2*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g9z = 4*c3*y + 4*c2*z;//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                  
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g9*g2+mu*(g9z*g2y)+2*(mu+lambda)*(g9z*g2y);
 }	
@@ -36889,35 +36799,32 @@ double A32_29(double x, double  y,double  z)
  inline
 double A32_30(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g3=f3*(2*f3-1), g0=f0*(2*f0-1);//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g0*g3+mu*(g0z*g3y)+2*(mu+lambda)*(g0z*g3y);
 }		
@@ -36925,209 +36832,191 @@ double A32_30(double x, double  y,double  z)
 inline
 double A32_31(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g3=f3*(2*f3-1), g1=f1*(2*f1-1);//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g1z = c1*(4*x - 1);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                  
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g1*g3+mu*(g1z*g3y)+2*(mu+lambda)*(g1z*g3y);
 }		
  inline
 double A32_32(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c2, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g3=f3*(2*f3-1), g2=f2*(2*f2-1);//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g2z = c2*(4*y - 1);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                  
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g2*g3+mu*(g2z*g3y)+2*(mu+lambda)*(g2z*g3y);
 }	
 inline
 double A32_33(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g3=f3*(2*f3-1);//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g3z = c3*(4*z - 1);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                   
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g3*g3+mu*(g3z*g3y)+2*(mu+lambda)*(g3z*g3y);
 }	
 inline
 double A32_34(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g3=f3*(2*f3-1), g4=4*f0*f1;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                  
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g4*g3+mu*(g4z*g3y)+2*(mu+lambda)*(g4z*g3y);
 }	
 inline
 double A32_35(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g3=f3*(2*f3-1), g5=4*f1*f2;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g5z = 4*c2*x + 4*c1*y;//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g5*g3+mu*(g5z*g3y)+2*(mu+lambda)*(g5z*g3y);
 }	
 inline
 double A32_36(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g3=f3*(2*f3-1), g6=4*f0*f2;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+            g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
                  
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g6*g3+mu*(g6z*g3y)+2*(mu+lambda)*(g6z*g3y);
@@ -37135,104 +37024,95 @@ double A32_36(double x, double  y,double  z)
 inline
 double A32_37(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g3=f3*(2*f3-1), g7=4*f0*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+              
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g7*g3+mu*(g7z*g3y)+2*(mu+lambda)*(g7z*g3y);
 }	
 inline
 double A32_38(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g3=f3*(2*f3-1), g8=4*f1*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g8z = 4*c3*x + 4*c1*z;//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+            
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g8*g3+mu*(g8z*g3y)+2*(mu+lambda)*(g8z*g3y);
 }	
 inline
 double A32_39(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g3=f3*(2*f3-1), g9=4*f2*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+            g9z = 4*c3*y + 4*c2*z;//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
                  
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g9*g3+mu*(g9z*g3y)+2*(mu+lambda)*(g9z*g3y);
@@ -37241,35 +37121,32 @@ double A32_39(double x, double  y,double  z)
  inline
 double A32_40(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g4=4*f0*f1, g0=f0*(2*f0-1);//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                   
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g0*g4+mu*(g0z*g4y)+2*(mu+lambda)*(g0z*g4y);
 }		
@@ -37277,34 +37154,31 @@ double A32_40(double x, double  y,double  z)
 inline
 double A32_41(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g4=4*f0*f1, g1=f1*(2*f1-1);//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+            g1z = c1*(4*x - 1);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
                  
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g1*g4+mu*(g1z*g4y)+2*(mu+lambda)*(g1z*g4y);
@@ -37312,280 +37186,255 @@ double A32_41(double x, double  y,double  z)
  inline
 double A32_42(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c2, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g4=4*f0*f1, g2=f2*(2*f2-1);//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g2z = c2*(4*y - 1);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                  
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g2*g4+mu*(g2z*g4y)+2*(mu+lambda)*(g2z*g4y);
 }	
 inline
 double A32_43(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g4=4*f0*f1, g3=f3*(2*f3-1);//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g3z = c3*(4*z - 1);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                    
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g3*g4+mu*(g3z*g4y)+2*(mu+lambda)*(g3z*g4y);
 }	
 inline
 double A32_44(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g4=4*f0*f1;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                  
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g4*g4+mu*(g4z*g4y)+2*(mu+lambda)*(g4z*g4y);
 }	
 inline
 double A32_45(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g4=4*f0*f1, g5=4*f1*f2;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g5z = 4*c2*x + 4*c1*y;//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                  
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g5*g4+mu*(g5z*g4y)+2*(mu+lambda)*(g5z*g4y);
 }	
 inline
 double A32_46(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g4=4*f0*f1, g6=4*f0*f2;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g6*g4+mu*(g6z*g4y)+2*(mu+lambda)*(g6z*g4y);
 }	
 inline
 double A32_47(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g4=4*f0*f1, g7=4*f0*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+            g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
                  
-               
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g7*g4+mu*(g7z*g4y)+2*(mu+lambda)*(g7z*g4y);
 }	
 inline
 double A32_48(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g4=4*f0*f1, g8=4*f1*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g8z = 4*c3*x + 4*c1*z;//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g8*g4+mu*(g8z*g4y)+2*(mu+lambda)*(g8z*g4y);
 }	
 inline
 double A32_49(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g4=4*f0*f1, g9=4*f2*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g9z = 4*c3*y + 4*c2*z;//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                     
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g9*g4+mu*(g9z*g4y)+2*(mu+lambda)*(g9z*g4y);
 }	 
@@ -37593,35 +37442,32 @@ double A32_49(double x, double  y,double  z)
  inline
 double A32_50(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g0=f0*(2*f0-1), g5=4*f1*f2;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                  
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g0*g5+mu*(g0z*g5y)+2*(mu+lambda)*(g0z*g5y);
 }		
@@ -37629,139 +37475,127 @@ double A32_50(double x, double  y,double  z)
 inline
 double A32_51(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g5=4*f1*f2, g1=f1*(2*f1-1);//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g1z = c1*(4*x - 1);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                  
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g1*g5+mu*(g1z*g5y)+2*(mu+lambda)*(g1z*g5y);
 }		
  inline
 double A32_52(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c2, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g5=4*f1*f2, g2=f2*(2*f2-1);//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g2z = c2*(4*y - 1);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g2*g5+mu*(g2z*g5y)+2*(mu+lambda)*(g2z*g5y);
 }	 
 inline
 double A32_53(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g5=4*f1*f2, g3=f3*(2*f3-1);//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g3z = c3*(4*z - 1);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+               
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g3*g5+mu*(g3z*g5y)+2*(mu+lambda)*(g3z*g5y);
 }	
 inline
 double A32_54(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g5=4*f1*f2, g4=4*f0*f1;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+            g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
                  
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g4*g5+mu*(g4z*g5y)+2*(mu+lambda)*(g4z*g5y);
@@ -37769,69 +37603,63 @@ double A32_54(double x, double  y,double  z)
 inline
 double A32_55(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g5=4*f1*f2;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g5z = 4*c2*x + 4*c1*y;//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+               
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g5*g5+mu*(g5z*g5y)+2*(mu+lambda)*(g5z*g5y);
 }	
 inline
 double A32_56(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g5=4*f1*f2, g6=4*f0*f2;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+            g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
                  
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g6*g5+mu*(g6z*g5y)+2*(mu+lambda)*(g6z*g5y);
@@ -37839,141 +37667,128 @@ double A32_56(double x, double  y,double  z)
 inline
 double A32_57(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g5=4*f1*f2, g7=4*f0*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                   
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g7*g5+mu*(g7z*g5y)+2*(mu+lambda)*(g7z*g5y);
 }	
 inline
 double A32_58(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g5=4*f1*f2, g8=4*f1*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g8z = 4*c3*x + 4*c1*z;//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                   
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g8*g5+mu*(g8z*g5y)+2*(mu+lambda)*(g8z*g5y);
 }	
 inline
 double A32_59(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g5=4*f1*f2, g9=4*f2*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
-               
+            g9z = 4*c3*y + 4*c2*z;//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                      
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g9*g5+mu*(g9z*g5y)+2*(mu+lambda)*(g9z*g5y);
 }	
 //###################################################################################################################################################################################################################################################
  inline
 double A32_60(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g6=4*f0*f2, g0=f0*(2*f0-1);//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                       
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g0*g6+mu*(g0z*g6y)+2*(mu+lambda)*(g0z*g6y);
 }		
@@ -37981,315 +37796,286 @@ double A32_60(double x, double  y,double  z)
 inline
 double A32_61(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g6=4*f0*f2, g1=f1*(2*f1-1);//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g1z = c1*(4*x - 1);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                      
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g1*g6+mu*(g1z*g6y)+2*(mu+lambda)*(g1z*g6y);
 }		
  inline
 double A32_62(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c2, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g6=4*f0*f2, g2=f2*(2*f2-1);//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
-               
+            g2z = c2*(4*y - 1);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                     
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g2*g6+mu*(g2z*g6y)+2*(mu+lambda)*(g2z*g6y);
 }	 
 inline
 double A32_63(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g6=4*f0*f2, g3=f3*(2*f3-1);//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g3z = c3*(4*z - 1);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                         
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g3*g6+mu*(g3z*g6y)+2*(mu+lambda)*(g3z*g6y);
 }	
 inline
 double A32_64(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g6=4*f0*f2, g4=4*f0*f1;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                   
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g4*g6+mu*(g4z*g6y)+2*(mu+lambda)*(g4z*g6y);
 }	
 inline
 double A32_65(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g5=4*f1*f2, g6=4*f0*f2;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
-               
+            g5z = 4*c2*x + 4*c1*y;//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                       
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g5*g6+mu*(g5z*g6y)+2*(mu+lambda)*(g5z*g6y);
 }	
 inline
 double A32_66(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g6=4*f0*f2;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                       
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g6*g6+mu*(g6z*g6y)+2*(mu+lambda)*(g6z*g6y);
 }	 
 inline
 double A32_67(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g6=4*f0*f2, g7=4*f0*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                     
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g7*g6+mu*(g7z*g6y)+2*(mu+lambda)*(g7z*g6y);
 }	
 inline
 double A32_68(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g6=4*f0*f2, g8=4*f1*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g8z = 4*c3*x + 4*c1*z;//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                     
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g8*g6+mu*(g8z*g6y)+2*(mu+lambda)*(g8z*g6y);
 }	
 inline
 double A32_69(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g6=4*f0*f2, g9=4*f2*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g9z = 4*c3*y + 4*c2*z;//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                    
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g9*g6+mu*(g9z*g6y)+2*(mu+lambda)*(g9z*g6y);
 }	
@@ -38297,35 +38083,32 @@ double A32_69(double x, double  y,double  z)
  inline
 double A32_70(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g0=f0*(2*f0-1), g7=4*f0*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                    
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g0*g7+mu*(g0z*g7y)+2*(mu+lambda)*(g0z*g7y);
 }		
@@ -38333,34 +38116,31 @@ double A32_70(double x, double  y,double  z)
 inline
 double A32_71(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g1=f1*(2*f1-1), g7=4*f0*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+            g1z = c1*(4*x - 1);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
                  
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g1*g7+mu*(g1z*g7y)+2*(mu+lambda)*(g1z*g7y);
@@ -38368,139 +38148,127 @@ double A32_71(double x, double  y,double  z)
  inline
 double A32_72(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c2, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g2=f2*(2*f2-1), g7=4*f0*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g2z = c2*(4*y - 1);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                  
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g2*g7+mu*(g2z*g7y)+2*(mu+lambda)*(g2z*g7y);
 }	 
 inline
 double A32_73(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g3=f3*(2*f3-1), g7=4*f0*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g3z = c3*(4*z - 1);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                  
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g3*g7+mu*(g3z*g7y)+2*(mu+lambda)*(g3z*g7y);
 }	
 inline
 double A32_74(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g4=4*f0*f1, g7=4*f0*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g4*g7+mu*(g4z*g7y)+2*(mu+lambda)*(g4z*g7y);
 }	
 inline
 double A32_75(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c2, c1, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g5=4*f1*f2, g7=4*f0*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+            g5z = 4*c2*x + 4*c1*y;//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
                  
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g5*g7+mu*(g5z*g7y)+2*(mu+lambda)*(g5z*g7y);
@@ -38508,34 +38276,31 @@ double A32_75(double x, double  y,double  z)
 inline
 double A32_76(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g6=4*f0*f2, g7=4*f0*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+            g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
                  
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g6*g7+mu*(g6z*g7y)+2*(mu+lambda)*(g6z*g7y);
@@ -38543,69 +38308,63 @@ double A32_76(double x, double  y,double  z)
 inline
 double A32_77(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g7=4*f0*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g7*g7+mu*(g7z*g7y)+2*(mu+lambda)*(g7z*g7y);
 }	
 inline
 double A32_78(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g8=4*f1*f3, g7=4*f0*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+            g8z = 4*c3*x + 4*c1*z;//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
                  
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g8*g7+mu*(g8z*g7y)+2*(mu+lambda)*(g8z*g7y);
@@ -38613,35 +38372,32 @@ double A32_78(double x, double  y,double  z)
 inline
 double A32_79(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	double b1, b2, b3, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g7=4*f0*f3, g9=4*f2*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g9z = 4*c3*y + 4*c2*z;//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g9*g7+mu*(g9z*g7y)+2*(mu+lambda)*(g9z*g7y);
 }	 
@@ -38649,35 +38405,32 @@ double A32_79(double x, double  y,double  z)
  inline
 double A32_80(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g0=f0*(2*f0-1), g8=4*f1*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+               
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g0*g8+mu*(g0z*g8y)+2*(mu+lambda)*(g0z*g8y);
 }		
@@ -38685,139 +38438,127 @@ double A32_80(double x, double  y,double  z)
 inline
 double A32_81(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g1=f1*(2*f1-1), g8=4*f1*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g1z = c1*(4*x - 1);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g1*g8+mu*(g1z*g8y)+2*(mu+lambda)*(g1z*g8y);
 }	 	
  inline
 double A32_82(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c2, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g2=f2*(2*f2-1), g8=4*f1*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g2z = c2*(4*y - 1);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+              
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g2*g8+mu*(g2z*g8y)+2*(mu+lambda)*(g2z*g8y);
 }	
 inline
 double A32_83(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g3=f3*(2*f3-1), g8=4*f1*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g3z = c3*(4*z - 1);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+               
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g3*g8+mu*(g3z*g8y)+2*(mu+lambda)*(g3z*g8y);
 }	
 inline
 double A32_84(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g4=4*f0*f1, g8=4*f1*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+            g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
                  
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g4*g8+mu*(g4z*g8y)+2*(mu+lambda)*(g4z*g8y);
@@ -38825,175 +38566,160 @@ double A32_84(double x, double  y,double  z)
 inline
 double A32_85(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g5=4*f1*f2, g8=4*f1*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g5z = 4*c2*x + 4*c1*y;//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+              
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g5*g8+mu*(g5z*g8y)+2*(mu+lambda)*(g5z*g8y);
 }	
 inline
 double A32_86(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g6=4*f0*f2, g8=4*f1*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+             
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g6*g8+mu*(g6z*g8y)+2*(mu+lambda)*(g6z*g8y);
 }	
 inline
 double A32_87(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g7=4*f0*f3, g8=4*f1*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+            
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g7*g8+mu*(g7z*g8y)+2*(mu+lambda)*(g7z*g8y);
 }	
 inline
 double A32_88(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g8=4*f1*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g8z = 4*c3*x + 4*c1*z;//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+             
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g8*g8+mu*(g8z*g8y)+2*(mu+lambda)*(g8z*g8y);
 }	
 inline
 double A32_89(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g8=4*f1*f3, g9=4*f2*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g9z = 4*c3*y + 4*c2*z;//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                    
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g9*g8+mu*(g9z*g8y)+2*(mu+lambda)*(g9z*g8y);
 }	
@@ -39001,35 +38727,32 @@ double A32_89(double x, double  y,double  z)
  inline
 double A32_90(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g0=f0*(2*f0-1), g9=4*f2*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                     
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g0*g9+mu*(g0z*g9y)+2*(mu+lambda)*(g0z*g9y);
 }		
@@ -39037,314 +38760,287 @@ double A32_90(double x, double  y,double  z)
 inline
 double A32_91(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g1=f1*(2*f1-1), g9=4*f2*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g1z = c1*(4*x - 1);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                        
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g1*g9+mu*(g1z*g9y)+2*(mu+lambda)*(g1z*g9y);
 }		
  inline
 double A32_92(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c2, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g2=f2*(2*f2-1), g9=4*f2*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g2z = c2*(4*y - 1);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                     
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g2*g9+mu*(g2z*g9y)+2*(mu+lambda)*(g2z*g9y);
 }	
 inline
 double A32_93(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g3=f3*(2*f3-1);//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g3z = c3*(4*z - 1), g9=4*f2*f3;//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                      
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g3*g9+mu*(g3z*g9y)+2*(mu+lambda)*(g3z*g9y);
 }	
 inline
 double A32_94(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g4=4*f0*f1, g9=4*f2*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                        
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g4*g9+mu*(g4z*g9y)+2*(mu+lambda)*(g4z*g9y);
 }	
 inline
 double A32_95(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g5=4*f1*f2;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g5z = 4*c2*x + 4*c1*y, g9=4*f2*f3;//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                      
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g5*g9+mu*(g5z*g9y)+2*(mu+lambda)*(g5z*g9y);
 }	
 inline
 double A32_96(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g6=4*f0*f2, g9=4*f2*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                     
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g6*g9+mu*(g6z*g9y)+2*(mu+lambda)*(g6z*g9y);
 }	 
 inline
 double A32_97(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c1, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g7=4*f0*f3, g9=4*f2*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4);//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                      
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g7*g9+mu*(g7z*g9y)+2*(mu+lambda)*(g7z*g9y);
 }	
 inline
 double A32_98(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	double b1, b2, b3, c1, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g8=4*f1*f3, g9=4*f2*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
-                 
+            g8z = 4*c3*x + 4*c1*z;//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+                     
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g8*g9+mu*(g8z*g9y)+2*(mu+lambda)*(g8z*g9y);
 }	
 inline
 double A32_99(double x, double  y,double  z)
 { 
-	 double jac, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp;
+	 double b1, b2, b3, c2, c3, mu, lambda;
                  
-     double r0_n, r0_m, r1_n , r1_m , r2_n, r2_m, r3_n, r3_m;
+     double  //r0_n, r1_n, r2_n, r3_n,
+             r0_m, r1_m, r2_m, r3_m;
      
-     double u0_n, u0_m, v0_n, v0_m, w0_n, w0_m,
-                 u1_n, u1_m, v1_n, v1_m, w1_n, w1_m,
-                 u2_n, u2_m, v2_n, v2_m, w2_n, w2_m,
-                 u3_n, u3_m, v3_n, v3_m, w3_n, w3_m,
-                 u4_n, u4_m, v4_n, v4_m, w4_n, w4_m,
-                 u5_n, u5_m, v5_n, v5_m, w5_n, w5_m,
-                 u6_n, u6_m, v6_n, v6_m, w6_n, w6_m,
-                 u7_n, u7_m, v7_n, v7_m, w7_n, w7_m,
-                 u8_n, u8_m, v8_n, v8_m, w8_n, w8_m,
-                 u9_n, u9_m, v9_n, v9_m, w9_n, w9_m;
+     double //u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n,
+            //u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m,
+            //v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n,
+            v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m;
+            //w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n,
+            //w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m;
                  
      double f0 = 1-x-y-z, f1 = x, f2 = y, f3 = z;
      
-     double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
-            f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
-            f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
+     //double f0x = -a1-a2-a3, f1x = a1, f2x = a2, f3x = a3,
+            //f0y = -b1-b2-b3, f1y = b1, f2y = b2, f3y = b3,
+            //f0z = -c1-c2-c3, f1z = c1, f2z = c2, f3z = c3;
             
      
-     double g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
+     double g9=4*f2*f3;//g0=f0*(2*f0-1), g1=f1*(2*f1-1), g2=f2*(2*f2-1), g3=f3*(2*f3-1), g4=4*f0*f1, g5=4*f1*f2, g6=4*f0*f2, g7=4*f0*f3, g8=4*f1*f3, g9=4*f2*f3;
      
      
-     double g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
+     double //g0x = (a1 + a2 + a3)*(4*x + 4*y + 4*z - 3), g1x = a1*(4*x - 1), g2x = a2*(4*y - 1), g3x = a3*(4*z - 1), g4x = - 4*a2*x - 4*a3*x - a1*(8*x + 4*y + 4*z - 4), g5x = 4*a2*x + 4*a1*y, g6x = - 4*a1*y - 4*a3*y - a2*(4*x + 8*y + 4*z - 4), g7x = - 4*a1*z - 4*a2*z - a3*(4*x + 4*y + 8*z - 4), g8x = 4*a3*x + 4*a1*z, g9x = 4*a3*y + 4*a2*z,
             g0y = (b1 + b2 + b3)*(4*x + 4*y + 4*z - 3), g1y = b1*(4*x - 1), g2y = b2*(4*y - 1), g3y = b3*(4*z - 1), g4y = - 4*b2*x - 4*b3*x - b1*(8*x + 4*y + 4*z - 4), g5y = 4*b2*x + 4*b1*y, g6y = - 4*b1*y - 4*b3*y - b2*(4*x + 8*y + 4*z - 4), g7y = - 4*b1*z - 4*b2*z - b3*(4*x + 4*y + 8*z - 4), g8y = 4*b3*x + 4*b1*z, g9y = 4*b3*y + 4*b2*z,
-            g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
+            g9z = 4*c3*y + 4*c2*z;//g0z = (c1 + c2 + c3)*(4*x + 4*y + 4*z - 3), g1z = c1*(4*x - 1), g2z = c2*(4*y - 1), g3z = c3*(4*z - 1), g4z = - 4*c2*x - 4*c3*x - c1*(8*x + 4*y + 4*z - 4), g5z = 4*c2*x + 4*c1*y, g6z = - 4*c1*y - 4*c3*y - c2*(4*x + 8*y + 4*z - 4), g7z = - 4*c1*z - 4*c2*z - c3*(4*x + 4*y + 8*z - 4), g8z = 4*c3*x + 4*c1*z, g9z = 4*c3*y + 4*c2*z;
                  
                
 	return (r0_m*f0+r1_m*f1+r2_m*f2+r3_m*f3)*(v0_m*g0y+v1_m*g1y+v2_m*g2y+v3_m*g3y+v4_m*g4y+v5_m*g5y+v6_m*g6y+v7_m*g7y+v8_m*g8y+v9_m*g9y)*g9*g9+mu*(g9z*g9y)+2*(mu+lambda)*(g9z*g9y);
