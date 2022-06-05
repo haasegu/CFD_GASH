@@ -8,7 +8,7 @@
 #include "jacsolve.h"
 #include "userset.h"
 #include "vdop.h"
-
+#include "elements.h"
 #include <cmath>
 #include <iostream>
 #include <sstream>
@@ -49,7 +49,7 @@ int main(int , char **)
     NXglob = nx * procx;
     NYglob = ny * procy;
     cout << "Intervalls: " << NXglob << " x " << NYglob << endl;
-
+//cout<<"Salman = "<<A00_00(1.0,1.0,1.0)<<endl;
 //########################################################################
     int nthreads;                                  // OpenMP
     #pragma omp parallel default(none) shared(cout,nthreads)
@@ -117,6 +117,7 @@ int main(int , char **)
     
     FEM_Matrix SK1(mesh); 
     SK1.Debug();
+    
 
     vector<double> uv(SK1.Nrows(),0.0);     // temperature
     vector<double> fv(SK1.Nrows(),0.0);     // r.h.s.
