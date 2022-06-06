@@ -149,22 +149,17 @@ const double dt, const double t, const double mu, const double lambda, const dou
                  b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
                  c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
                  
-    const double r0_n = r_old_n.at(ial[0]), r0_m = r_old_m.at(ial[0]),
-                 r1_n = r_old_n.at(ial[1]), r1_m = r_old_m.at(ial[1]),
-                 r2_n = r_old_n.at(ial[2]), r2_m = r_old_m.at(ial[2]),
-                 r3_n = r_old_n.at(ial[3]), r3_m = r_old_m.at(ial[3]);
+    const double r0_n = r_old_n.at(ial[0]), r1_n = r_old_n.at(ial[1]), r2_n = r_old_n.at(ial[2]), r3_n = r_old_n.at(ial[3]),
+                 r0_m = r_old_m.at(ial[0]), r1_m = r_old_m.at(ial[1]), r2_m = r_old_m.at(ial[2]), r3_m = r_old_m.at(ial[3]);
+                             
+     const double //u0_n = u_old_n.at(ial[0]), u1_n = u_old_n.at(ial[1]), u2_n = u_old_n.at(ial[2]), u3_n = u_old_n.at(ial[3]), u4_n = u_old_n.at(ial[4]), u5_n = u_old_n.at(ial[5]), u6_n = u_old_n.at(ial[6]), u7_n = u_old_n.at(ial[7]), u8_n = u_old_n.at(ial[8]), u9_n = u_old_n.at(ial[9]),
+                  u0_m = u_old_m.at(ial[0]), u1_m = u_old_m.at(ial[1]), u2_m = u_old_m.at(ial[2]), u3_m = u_old_m.at(ial[3]), u4_m = u_old_m.at(ial[4]), u5_m = u_old_m.at(ial[5]), u6_m = u_old_m.at(ial[6]), u7_m = u_old_m.at(ial[7]), u8_m = u_old_m.at(ial[8]), u9_m = u_old_m.at(ial[9]),
+                  //v0_n = v_old_n.at(ial[0]), v1_n = v_old_n.at(ial[1]), v2_n = v_old_n.at(ial[2]), v3_n = v_old_n.at(ial[3]), v4_n = v_old_n.at(ial[4]), v5_n = v_old_n.at(ial[5]), v6_n = v_old_n.at(ial[6]), v7_n = v_old_n.at(ial[7]), v8_n = v_old_n.at(ial[8]), v9_n = v_old_n.at(ial[9]),
+                  v0_m = v_old_m.at(ial[0]), v1_m = v_old_m.at(ial[1]), v2_m = v_old_m.at(ial[2]), v3_m = v_old_m.at(ial[3]), v4_m = v_old_m.at(ial[4]), v5_m = v_old_m.at(ial[5]), v6_m = v_old_m.at(ial[6]), v7_m = v_old_m.at(ial[7]), v8_m = v_old_m.at(ial[8]), v9_m = v_old_m.at(ial[9]),
+                  //w0_n = w_old_n.at(ial[0]), w1_n = w_old_n.at(ial[1]), w2_n = w_old_n.at(ial[2]), w3_n = w_old_n.at(ial[3]), w4_n = w_old_n.at(ial[4]), w5_n = w_old_n.at(ial[5]), w6_n = w_old_n.at(ial[6]), w7_n = w_old_n.at(ial[7]), w8_n = w_old_n.at(ial[8]), w9_n = w_old_n.at(ial[9]),
+                  w0_m = w_old_m.at(ial[0]), w1_m = w_old_m.at(ial[1]), w2_m = w_old_m.at(ial[2]), w3_m = w_old_m.at(ial[3]), w4_m = w_old_m.at(ial[4]), w5_m = w_old_m.at(ial[5]), w6_m = w_old_m.at(ial[6]), w7_m = w_old_m.at(ial[7]), w8_m = w_old_m.at(ial[8]), w9_m = w_old_m.at(ial[9]);
      
-    const double u0_n = u_old_n.at(ial[0]), u0_m = u_old_m.at(ial[0]), v0_n = v_old_n.at(ial[0]), v0_m = v_old_m.at(ial[0]), w0_n = w_old_n.at(ial[0]), w0_m = w_old_m.at(ial[0]),
-                 u1_n = u_old_n.at(ial[1]), u1_m = u_old_m.at(ial[1]), v1_n = v_old_n.at(ial[1]), v1_m = v_old_m.at(ial[1]), w1_n = w_old_n.at(ial[1]), w1_m = w_old_m.at(ial[1]),
-                 u2_n = u_old_n.at(ial[2]), u2_m = u_old_m.at(ial[2]), v2_n = v_old_n.at(ial[2]), v2_m = v_old_m.at(ial[2]), w2_n = w_old_n.at(ial[2]), w2_m = w_old_m.at(ial[2]),
-                 u3_n = u_old_n.at(ial[3]), u3_m = u_old_m.at(ial[3]), v3_n = v_old_n.at(ial[3]), v3_m = v_old_m.at(ial[3]), w3_n = w_old_n.at(ial[3]), w3_m = w_old_m.at(ial[3]),
-                 u4_n = u_old_n.at(ial[4]), u4_m = u_old_m.at(ial[4]), v4_n = v_old_n.at(ial[4]), v4_m = v_old_m.at(ial[4]), w4_n = w_old_n.at(ial[4]), w4_m = w_old_m.at(ial[4]),
-                 u5_n = u_old_n.at(ial[5]), u5_m = u_old_m.at(ial[5]), v5_n = v_old_n.at(ial[5]), v5_m = v_old_m.at(ial[5]), w5_n = w_old_n.at(ial[5]), w5_m = w_old_m.at(ial[5]),
-                 u6_n = u_old_n.at(ial[6]), u6_m = u_old_m.at(ial[6]), v6_n = v_old_n.at(ial[6]), v6_m = v_old_m.at(ial[6]), w6_n = w_old_n.at(ial[6]), w6_m = w_old_m.at(ial[6]),
-                 u7_n = u_old_n.at(ial[7]), u7_m = u_old_m.at(ial[7]), v7_n = v_old_n.at(ial[7]), v7_m = v_old_m.at(ial[7]), w7_n = w_old_n.at(ial[7]), w7_m = w_old_m.at(ial[7]),
-                 u8_n = u_old_n.at(ial[8]), u8_m = u_old_m.at(ial[8]), v8_n = v_old_n.at(ial[8]), v8_m = v_old_m.at(ial[8]), w8_n = w_old_n.at(ial[8]), w8_m = w_old_m.at(ial[8]),
-                 u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
-		
+     
 	double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
 	
 	A00 function00[4][10] = {{A00_00,A00_01,A00_02,A00_03},
@@ -220,8 +215,7 @@ typedef double (*A01) (double x, double y, double z, double a1, double a2, doubl
 void CalcElem_Navier_Stokes_A01(int const ial[10], double const xc[], double ske[4][10], double fe[4], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
 const double dt, const double t, const double mu, const double lambda, const double kp)
 {
-    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3], i5 = 3 * ial[5], i6 = 3 * ial[6],
-     i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
+    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3];// i5 = 3 * ial[5], i6 = 3 * ial[6], i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
     const double x1 = xc[i1 + 0] - xc[i4 + 0],  y1 = xc[i1 + 1] - xc[i4 + 1], z1 = xc[i1 + 2] - xc[i4 + 2],
                  x2 = xc[i2 + 0] - xc[i4 + 0],  y2 = xc[i2 + 1] - xc[i4 + 1], z2 = xc[i2 + 2] - xc[i4 + 2],
                  x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
@@ -232,22 +226,17 @@ const double dt, const double t, const double mu, const double lambda, const dou
                  b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
                  c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
                  
-     const double r0_n = r_old_n.at(ial[0]), r0_m = r_old_m.at(ial[0]),
-                 r1_n = r_old_n.at(ial[1]), r1_m = r_old_m.at(ial[1]),
-                 r2_n = r_old_n.at(ial[2]), r2_m = r_old_m.at(ial[2]),
-                 r3_n = r_old_n.at(ial[3]), r3_m = r_old_m.at(ial[3]);
+     const double //r0_n = r_old_n.at(ial[0]), r1_n = r_old_n.at(ial[1]), r2_n = r_old_n.at(ial[2]), r3_n = r_old_n.at(ial[3]),
+                 r0_m = r_old_m.at(ial[0]), r1_m = r_old_m.at(ial[1]), r2_m = r_old_m.at(ial[2]), r3_m = r_old_m.at(ial[3]);
                              
-     const double u0_n = u_old_n.at(ial[0]), u0_m = u_old_m.at(ial[0]), v0_n = v_old_n.at(ial[0]), v0_m = v_old_m.at(ial[0]), w0_n = w_old_n.at(ial[0]), w0_m = w_old_m.at(ial[0]),
-                 u1_n = u_old_n.at(ial[1]), u1_m = u_old_m.at(ial[1]), v1_n = v_old_n.at(ial[1]), v1_m = v_old_m.at(ial[1]), w1_n = w_old_n.at(ial[1]), w1_m = w_old_m.at(ial[1]),
-                 u2_n = u_old_n.at(ial[2]), u2_m = u_old_m.at(ial[2]), v2_n = v_old_n.at(ial[2]), v2_m = v_old_m.at(ial[2]), w2_n = w_old_n.at(ial[2]), w2_m = w_old_m.at(ial[2]),
-                 u3_n = u_old_n.at(ial[3]), u3_m = u_old_m.at(ial[3]), v3_n = v_old_n.at(ial[3]), v3_m = v_old_m.at(ial[3]), w3_n = w_old_n.at(ial[3]), w3_m = w_old_m.at(ial[3]),
-                 u4_n = u_old_n.at(ial[4]), u4_m = u_old_m.at(ial[4]), v4_n = v_old_n.at(ial[4]), v4_m = v_old_m.at(ial[4]), w4_n = w_old_n.at(ial[4]), w4_m = w_old_m.at(ial[4]),
-                 u5_n = u_old_n.at(ial[5]), u5_m = u_old_m.at(ial[5]), v5_n = v_old_n.at(ial[5]), v5_m = v_old_m.at(ial[5]), w5_n = w_old_n.at(ial[5]), w5_m = w_old_m.at(ial[5]),
-                 u6_n = u_old_n.at(ial[6]), u6_m = u_old_m.at(ial[6]), v6_n = v_old_n.at(ial[6]), v6_m = v_old_m.at(ial[6]), w6_n = w_old_n.at(ial[6]), w6_m = w_old_m.at(ial[6]),
-                 u7_n = u_old_n.at(ial[7]), u7_m = u_old_m.at(ial[7]), v7_n = v_old_n.at(ial[7]), v7_m = v_old_m.at(ial[7]), w7_n = w_old_n.at(ial[7]), w7_m = w_old_m.at(ial[7]),
-                 u8_n = u_old_n.at(ial[8]), u8_m = u_old_m.at(ial[8]), v8_n = v_old_n.at(ial[8]), v8_m = v_old_m.at(ial[8]), w8_n = w_old_n.at(ial[8]), w8_m = w_old_m.at(ial[8]),
-                 u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
-               
+     //const double u0_n = u_old_n.at(ial[0]), u1_n = u_old_n.at(ial[1]), u2_n = u_old_n.at(ial[2]), u3_n = u_old_n.at(ial[3]), u4_n = u_old_n.at(ial[4]), u5_n = u_old_n.at(ial[5]), u6_n = u_old_n.at(ial[6]), u7_n = u_old_n.at(ial[7]), u8_n = u_old_n.at(ial[8]), u9_n = u_old_n.at(ial[9]),
+                  //u0_m = u_old_m.at(ial[0]), u1_m = u_old_m.at(ial[1]), u2_m = u_old_m.at(ial[2]), u3_m = u_old_m.at(ial[3]), u4_m = u_old_m.at(ial[4]), u5_m = u_old_m.at(ial[5]), u6_m = u_old_m.at(ial[6]), u7_m = u_old_m.at(ial[7]), u8_m = u_old_m.at(ial[8]), u9_m = u_old_m.at(ial[9]),
+                  //v0_n = v_old_n.at(ial[0]), v1_n = v_old_n.at(ial[1]), v2_n = v_old_n.at(ial[2]), v3_n = v_old_n.at(ial[3]), v4_n = v_old_n.at(ial[4]), v5_n = v_old_n.at(ial[5]), v6_n = v_old_n.at(ial[6]), v7_n = v_old_n.at(ial[7]), v8_n = v_old_n.at(ial[8]), v9_n = v_old_n.at(ial[9]),
+                  //v0_m = v_old_m.at(ial[0]), v1_m = v_old_m.at(ial[1]), v2_m = v_old_m.at(ial[2]), v3_m = v_old_m.at(ial[3]), v4_m = v_old_m.at(ial[4]), v5_m = v_old_m.at(ial[5]), v6_m = v_old_m.at(ial[6]), v7_m = v_old_m.at(ial[7]), v8_m = v_old_m.at(ial[8]), v9_m = v_old_m.at(ial[9]),
+                  //w0_n = w_old_n.at(ial[0]), w1_n = w_old_n.at(ial[1]), w2_n = w_old_n.at(ial[2]), w3_n = w_old_n.at(ial[3]), w4_n = w_old_n.at(ial[4]), w5_n = w_old_n.at(ial[5]), w6_n = w_old_n.at(ial[6]), w7_n = w_old_n.at(ial[7]), w8_n = w_old_n.at(ial[8]), w9_n = w_old_n.at(ial[9]),
+                  //w0_m = w_old_m.at(ial[0]), w1_m = w_old_m.at(ial[1]), w2_m = w_old_m.at(ial[2]), w3_m = w_old_m.at(ial[3]), w4_m = w_old_m.at(ial[4]), w5_m = w_old_m.at(ial[5]), w6_m = w_old_m.at(ial[6]), w7_m = w_old_m.at(ial[7]), w8_m = w_old_m.at(ial[8]), w9_m = w_old_m.at(ial[9]);
+     
+        
      double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
      
       A01 function01[4][10] = {{A01_00,A01_01,A01_02,A01_03,A01_04,A01_05,A01_06,A01_07,A01_08,A01_09},
@@ -283,8 +272,7 @@ typedef double (*A02) (double x, double y, double z, double b1, double b2, doubl
 void CalcElem_Navier_Stokes_A02(int const ial[10], double const xc[], double ske[4][10], double fe[4], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
 const double dt, const double t, const double mu, const double lambda, const double kp)
 {
-    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3], i5 = 3 * ial[5], i6 = 3 * ial[6],
-     i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
+    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3];// i5 = 3 * ial[5], i6 = 3 * ial[6], i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
     const double x1 = xc[i1 + 0] - xc[i4 + 0],  y1 = xc[i1 + 1] - xc[i4 + 1], z1 = xc[i1 + 2] - xc[i4 + 2],
                  x2 = xc[i2 + 0] - xc[i4 + 0],  y2 = xc[i2 + 1] - xc[i4 + 1], z2 = xc[i2 + 2] - xc[i4 + 2],
                  x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
@@ -295,22 +283,17 @@ const double dt, const double t, const double mu, const double lambda, const dou
                  b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
                  c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
                  
-      const double r0_n = r_old_n.at(ial[0]), r0_m = r_old_m.at(ial[0]),
-                 r1_n = r_old_n.at(ial[1]), r1_m = r_old_m.at(ial[1]),
-                 r2_n = r_old_n.at(ial[2]), r2_m = r_old_m.at(ial[2]),
-                 r3_n = r_old_n.at(ial[3]), r3_m = r_old_m.at(ial[3]);
-                            
-     const double u0_n = u_old_n.at(ial[0]), u0_m = u_old_m.at(ial[0]), v0_n = v_old_n.at(ial[0]), v0_m = v_old_m.at(ial[0]), w0_n = w_old_n.at(ial[0]), w0_m = w_old_m.at(ial[0]),
-                 u1_n = u_old_n.at(ial[1]), u1_m = u_old_m.at(ial[1]), v1_n = v_old_n.at(ial[1]), v1_m = v_old_m.at(ial[1]), w1_n = w_old_n.at(ial[1]), w1_m = w_old_m.at(ial[1]),
-                 u2_n = u_old_n.at(ial[2]), u2_m = u_old_m.at(ial[2]), v2_n = v_old_n.at(ial[2]), v2_m = v_old_m.at(ial[2]), w2_n = w_old_n.at(ial[2]), w2_m = w_old_m.at(ial[2]),
-                 u3_n = u_old_n.at(ial[3]), u3_m = u_old_m.at(ial[3]), v3_n = v_old_n.at(ial[3]), v3_m = v_old_m.at(ial[3]), w3_n = w_old_n.at(ial[3]), w3_m = w_old_m.at(ial[3]),
-                 u4_n = u_old_n.at(ial[4]), u4_m = u_old_m.at(ial[4]), v4_n = v_old_n.at(ial[4]), v4_m = v_old_m.at(ial[4]), w4_n = w_old_n.at(ial[4]), w4_m = w_old_m.at(ial[4]),
-                 u5_n = u_old_n.at(ial[5]), u5_m = u_old_m.at(ial[5]), v5_n = v_old_n.at(ial[5]), v5_m = v_old_m.at(ial[5]), w5_n = w_old_n.at(ial[5]), w5_m = w_old_m.at(ial[5]),
-                 u6_n = u_old_n.at(ial[6]), u6_m = u_old_m.at(ial[6]), v6_n = v_old_n.at(ial[6]), v6_m = v_old_m.at(ial[6]), w6_n = w_old_n.at(ial[6]), w6_m = w_old_m.at(ial[6]),
-                 u7_n = u_old_n.at(ial[7]), u7_m = u_old_m.at(ial[7]), v7_n = v_old_n.at(ial[7]), v7_m = v_old_m.at(ial[7]), w7_n = w_old_n.at(ial[7]), w7_m = w_old_m.at(ial[7]),
-                 u8_n = u_old_n.at(ial[8]), u8_m = u_old_m.at(ial[8]), v8_n = v_old_n.at(ial[8]), v8_m = v_old_m.at(ial[8]), w8_n = w_old_n.at(ial[8]), w8_m = w_old_m.at(ial[8]),
-                 u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
-                 
+      const double //r0_n = r_old_n.at(ial[0]), r1_n = r_old_n.at(ial[1]), r2_n = r_old_n.at(ial[2]), r3_n = r_old_n.at(ial[3]),
+                 r0_m = r_old_m.at(ial[0]), r1_m = r_old_m.at(ial[1]), r2_m = r_old_m.at(ial[2]), r3_m = r_old_m.at(ial[3]);
+                             
+     //const double u0_n = u_old_n.at(ial[0]), u1_n = u_old_n.at(ial[1]), u2_n = u_old_n.at(ial[2]), u3_n = u_old_n.at(ial[3]), u4_n = u_old_n.at(ial[4]), u5_n = u_old_n.at(ial[5]), u6_n = u_old_n.at(ial[6]), u7_n = u_old_n.at(ial[7]), u8_n = u_old_n.at(ial[8]), u9_n = u_old_n.at(ial[9]),
+                  //u0_m = u_old_m.at(ial[0]), u1_m = u_old_m.at(ial[1]), u2_m = u_old_m.at(ial[2]), u3_m = u_old_m.at(ial[3]), u4_m = u_old_m.at(ial[4]), u5_m = u_old_m.at(ial[5]), u6_m = u_old_m.at(ial[6]), u7_m = u_old_m.at(ial[7]), u8_m = u_old_m.at(ial[8]), u9_m = u_old_m.at(ial[9]),
+                  //v0_n = v_old_n.at(ial[0]), v1_n = v_old_n.at(ial[1]), v2_n = v_old_n.at(ial[2]), v3_n = v_old_n.at(ial[3]), v4_n = v_old_n.at(ial[4]), v5_n = v_old_n.at(ial[5]), v6_n = v_old_n.at(ial[6]), v7_n = v_old_n.at(ial[7]), v8_n = v_old_n.at(ial[8]), v9_n = v_old_n.at(ial[9]),
+                  //v0_m = v_old_m.at(ial[0]), v1_m = v_old_m.at(ial[1]), v2_m = v_old_m.at(ial[2]), v3_m = v_old_m.at(ial[3]), v4_m = v_old_m.at(ial[4]), v5_m = v_old_m.at(ial[5]), v6_m = v_old_m.at(ial[6]), v7_m = v_old_m.at(ial[7]), v8_m = v_old_m.at(ial[8]), v9_m = v_old_m.at(ial[9]),
+                  //w0_n = w_old_n.at(ial[0]), w1_n = w_old_n.at(ial[1]), w2_n = w_old_n.at(ial[2]), w3_n = w_old_n.at(ial[3]), w4_n = w_old_n.at(ial[4]), w5_n = w_old_n.at(ial[5]), w6_n = w_old_n.at(ial[6]), w7_n = w_old_n.at(ial[7]), w8_n = w_old_n.at(ial[8]), w9_n = w_old_n.at(ial[9]),
+                  //w0_m = w_old_m.at(ial[0]), w1_m = w_old_m.at(ial[1]), w2_m = w_old_m.at(ial[2]), w3_m = w_old_m.at(ial[3]), w4_m = w_old_m.at(ial[4]), w5_m = w_old_m.at(ial[5]), w6_m = w_old_m.at(ial[6]), w7_m = w_old_m.at(ial[7]), w8_m = w_old_m.at(ial[8]), w9_m = w_old_m.at(ial[9]);
+     
+      
      double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
      
      A02 function01[4][10] = { {A01_00,A01_01,A01_02,A01_03,A01_04,A01_05,A01_06,A01_07,A01_08,A01_09},
@@ -348,34 +331,28 @@ typedef double (*A03) (double x, double y, double z, double c1, double c2, doubl
 void CalcElem_Navier_Stokes_A03(int const ial[10], double const xc[], double ske[4][10], double fe[4], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
 const double dt, const double t, const double mu, const double lambda, const double kp)
 {
-    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3], i5 = 3 * ial[5], i6 = 3 * ial[6],
-     i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
+    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3];// i5 = 3 * ial[5], i6 = 3 * ial[6], i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
     const double x1 = xc[i1 + 0] - xc[i4 + 0],  y1 = xc[i1 + 1] - xc[i4 + 1], z1 = xc[i1 + 2] - xc[i4 + 2],
                  x2 = xc[i2 + 0] - xc[i4 + 0],  y2 = xc[i2 + 1] - xc[i4 + 1], z2 = xc[i2 + 2] - xc[i4 + 2],
                  x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
                  
     const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
     //coefficients for derivatives
-    const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
-                 b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
+    const double //a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
+                 //b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
                  c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
      
-     const double r0_n = r_old_n.at(ial[0]), r0_m = r_old_m.at(ial[0]),
-                 r1_n = r_old_n.at(ial[1]), r1_m = r_old_m.at(ial[1]),
-                 r2_n = r_old_n.at(ial[2]), r2_m = r_old_m.at(ial[2]),
-                 r3_n = r_old_n.at(ial[3]), r3_m = r_old_m.at(ial[3]);
+     const double //r0_n = r_old_n.at(ial[0]), r1_n = r_old_n.at(ial[1]), r2_n = r_old_n.at(ial[2]), r3_n = r_old_n.at(ial[3]),
+                 r0_m = r_old_m.at(ial[0]), r1_m = r_old_m.at(ial[1]), r2_m = r_old_m.at(ial[2]), r3_m = r_old_m.at(ial[3]);
                              
-    const double u0_n = u_old_n.at(ial[0]), u0_m = u_old_m.at(ial[0]), v0_n = v_old_n.at(ial[0]), v0_m = v_old_m.at(ial[0]), w0_n = w_old_n.at(ial[0]), w0_m = w_old_m.at(ial[0]),
-                 u1_n = u_old_n.at(ial[1]), u1_m = u_old_m.at(ial[1]), v1_n = v_old_n.at(ial[1]), v1_m = v_old_m.at(ial[1]), w1_n = w_old_n.at(ial[1]), w1_m = w_old_m.at(ial[1]),
-                 u2_n = u_old_n.at(ial[2]), u2_m = u_old_m.at(ial[2]), v2_n = v_old_n.at(ial[2]), v2_m = v_old_m.at(ial[2]), w2_n = w_old_n.at(ial[2]), w2_m = w_old_m.at(ial[2]),
-                 u3_n = u_old_n.at(ial[3]), u3_m = u_old_m.at(ial[3]), v3_n = v_old_n.at(ial[3]), v3_m = v_old_m.at(ial[3]), w3_n = w_old_n.at(ial[3]), w3_m = w_old_m.at(ial[3]),
-                 u4_n = u_old_n.at(ial[4]), u4_m = u_old_m.at(ial[4]), v4_n = v_old_n.at(ial[4]), v4_m = v_old_m.at(ial[4]), w4_n = w_old_n.at(ial[4]), w4_m = w_old_m.at(ial[4]),
-                 u5_n = u_old_n.at(ial[5]), u5_m = u_old_m.at(ial[5]), v5_n = v_old_n.at(ial[5]), v5_m = v_old_m.at(ial[5]), w5_n = w_old_n.at(ial[5]), w5_m = w_old_m.at(ial[5]),
-                 u6_n = u_old_n.at(ial[6]), u6_m = u_old_m.at(ial[6]), v6_n = v_old_n.at(ial[6]), v6_m = v_old_m.at(ial[6]), w6_n = w_old_n.at(ial[6]), w6_m = w_old_m.at(ial[6]),
-                 u7_n = u_old_n.at(ial[7]), u7_m = u_old_m.at(ial[7]), v7_n = v_old_n.at(ial[7]), v7_m = v_old_m.at(ial[7]), w7_n = w_old_n.at(ial[7]), w7_m = w_old_m.at(ial[7]),
-                 u8_n = u_old_n.at(ial[8]), u8_m = u_old_m.at(ial[8]), v8_n = v_old_n.at(ial[8]), v8_m = v_old_m.at(ial[8]), w8_n = w_old_n.at(ial[8]), w8_m = w_old_m.at(ial[8]),
-                 u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
-                 
+     //const double u0_n = u_old_n.at(ial[0]), u1_n = u_old_n.at(ial[1]), u2_n = u_old_n.at(ial[2]), u3_n = u_old_n.at(ial[3]), u4_n = u_old_n.at(ial[4]), u5_n = u_old_n.at(ial[5]), u6_n = u_old_n.at(ial[6]), u7_n = u_old_n.at(ial[7]), u8_n = u_old_n.at(ial[8]), u9_n = u_old_n.at(ial[9]),
+                  //u0_m = u_old_m.at(ial[0]), u1_m = u_old_m.at(ial[1]), u2_m = u_old_m.at(ial[2]), u3_m = u_old_m.at(ial[3]), u4_m = u_old_m.at(ial[4]), u5_m = u_old_m.at(ial[5]), u6_m = u_old_m.at(ial[6]), u7_m = u_old_m.at(ial[7]), u8_m = u_old_m.at(ial[8]), u9_m = u_old_m.at(ial[9]),
+                  //v0_n = v_old_n.at(ial[0]), v1_n = v_old_n.at(ial[1]), v2_n = v_old_n.at(ial[2]), v3_n = v_old_n.at(ial[3]), v4_n = v_old_n.at(ial[4]), v5_n = v_old_n.at(ial[5]), v6_n = v_old_n.at(ial[6]), v7_n = v_old_n.at(ial[7]), v8_n = v_old_n.at(ial[8]), v9_n = v_old_n.at(ial[9]),
+                 // v0_m = v_old_m.at(ial[0]), v1_m = v_old_m.at(ial[1]), v2_m = v_old_m.at(ial[2]), v3_m = v_old_m.at(ial[3]), v4_m = v_old_m.at(ial[4]), v5_m = v_old_m.at(ial[5]), v6_m = v_old_m.at(ial[6]), v7_m = v_old_m.at(ial[7]), v8_m = v_old_m.at(ial[8]), v9_m = v_old_m.at(ial[9]),
+                 // w0_n = w_old_n.at(ial[0]), w1_n = w_old_n.at(ial[1]), w2_n = w_old_n.at(ial[2]), w3_n = w_old_n.at(ial[3]), w4_n = w_old_n.at(ial[4]), w5_n = w_old_n.at(ial[5]), w6_n = w_old_n.at(ial[6]), w7_n = w_old_n.at(ial[7]), w8_n = w_old_n.at(ial[8]), w9_n = w_old_n.at(ial[9]),
+                 // w0_m = w_old_m.at(ial[0]), w1_m = w_old_m.at(ial[1]), w2_m = w_old_m.at(ial[2]), w3_m = w_old_m.at(ial[3]), w4_m = w_old_m.at(ial[4]), w5_m = w_old_m.at(ial[5]), w6_m = w_old_m.at(ial[6]), w7_m = w_old_m.at(ial[7]), w8_m = w_old_m.at(ial[8]), w9_m = w_old_m.at(ial[9]);
+     
+      
     double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
     
     A03 function03[4][10] = {{A03_00,A03_01,A03_02,A03_03,A03_04,A03_05,A03_06,A03_07,A03_08,A03_09},
@@ -416,8 +393,7 @@ double v0_m, double v1_m, double v2_m, double v3_m, double v4_m, double v5_m, do
 void CalcElem_Navier_Stokes_A10(int const ial[10], double const xc[], double ske[10][4], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
 const double dt, const double t, const double mu, const double lambda, const double kp)
 {
-    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3], i5 = 3 * ial[5], i6 = 3 * ial[6],
-     i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
+    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3];// i5 = 3 * ial[5], i6 = 3 * ial[6], i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
     const double x1 = xc[i1 + 0] - xc[i4 + 0],  y1 = xc[i1 + 1] - xc[i4 + 1], z1 = xc[i1 + 2] - xc[i4 + 2],
                  x2 = xc[i2 + 0] - xc[i4 + 0],  y2 = xc[i2 + 1] - xc[i4 + 1], z2 = xc[i2 + 2] - xc[i4 + 2],
                  x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
@@ -428,22 +404,17 @@ const double dt, const double t, const double mu, const double lambda, const dou
                  b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
                  c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
       
-      const double r0_n = r_old_n.at(ial[0]), r0_m = r_old_m.at(ial[0]),
-                 r1_n = r_old_n.at(ial[1]), r1_m = r_old_m.at(ial[1]),
-                 r2_n = r_old_n.at(ial[2]), r2_m = r_old_m.at(ial[2]),
-                 r3_n = r_old_n.at(ial[3]), r3_m = r_old_m.at(ial[3]);
-                            
-     const double u0_n = u_old_n.at(ial[0]), u0_m = u_old_m.at(ial[0]), v0_n = v_old_n.at(ial[0]), v0_m = v_old_m.at(ial[0]), w0_n = w_old_n.at(ial[0]), w0_m = w_old_m.at(ial[0]),
-                 u1_n = u_old_n.at(ial[1]), u1_m = u_old_m.at(ial[1]), v1_n = v_old_n.at(ial[1]), v1_m = v_old_m.at(ial[1]), w1_n = w_old_n.at(ial[1]), w1_m = w_old_m.at(ial[1]),
-                 u2_n = u_old_n.at(ial[2]), u2_m = u_old_m.at(ial[2]), v2_n = v_old_n.at(ial[2]), v2_m = v_old_m.at(ial[2]), w2_n = w_old_n.at(ial[2]), w2_m = w_old_m.at(ial[2]),
-                 u3_n = u_old_n.at(ial[3]), u3_m = u_old_m.at(ial[3]), v3_n = v_old_n.at(ial[3]), v3_m = v_old_m.at(ial[3]), w3_n = w_old_n.at(ial[3]), w3_m = w_old_m.at(ial[3]),
-                 u4_n = u_old_n.at(ial[4]), u4_m = u_old_m.at(ial[4]), v4_n = v_old_n.at(ial[4]), v4_m = v_old_m.at(ial[4]), w4_n = w_old_n.at(ial[4]), w4_m = w_old_m.at(ial[4]),
-                 u5_n = u_old_n.at(ial[5]), u5_m = u_old_m.at(ial[5]), v5_n = v_old_n.at(ial[5]), v5_m = v_old_m.at(ial[5]), w5_n = w_old_n.at(ial[5]), w5_m = w_old_m.at(ial[5]),
-                 u6_n = u_old_n.at(ial[6]), u6_m = u_old_m.at(ial[6]), v6_n = v_old_n.at(ial[6]), v6_m = v_old_m.at(ial[6]), w6_n = w_old_n.at(ial[6]), w6_m = w_old_m.at(ial[6]),
-                 u7_n = u_old_n.at(ial[7]), u7_m = u_old_m.at(ial[7]), v7_n = v_old_n.at(ial[7]), v7_m = v_old_m.at(ial[7]), w7_n = w_old_n.at(ial[7]), w7_m = w_old_m.at(ial[7]),
-                 u8_n = u_old_n.at(ial[8]), u8_m = u_old_m.at(ial[8]), v8_n = v_old_n.at(ial[8]), v8_m = v_old_m.at(ial[8]), w8_n = w_old_n.at(ial[8]), w8_m = w_old_m.at(ial[8]),
-                 u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
-                 
+      const double //r0_n = r_old_n.at(ial[0]), r1_n = r_old_n.at(ial[1]), r2_n = r_old_n.at(ial[2]), r3_n = r_old_n.at(ial[3]),
+                 r0_m = r_old_m.at(ial[0]), r1_m = r_old_m.at(ial[1]), r2_m = r_old_m.at(ial[2]), r3_m = r_old_m.at(ial[3]);
+                             
+     const double u0_n = u_old_n.at(ial[0]), u1_n = u_old_n.at(ial[1]), u2_n = u_old_n.at(ial[2]), u3_n = u_old_n.at(ial[3]), u4_n = u_old_n.at(ial[4]), u5_n = u_old_n.at(ial[5]), u6_n = u_old_n.at(ial[6]), u7_n = u_old_n.at(ial[7]), u8_n = u_old_n.at(ial[8]), u9_n = u_old_n.at(ial[9]),
+                  u0_m = u_old_m.at(ial[0]), u1_m = u_old_m.at(ial[1]), u2_m = u_old_m.at(ial[2]), u3_m = u_old_m.at(ial[3]), u4_m = u_old_m.at(ial[4]), u5_m = u_old_m.at(ial[5]), u6_m = u_old_m.at(ial[6]), u7_m = u_old_m.at(ial[7]), u8_m = u_old_m.at(ial[8]), u9_m = u_old_m.at(ial[9]),
+                  //v0_n = v_old_n.at(ial[0]), v1_n = v_old_n.at(ial[1]), v2_n = v_old_n.at(ial[2]), v3_n = v_old_n.at(ial[3]), v4_n = v_old_n.at(ial[4]), v5_n = v_old_n.at(ial[5]), v6_n = v_old_n.at(ial[6]), v7_n = v_old_n.at(ial[7]), v8_n = v_old_n.at(ial[8]), v9_n = v_old_n.at(ial[9]),
+                  v0_m = v_old_m.at(ial[0]), v1_m = v_old_m.at(ial[1]), v2_m = v_old_m.at(ial[2]), v3_m = v_old_m.at(ial[3]), v4_m = v_old_m.at(ial[4]), v5_m = v_old_m.at(ial[5]), v6_m = v_old_m.at(ial[6]), v7_m = v_old_m.at(ial[7]), v8_m = v_old_m.at(ial[8]), v9_m = v_old_m.at(ial[9]),
+                  //w0_n = w_old_n.at(ial[0]), w1_n = w_old_n.at(ial[1]), w2_n = w_old_n.at(ial[2]), w3_n = w_old_n.at(ial[3]), w4_n = w_old_n.at(ial[4]), w5_n = w_old_n.at(ial[5]), w6_n = w_old_n.at(ial[6]), w7_n = w_old_n.at(ial[7]), w8_n = w_old_n.at(ial[8]), w9_n = w_old_n.at(ial[9]),
+                  w0_m = w_old_m.at(ial[0]), w1_m = w_old_m.at(ial[1]), w2_m = w_old_m.at(ial[2]), w3_m = w_old_m.at(ial[3]), w4_m = w_old_m.at(ial[4]), w5_m = w_old_m.at(ial[5]), w6_m = w_old_m.at(ial[6]), w7_m = w_old_m.at(ial[7]), w8_m = w_old_m.at(ial[8]), w9_m = w_old_m.at(ial[9]);
+     
+        
      double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
      
      A10 function10[10][4] = {{A10_00,A10_01,A10_02,A10_03},
@@ -508,8 +479,7 @@ double w0_m, double w1_m, double w2_m, double w3_m, double w4_m, double w5_m, do
 void CalcElem_Navier_Stokes_A11(int const ial[10], double const xc[], double ske[10][10], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
 const double dt, const double t, const double mu, const double lambda, const double kp)
 {
-    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3], i5 = 3 * ial[5], i6 = 3 * ial[6],
-     i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
+    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3];// i5 = 3 * ial[5], i6 = 3 * ial[6], i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
     const double x1 = xc[i1 + 0] - xc[i4 + 0],  y1 = xc[i1 + 1] - xc[i4 + 1], z1 = xc[i1 + 2] - xc[i4 + 2],
                  x2 = xc[i2 + 0] - xc[i4 + 0],  y2 = xc[i2 + 1] - xc[i4 + 1], z2 = xc[i2 + 2] - xc[i4 + 2],
                  x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
@@ -520,22 +490,17 @@ const double dt, const double t, const double mu, const double lambda, const dou
                  b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
                  c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
      
-     const double r0_n = r_old_n.at(ial[0]), r0_m = r_old_m.at(ial[0]),
-                 r1_n = r_old_n.at(ial[1]), r1_m = r_old_m.at(ial[1]),
-                 r2_n = r_old_n.at(ial[2]), r2_m = r_old_m.at(ial[2]),
-                 r3_n = r_old_n.at(ial[3]), r3_m = r_old_m.at(ial[3]);
+     const double //r0_n = r_old_n.at(ial[0]), r1_n = r_old_n.at(ial[1]), r2_n = r_old_n.at(ial[2]), r3_n = r_old_n.at(ial[3]),
+                 r0_m = r_old_m.at(ial[0]), r1_m = r_old_m.at(ial[1]), r2_m = r_old_m.at(ial[2]), r3_m = r_old_m.at(ial[3]);
                              
-    const double u0_n = u_old_n.at(ial[0]), u0_m = u_old_m.at(ial[0]), v0_n = v_old_n.at(ial[0]), v0_m = v_old_m.at(ial[0]), w0_n = w_old_n.at(ial[0]), w0_m = w_old_m.at(ial[0]),
-                 u1_n = u_old_n.at(ial[1]), u1_m = u_old_m.at(ial[1]), v1_n = v_old_n.at(ial[1]), v1_m = v_old_m.at(ial[1]), w1_n = w_old_n.at(ial[1]), w1_m = w_old_m.at(ial[1]),
-                 u2_n = u_old_n.at(ial[2]), u2_m = u_old_m.at(ial[2]), v2_n = v_old_n.at(ial[2]), v2_m = v_old_m.at(ial[2]), w2_n = w_old_n.at(ial[2]), w2_m = w_old_m.at(ial[2]),
-                 u3_n = u_old_n.at(ial[3]), u3_m = u_old_m.at(ial[3]), v3_n = v_old_n.at(ial[3]), v3_m = v_old_m.at(ial[3]), w3_n = w_old_n.at(ial[3]), w3_m = w_old_m.at(ial[3]),
-                 u4_n = u_old_n.at(ial[4]), u4_m = u_old_m.at(ial[4]), v4_n = v_old_n.at(ial[4]), v4_m = v_old_m.at(ial[4]), w4_n = w_old_n.at(ial[4]), w4_m = w_old_m.at(ial[4]),
-                 u5_n = u_old_n.at(ial[5]), u5_m = u_old_m.at(ial[5]), v5_n = v_old_n.at(ial[5]), v5_m = v_old_m.at(ial[5]), w5_n = w_old_n.at(ial[5]), w5_m = w_old_m.at(ial[5]),
-                 u6_n = u_old_n.at(ial[6]), u6_m = u_old_m.at(ial[6]), v6_n = v_old_n.at(ial[6]), v6_m = v_old_m.at(ial[6]), w6_n = w_old_n.at(ial[6]), w6_m = w_old_m.at(ial[6]),
-                 u7_n = u_old_n.at(ial[7]), u7_m = u_old_m.at(ial[7]), v7_n = v_old_n.at(ial[7]), v7_m = v_old_m.at(ial[7]), w7_n = w_old_n.at(ial[7]), w7_m = w_old_m.at(ial[7]),
-                 u8_n = u_old_n.at(ial[8]), u8_m = u_old_m.at(ial[8]), v8_n = v_old_n.at(ial[8]), v8_m = v_old_m.at(ial[8]), w8_n = w_old_n.at(ial[8]), w8_m = w_old_m.at(ial[8]),
-                 u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
-                 
+     const double //u0_n = u_old_n.at(ial[0]), u1_n = u_old_n.at(ial[1]), u2_n = u_old_n.at(ial[2]), u3_n = u_old_n.at(ial[3]), u4_n = u_old_n.at(ial[4]), u5_n = u_old_n.at(ial[5]), u6_n = u_old_n.at(ial[6]), u7_n = u_old_n.at(ial[7]), u8_n = u_old_n.at(ial[8]), u9_n = u_old_n.at(ial[9]),
+                  u0_m = u_old_m.at(ial[0]), u1_m = u_old_m.at(ial[1]), u2_m = u_old_m.at(ial[2]), u3_m = u_old_m.at(ial[3]), u4_m = u_old_m.at(ial[4]), u5_m = u_old_m.at(ial[5]), u6_m = u_old_m.at(ial[6]), u7_m = u_old_m.at(ial[7]), u8_m = u_old_m.at(ial[8]), u9_m = u_old_m.at(ial[9]),
+                  //v0_n = v_old_n.at(ial[0]), v1_n = v_old_n.at(ial[1]), v2_n = v_old_n.at(ial[2]), v3_n = v_old_n.at(ial[3]), v4_n = v_old_n.at(ial[4]), v5_n = v_old_n.at(ial[5]), v6_n = v_old_n.at(ial[6]), v7_n = v_old_n.at(ial[7]), v8_n = v_old_n.at(ial[8]), v9_n = v_old_n.at(ial[9]),
+                  v0_m = v_old_m.at(ial[0]), v1_m = v_old_m.at(ial[1]), v2_m = v_old_m.at(ial[2]), v3_m = v_old_m.at(ial[3]), v4_m = v_old_m.at(ial[4]), v5_m = v_old_m.at(ial[5]), v6_m = v_old_m.at(ial[6]), v7_m = v_old_m.at(ial[7]), v8_m = v_old_m.at(ial[8]), v9_m = v_old_m.at(ial[9]),
+                  //w0_n = w_old_n.at(ial[0]), w1_n = w_old_n.at(ial[1]), w2_n = w_old_n.at(ial[2]), w3_n = w_old_n.at(ial[3]), w4_n = w_old_n.at(ial[4]), w5_n = w_old_n.at(ial[5]), w6_n = w_old_n.at(ial[6]), w7_n = w_old_n.at(ial[7]), w8_n = w_old_n.at(ial[8]), w9_n = w_old_n.at(ial[9]),
+                  w0_m = w_old_m.at(ial[0]), w1_m = w_old_m.at(ial[1]), w2_m = w_old_m.at(ial[2]), w3_m = w_old_m.at(ial[3]), w4_m = w_old_m.at(ial[4]), w5_m = w_old_m.at(ial[5]), w6_m = w_old_m.at(ial[6]), w7_m = w_old_m.at(ial[7]), w8_m = w_old_m.at(ial[8]), w9_m = w_old_m.at(ial[9]);
+     
+           
     double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
     
     A11 function11[10][10] = {{A11_00,A11_01,A11_02,A11_03,A11_04,A11_05,A11_06,A11_07,A11_08,A11_09},
@@ -578,8 +543,7 @@ typedef double (*A12) (double x, double y, double z, double a1, double a2, doubl
 void CalcElem_Navier_Stokes_A12(int const ial[10], double const xc[], double ske[10][10], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
 const double dt, const double t, const double mu, const double lambda, const double kp)
 {
-    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3], i5 = 3 * ial[5], i6 = 3 * ial[6],
-     i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
+    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3];// i5 = 3 * ial[5], i6 = 3 * ial[6], i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
     const double x1 = xc[i1 + 0] - xc[i4 + 0],  y1 = xc[i1 + 1] - xc[i4 + 1], z1 = xc[i1 + 2] - xc[i4 + 2],
                  x2 = xc[i2 + 0] - xc[i4 + 0],  y2 = xc[i2 + 1] - xc[i4 + 1], z2 = xc[i2 + 2] - xc[i4 + 2],
                  x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
@@ -590,22 +554,17 @@ const double dt, const double t, const double mu, const double lambda, const dou
                  b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
                  c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
      
-     const double r0_n = r_old_n.at(ial[0]), r0_m = r_old_m.at(ial[0]),
-                 r1_n = r_old_n.at(ial[1]), r1_m = r_old_m.at(ial[1]),
-                 r2_n = r_old_n.at(ial[2]), r2_m = r_old_m.at(ial[2]),
-                 r3_n = r_old_n.at(ial[3]), r3_m = r_old_m.at(ial[3]);
+    const double //r0_n = r_old_n.at(ial[0]), r1_n = r_old_n.at(ial[1]), r2_n = r_old_n.at(ial[2]), r3_n = r_old_n.at(ial[3]),
+                 r0_m = r_old_m.at(ial[0]), r1_m = r_old_m.at(ial[1]), r2_m = r_old_m.at(ial[2]), r3_m = r_old_m.at(ial[3]);
                              
-     const double u0_n = u_old_n.at(ial[0]), u0_m = u_old_m.at(ial[0]), v0_n = v_old_n.at(ial[0]), v0_m = v_old_m.at(ial[0]), w0_n = w_old_n.at(ial[0]), w0_m = w_old_m.at(ial[0]),
-                 u1_n = u_old_n.at(ial[1]), u1_m = u_old_m.at(ial[1]), v1_n = v_old_n.at(ial[1]), v1_m = v_old_m.at(ial[1]), w1_n = w_old_n.at(ial[1]), w1_m = w_old_m.at(ial[1]),
-                 u2_n = u_old_n.at(ial[2]), u2_m = u_old_m.at(ial[2]), v2_n = v_old_n.at(ial[2]), v2_m = v_old_m.at(ial[2]), w2_n = w_old_n.at(ial[2]), w2_m = w_old_m.at(ial[2]),
-                 u3_n = u_old_n.at(ial[3]), u3_m = u_old_m.at(ial[3]), v3_n = v_old_n.at(ial[3]), v3_m = v_old_m.at(ial[3]), w3_n = w_old_n.at(ial[3]), w3_m = w_old_m.at(ial[3]),
-                 u4_n = u_old_n.at(ial[4]), u4_m = u_old_m.at(ial[4]), v4_n = v_old_n.at(ial[4]), v4_m = v_old_m.at(ial[4]), w4_n = w_old_n.at(ial[4]), w4_m = w_old_m.at(ial[4]),
-                 u5_n = u_old_n.at(ial[5]), u5_m = u_old_m.at(ial[5]), v5_n = v_old_n.at(ial[5]), v5_m = v_old_m.at(ial[5]), w5_n = w_old_n.at(ial[5]), w5_m = w_old_m.at(ial[5]),
-                 u6_n = u_old_n.at(ial[6]), u6_m = u_old_m.at(ial[6]), v6_n = v_old_n.at(ial[6]), v6_m = v_old_m.at(ial[6]), w6_n = w_old_n.at(ial[6]), w6_m = w_old_m.at(ial[6]),
-                 u7_n = u_old_n.at(ial[7]), u7_m = u_old_m.at(ial[7]), v7_n = v_old_n.at(ial[7]), v7_m = v_old_m.at(ial[7]), w7_n = w_old_n.at(ial[7]), w7_m = w_old_m.at(ial[7]),
-                 u8_n = u_old_n.at(ial[8]), u8_m = u_old_m.at(ial[8]), v8_n = v_old_n.at(ial[8]), v8_m = v_old_m.at(ial[8]), w8_n = w_old_n.at(ial[8]), w8_m = w_old_m.at(ial[8]),
-                 u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
-                 
+     const double //u0_n = u_old_n.at(ial[0]), u1_n = u_old_n.at(ial[1]), u2_n = u_old_n.at(ial[2]), u3_n = u_old_n.at(ial[3]), u4_n = u_old_n.at(ial[4]), u5_n = u_old_n.at(ial[5]), u6_n = u_old_n.at(ial[6]), u7_n = u_old_n.at(ial[7]), u8_n = u_old_n.at(ial[8]), u9_n = u_old_n.at(ial[9]),
+                  u0_m = u_old_m.at(ial[0]), u1_m = u_old_m.at(ial[1]), u2_m = u_old_m.at(ial[2]), u3_m = u_old_m.at(ial[3]), u4_m = u_old_m.at(ial[4]), u5_m = u_old_m.at(ial[5]), u6_m = u_old_m.at(ial[6]), u7_m = u_old_m.at(ial[7]), u8_m = u_old_m.at(ial[8]), u9_m = u_old_m.at(ial[9]);
+                  //v0_n = v_old_n.at(ial[0]), v1_n = v_old_n.at(ial[1]), v2_n = v_old_n.at(ial[2]), v3_n = v_old_n.at(ial[3]), v4_n = v_old_n.at(ial[4]), v5_n = v_old_n.at(ial[5]), v6_n = v_old_n.at(ial[6]), v7_n = v_old_n.at(ial[7]), v8_n = v_old_n.at(ial[8]), v9_n = v_old_n.at(ial[9]),
+                  //v0_m = v_old_m.at(ial[0]), v1_m = v_old_m.at(ial[1]), v2_m = v_old_m.at(ial[2]), v3_m = v_old_m.at(ial[3]), v4_m = v_old_m.at(ial[4]), v5_m = v_old_m.at(ial[5]), v6_m = v_old_m.at(ial[6]), v7_m = v_old_m.at(ial[7]), v8_m = v_old_m.at(ial[8]), v9_m = v_old_m.at(ial[9]),
+                  //w0_n = w_old_n.at(ial[0]), w1_n = w_old_n.at(ial[1]), w2_n = w_old_n.at(ial[2]), w3_n = w_old_n.at(ial[3]), w4_n = w_old_n.at(ial[4]), w5_n = w_old_n.at(ial[5]), w6_n = w_old_n.at(ial[6]), w7_n = w_old_n.at(ial[7]), w8_n = w_old_n.at(ial[8]), w9_n = w_old_n.at(ial[9]),
+                  //w0_m = w_old_m.at(ial[0]), w1_m = w_old_m.at(ial[1]), w2_m = w_old_m.at(ial[2]), w3_m = w_old_m.at(ial[3]), w4_m = w_old_m.at(ial[4]), w5_m = w_old_m.at(ial[5]), w6_m = w_old_m.at(ial[6]), w7_m = w_old_m.at(ial[7]), w8_m = w_old_m.at(ial[8]), w9_m = w_old_m.at(ial[9]);
+     
+     
      double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
      
      A12 function12[10][10] = {{A12_00,A12_01,A12_02,A12_03,A12_04,A12_05,A12_06,A12_07,A12_08,A12_09},
@@ -647,8 +606,7 @@ typedef double (*A13) (double x, double y, double z, double a1, double a2, doubl
 void CalcElem_Navier_Stokes_A13(int const ial[10], double const xc[], double ske[10][10], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
 const double dt, const double t, const double mu, const double lambda, const double kp)
 {
-    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3], i5 = 3 * ial[5], i6 = 3 * ial[6],
-     i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
+    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3];// i5 = 3 * ial[5], i6 = 3 * ial[6], i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
     const double x1 = xc[i1 + 0] - xc[i4 + 0],  y1 = xc[i1 + 1] - xc[i4 + 1], z1 = xc[i1 + 2] - xc[i4 + 2],
                  x2 = xc[i2 + 0] - xc[i4 + 0],  y2 = xc[i2 + 1] - xc[i4 + 1], z2 = xc[i2 + 2] - xc[i4 + 2],
                  x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
@@ -656,25 +614,20 @@ const double dt, const double t, const double mu, const double lambda, const dou
     const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
     //coefficients for derivatives
     const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
-                 b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
+                 //b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
                  c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
       
-      const double r0_n = r_old_n.at(ial[0]), r0_m = r_old_m.at(ial[0]),
-                 r1_n = r_old_n.at(ial[1]), r1_m = r_old_m.at(ial[1]),
-                 r2_n = r_old_n.at(ial[2]), r2_m = r_old_m.at(ial[2]),
-                 r3_n = r_old_n.at(ial[3]), r3_m = r_old_m.at(ial[3]);
-                 
-      const double u0_n = u_old_n.at(ial[0]), u0_m = u_old_m.at(ial[0]), v0_n = v_old_n.at(ial[0]), v0_m = v_old_m.at(ial[0]), w0_n = w_old_n.at(ial[0]), w0_m = w_old_m.at(ial[0]),
-                 u1_n = u_old_n.at(ial[1]), u1_m = u_old_m.at(ial[1]), v1_n = v_old_n.at(ial[1]), v1_m = v_old_m.at(ial[1]), w1_n = w_old_n.at(ial[1]), w1_m = w_old_m.at(ial[1]),
-                 u2_n = u_old_n.at(ial[2]), u2_m = u_old_m.at(ial[2]), v2_n = v_old_n.at(ial[2]), v2_m = v_old_m.at(ial[2]), w2_n = w_old_n.at(ial[2]), w2_m = w_old_m.at(ial[2]),
-                 u3_n = u_old_n.at(ial[3]), u3_m = u_old_m.at(ial[3]), v3_n = v_old_n.at(ial[3]), v3_m = v_old_m.at(ial[3]), w3_n = w_old_n.at(ial[3]), w3_m = w_old_m.at(ial[3]),
-                 u4_n = u_old_n.at(ial[4]), u4_m = u_old_m.at(ial[4]), v4_n = v_old_n.at(ial[4]), v4_m = v_old_m.at(ial[4]), w4_n = w_old_n.at(ial[4]), w4_m = w_old_m.at(ial[4]),
-                 u5_n = u_old_n.at(ial[5]), u5_m = u_old_m.at(ial[5]), v5_n = v_old_n.at(ial[5]), v5_m = v_old_m.at(ial[5]), w5_n = w_old_n.at(ial[5]), w5_m = w_old_m.at(ial[5]),
-                 u6_n = u_old_n.at(ial[6]), u6_m = u_old_m.at(ial[6]), v6_n = v_old_n.at(ial[6]), v6_m = v_old_m.at(ial[6]), w6_n = w_old_n.at(ial[6]), w6_m = w_old_m.at(ial[6]),
-                 u7_n = u_old_n.at(ial[7]), u7_m = u_old_m.at(ial[7]), v7_n = v_old_n.at(ial[7]), v7_m = v_old_m.at(ial[7]), w7_n = w_old_n.at(ial[7]), w7_m = w_old_m.at(ial[7]),
-                 u8_n = u_old_n.at(ial[8]), u8_m = u_old_m.at(ial[8]), v8_n = v_old_n.at(ial[8]), v8_m = v_old_m.at(ial[8]), w8_n = w_old_n.at(ial[8]), w8_m = w_old_m.at(ial[8]),
-                 u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
-                            
+      const double //r0_n = r_old_n.at(ial[0]), r1_n = r_old_n.at(ial[1]), r2_n = r_old_n.at(ial[2]), r3_n = r_old_n.at(ial[3]),
+                 r0_m = r_old_m.at(ial[0]), r1_m = r_old_m.at(ial[1]), r2_m = r_old_m.at(ial[2]), r3_m = r_old_m.at(ial[3]);
+                             
+     const double //u0_n = u_old_n.at(ial[0]), u1_n = u_old_n.at(ial[1]), u2_n = u_old_n.at(ial[2]), u3_n = u_old_n.at(ial[3]), u4_n = u_old_n.at(ial[4]), u5_n = u_old_n.at(ial[5]), u6_n = u_old_n.at(ial[6]), u7_n = u_old_n.at(ial[7]), u8_n = u_old_n.at(ial[8]), u9_n = u_old_n.at(ial[9]),
+                  u0_m = u_old_m.at(ial[0]), u1_m = u_old_m.at(ial[1]), u2_m = u_old_m.at(ial[2]), u3_m = u_old_m.at(ial[3]), u4_m = u_old_m.at(ial[4]), u5_m = u_old_m.at(ial[5]), u6_m = u_old_m.at(ial[6]), u7_m = u_old_m.at(ial[7]), u8_m = u_old_m.at(ial[8]), u9_m = u_old_m.at(ial[9]);
+                  //v0_n = v_old_n.at(ial[0]), v1_n = v_old_n.at(ial[1]), v2_n = v_old_n.at(ial[2]), v3_n = v_old_n.at(ial[3]), v4_n = v_old_n.at(ial[4]), v5_n = v_old_n.at(ial[5]), v6_n = v_old_n.at(ial[6]), v7_n = v_old_n.at(ial[7]), v8_n = v_old_n.at(ial[8]), v9_n = v_old_n.at(ial[9]),
+                  //v0_m = v_old_m.at(ial[0]), v1_m = v_old_m.at(ial[1]), v2_m = v_old_m.at(ial[2]), v3_m = v_old_m.at(ial[3]), v4_m = v_old_m.at(ial[4]), v5_m = v_old_m.at(ial[5]), v6_m = v_old_m.at(ial[6]), v7_m = v_old_m.at(ial[7]), v8_m = v_old_m.at(ial[8]), v9_m = v_old_m.at(ial[9]),
+                  //w0_n = w_old_n.at(ial[0]), w1_n = w_old_n.at(ial[1]), w2_n = w_old_n.at(ial[2]), w3_n = w_old_n.at(ial[3]), w4_n = w_old_n.at(ial[4]), w5_n = w_old_n.at(ial[5]), w6_n = w_old_n.at(ial[6]), w7_n = w_old_n.at(ial[7]), w8_n = w_old_n.at(ial[8]), w9_n = w_old_n.at(ial[9]),
+                  //w0_m = w_old_m.at(ial[0]), w1_m = w_old_m.at(ial[1]), w2_m = w_old_m.at(ial[2]), w3_m = w_old_m.at(ial[3]), w4_m = w_old_m.at(ial[4]), w5_m = w_old_m.at(ial[5]), w6_m = w_old_m.at(ial[6]), w7_m = w_old_m.at(ial[7]), w8_m = w_old_m.at(ial[8]), w9_m = w_old_m.at(ial[9]);
+     
+                     
      double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
      
      A13 function13[10][10] = {{A13_00,A13_01,A13_02,A13_03,A13_04,A13_05,A13_06,A13_07,A13_08,A13_09},
@@ -721,8 +674,7 @@ double w0_m, double w1_m, double w2_m, double w3_m, double w4_m, double w5_m, do
 void CalcElem_Navier_Stokes_A20(int const ial[10], double const xc[], double ske[10][4], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
 const double dt, const double t, const double mu, const double lambda, const double kp)
 {
-    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3], i5 = 3 * ial[5], i6 = 3 * ial[6],
-     i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
+    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3];// i5 = 3 * ial[5], i6 = 3 * ial[6], i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
     const double x1 = xc[i1 + 0] - xc[i4 + 0],  y1 = xc[i1 + 1] - xc[i4 + 1], z1 = xc[i1 + 2] - xc[i4 + 2],
                  x2 = xc[i2 + 0] - xc[i4 + 0],  y2 = xc[i2 + 1] - xc[i4 + 1], z2 = xc[i2 + 2] - xc[i4 + 2],
                  x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
@@ -733,22 +685,17 @@ const double dt, const double t, const double mu, const double lambda, const dou
                  b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
                  c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
      
-     const double r0_n = r_old_n.at(ial[0]), r0_m = r_old_m.at(ial[0]),
-                 r1_n = r_old_n.at(ial[1]), r1_m = r_old_m.at(ial[1]),
-                 r2_n = r_old_n.at(ial[2]), r2_m = r_old_m.at(ial[2]),
-                 r3_n = r_old_n.at(ial[3]), r3_m = r_old_m.at(ial[3]);
+     const double //r0_n = r_old_n.at(ial[0]), r1_n = r_old_n.at(ial[1]), r2_n = r_old_n.at(ial[2]), r3_n = r_old_n.at(ial[3]),
+                 r0_m = r_old_m.at(ial[0]), r1_m = r_old_m.at(ial[1]), r2_m = r_old_m.at(ial[2]), r3_m = r_old_m.at(ial[3]);
                              
-     const double u0_n = u_old_n.at(ial[0]), u0_m = u_old_m.at(ial[0]), v0_n = v_old_n.at(ial[0]), v0_m = v_old_m.at(ial[0]), w0_n = w_old_n.at(ial[0]), w0_m = w_old_m.at(ial[0]),
-                 u1_n = u_old_n.at(ial[1]), u1_m = u_old_m.at(ial[1]), v1_n = v_old_n.at(ial[1]), v1_m = v_old_m.at(ial[1]), w1_n = w_old_n.at(ial[1]), w1_m = w_old_m.at(ial[1]),
-                 u2_n = u_old_n.at(ial[2]), u2_m = u_old_m.at(ial[2]), v2_n = v_old_n.at(ial[2]), v2_m = v_old_m.at(ial[2]), w2_n = w_old_n.at(ial[2]), w2_m = w_old_m.at(ial[2]),
-                 u3_n = u_old_n.at(ial[3]), u3_m = u_old_m.at(ial[3]), v3_n = v_old_n.at(ial[3]), v3_m = v_old_m.at(ial[3]), w3_n = w_old_n.at(ial[3]), w3_m = w_old_m.at(ial[3]),
-                 u4_n = u_old_n.at(ial[4]), u4_m = u_old_m.at(ial[4]), v4_n = v_old_n.at(ial[4]), v4_m = v_old_m.at(ial[4]), w4_n = w_old_n.at(ial[4]), w4_m = w_old_m.at(ial[4]),
-                 u5_n = u_old_n.at(ial[5]), u5_m = u_old_m.at(ial[5]), v5_n = v_old_n.at(ial[5]), v5_m = v_old_m.at(ial[5]), w5_n = w_old_n.at(ial[5]), w5_m = w_old_m.at(ial[5]),
-                 u6_n = u_old_n.at(ial[6]), u6_m = u_old_m.at(ial[6]), v6_n = v_old_n.at(ial[6]), v6_m = v_old_m.at(ial[6]), w6_n = w_old_n.at(ial[6]), w6_m = w_old_m.at(ial[6]),
-                 u7_n = u_old_n.at(ial[7]), u7_m = u_old_m.at(ial[7]), v7_n = v_old_n.at(ial[7]), v7_m = v_old_m.at(ial[7]), w7_n = w_old_n.at(ial[7]), w7_m = w_old_m.at(ial[7]),
-                 u8_n = u_old_n.at(ial[8]), u8_m = u_old_m.at(ial[8]), v8_n = v_old_n.at(ial[8]), v8_m = v_old_m.at(ial[8]), w8_n = w_old_n.at(ial[8]), w8_m = w_old_m.at(ial[8]),
-                 u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
-                 
+     const double //u0_n = u_old_n.at(ial[0]), u1_n = u_old_n.at(ial[1]), u2_n = u_old_n.at(ial[2]), u3_n = u_old_n.at(ial[3]), u4_n = u_old_n.at(ial[4]), u5_n = u_old_n.at(ial[5]), u6_n = u_old_n.at(ial[6]), u7_n = u_old_n.at(ial[7]), u8_n = u_old_n.at(ial[8]), u9_n = u_old_n.at(ial[9]),
+                  u0_m = u_old_m.at(ial[0]), u1_m = u_old_m.at(ial[1]), u2_m = u_old_m.at(ial[2]), u3_m = u_old_m.at(ial[3]), u4_m = u_old_m.at(ial[4]), u5_m = u_old_m.at(ial[5]), u6_m = u_old_m.at(ial[6]), u7_m = u_old_m.at(ial[7]), u8_m = u_old_m.at(ial[8]), u9_m = u_old_m.at(ial[9]),
+                  v0_n = v_old_n.at(ial[0]), v1_n = v_old_n.at(ial[1]), v2_n = v_old_n.at(ial[2]), v3_n = v_old_n.at(ial[3]), v4_n = v_old_n.at(ial[4]), v5_n = v_old_n.at(ial[5]), v6_n = v_old_n.at(ial[6]), v7_n = v_old_n.at(ial[7]), v8_n = v_old_n.at(ial[8]), v9_n = v_old_n.at(ial[9]),
+                  v0_m = v_old_m.at(ial[0]), v1_m = v_old_m.at(ial[1]), v2_m = v_old_m.at(ial[2]), v3_m = v_old_m.at(ial[3]), v4_m = v_old_m.at(ial[4]), v5_m = v_old_m.at(ial[5]), v6_m = v_old_m.at(ial[6]), v7_m = v_old_m.at(ial[7]), v8_m = v_old_m.at(ial[8]), v9_m = v_old_m.at(ial[9]),
+                  //w0_n = w_old_n.at(ial[0]), w1_n = w_old_n.at(ial[1]), w2_n = w_old_n.at(ial[2]), w3_n = w_old_n.at(ial[3]), w4_n = w_old_n.at(ial[4]), w5_n = w_old_n.at(ial[5]), w6_n = w_old_n.at(ial[6]), w7_n = w_old_n.at(ial[7]), w8_n = w_old_n.at(ial[8]), w9_n = w_old_n.at(ial[9]),
+                  w0_m = w_old_m.at(ial[0]), w1_m = w_old_m.at(ial[1]), w2_m = w_old_m.at(ial[2]), w3_m = w_old_m.at(ial[3]), w4_m = w_old_m.at(ial[4]), w5_m = w_old_m.at(ial[5]), w6_m = w_old_m.at(ial[6]), w7_m = w_old_m.at(ial[7]), w8_m = w_old_m.at(ial[8]), w9_m = w_old_m.at(ial[9]);
+     
+           
      double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
      
      A20 function20[10][4] = {{A20_00,A20_01,A20_02,A20_03},
@@ -811,8 +758,7 @@ typedef double (*A21) (double x, double y, double z, double a1, double a2, doubl
 void CalcElem_Navier_Stokes_A21(int const ial[10], double const xc[], double ske[10][10], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
 const double dt, const double t, const double mu, const double lambda, const double kp)
 {
-    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3], i5 = 3 * ial[5], i6 = 3 * ial[6],
-     i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
+    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3];// i5 = 3 * ial[5], i6 = 3 * ial[6], i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
     const double x1 = xc[i1 + 0] - xc[i4 + 0],  y1 = xc[i1 + 1] - xc[i4 + 1], z1 = xc[i1 + 2] - xc[i4 + 2],
                  x2 = xc[i2 + 0] - xc[i4 + 0],  y2 = xc[i2 + 1] - xc[i4 + 1], z2 = xc[i2 + 2] - xc[i4 + 2],
                  x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
@@ -820,25 +766,20 @@ const double dt, const double t, const double mu, const double lambda, const dou
     const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
     //coefficients for derivatives
     const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
-                 b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
-                 c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
+                 b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac;
+                 //c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
      
-     const double r0_n = r_old_n.at(ial[0]), r0_m = r_old_m.at(ial[0]),
-                 r1_n = r_old_n.at(ial[1]), r1_m = r_old_m.at(ial[1]),
-                 r2_n = r_old_n.at(ial[2]), r2_m = r_old_m.at(ial[2]),
-                 r3_n = r_old_n.at(ial[3]), r3_m = r_old_m.at(ial[3]);
+     const double //r0_n = r_old_n.at(ial[0]), r1_n = r_old_n.at(ial[1]), r2_n = r_old_n.at(ial[2]), r3_n = r_old_n.at(ial[3]),
+                 r0_m = r_old_m.at(ial[0]), r1_m = r_old_m.at(ial[1]), r2_m = r_old_m.at(ial[2]), r3_m = r_old_m.at(ial[3]);
                              
-    const double u0_n = u_old_n.at(ial[0]), u0_m = u_old_m.at(ial[0]), v0_n = v_old_n.at(ial[0]), v0_m = v_old_m.at(ial[0]), w0_n = w_old_n.at(ial[0]), w0_m = w_old_m.at(ial[0]),
-                 u1_n = u_old_n.at(ial[1]), u1_m = u_old_m.at(ial[1]), v1_n = v_old_n.at(ial[1]), v1_m = v_old_m.at(ial[1]), w1_n = w_old_n.at(ial[1]), w1_m = w_old_m.at(ial[1]),
-                 u2_n = u_old_n.at(ial[2]), u2_m = u_old_m.at(ial[2]), v2_n = v_old_n.at(ial[2]), v2_m = v_old_m.at(ial[2]), w2_n = w_old_n.at(ial[2]), w2_m = w_old_m.at(ial[2]),
-                 u3_n = u_old_n.at(ial[3]), u3_m = u_old_m.at(ial[3]), v3_n = v_old_n.at(ial[3]), v3_m = v_old_m.at(ial[3]), w3_n = w_old_n.at(ial[3]), w3_m = w_old_m.at(ial[3]),
-                 u4_n = u_old_n.at(ial[4]), u4_m = u_old_m.at(ial[4]), v4_n = v_old_n.at(ial[4]), v4_m = v_old_m.at(ial[4]), w4_n = w_old_n.at(ial[4]), w4_m = w_old_m.at(ial[4]),
-                 u5_n = u_old_n.at(ial[5]), u5_m = u_old_m.at(ial[5]), v5_n = v_old_n.at(ial[5]), v5_m = v_old_m.at(ial[5]), w5_n = w_old_n.at(ial[5]), w5_m = w_old_m.at(ial[5]),
-                 u6_n = u_old_n.at(ial[6]), u6_m = u_old_m.at(ial[6]), v6_n = v_old_n.at(ial[6]), v6_m = v_old_m.at(ial[6]), w6_n = w_old_n.at(ial[6]), w6_m = w_old_m.at(ial[6]),
-                 u7_n = u_old_n.at(ial[7]), u7_m = u_old_m.at(ial[7]), v7_n = v_old_n.at(ial[7]), v7_m = v_old_m.at(ial[7]), w7_n = w_old_n.at(ial[7]), w7_m = w_old_m.at(ial[7]),
-                 u8_n = u_old_n.at(ial[8]), u8_m = u_old_m.at(ial[8]), v8_n = v_old_n.at(ial[8]), v8_m = v_old_m.at(ial[8]), w8_n = w_old_n.at(ial[8]), w8_m = w_old_m.at(ial[8]),
-                 u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
-                 
+     const double //u0_n = u_old_n.at(ial[0]), u1_n = u_old_n.at(ial[1]), u2_n = u_old_n.at(ial[2]), u3_n = u_old_n.at(ial[3]), u4_n = u_old_n.at(ial[4]), u5_n = u_old_n.at(ial[5]), u6_n = u_old_n.at(ial[6]), u7_n = u_old_n.at(ial[7]), u8_n = u_old_n.at(ial[8]), u9_n = u_old_n.at(ial[9]),
+                  //u0_m = u_old_m.at(ial[0]), u1_m = u_old_m.at(ial[1]), u2_m = u_old_m.at(ial[2]), u3_m = u_old_m.at(ial[3]), u4_m = u_old_m.at(ial[4]), u5_m = u_old_m.at(ial[5]), u6_m = u_old_m.at(ial[6]), u7_m = u_old_m.at(ial[7]), u8_m = u_old_m.at(ial[8]), u9_m = u_old_m.at(ial[9]),
+                  //v0_n = v_old_n.at(ial[0]), v1_n = v_old_n.at(ial[1]), v2_n = v_old_n.at(ial[2]), v3_n = v_old_n.at(ial[3]), v4_n = v_old_n.at(ial[4]), v5_n = v_old_n.at(ial[5]), v6_n = v_old_n.at(ial[6]), v7_n = v_old_n.at(ial[7]), v8_n = v_old_n.at(ial[8]), v9_n = v_old_n.at(ial[9]),
+                  v0_m = v_old_m.at(ial[0]), v1_m = v_old_m.at(ial[1]), v2_m = v_old_m.at(ial[2]), v3_m = v_old_m.at(ial[3]), v4_m = v_old_m.at(ial[4]), v5_m = v_old_m.at(ial[5]), v6_m = v_old_m.at(ial[6]), v7_m = v_old_m.at(ial[7]), v8_m = v_old_m.at(ial[8]), v9_m = v_old_m.at(ial[9]);
+                  //w0_n = w_old_n.at(ial[0]), w1_n = w_old_n.at(ial[1]), w2_n = w_old_n.at(ial[2]), w3_n = w_old_n.at(ial[3]), w4_n = w_old_n.at(ial[4]), w5_n = w_old_n.at(ial[5]), w6_n = w_old_n.at(ial[6]), w7_n = w_old_n.at(ial[7]), w8_n = w_old_n.at(ial[8]), w9_n = w_old_n.at(ial[9]),
+                  //w0_m = w_old_m.at(ial[0]), w1_m = w_old_m.at(ial[1]), w2_m = w_old_m.at(ial[2]), w3_m = w_old_m.at(ial[3]), w4_m = w_old_m.at(ial[4]), w5_m = w_old_m.at(ial[5]), w6_m = w_old_m.at(ial[6]), w7_m = w_old_m.at(ial[7]), w8_m = w_old_m.at(ial[8]), w9_m = w_old_m.at(ial[9]);
+     
+           
     double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
     
     A21 function21[10][10] = {{A21_00,A21_01,A21_02,A21_03,A21_04,A21_05,A21_06,A21_07,A21_08,A21_09},
@@ -881,8 +822,7 @@ double v0_m, double v1_m, double v2_m, double v3_m, double v4_m, double v5_m, do
 void CalcElem_Navier_Stokes_A22(int const ial[10], double const xc[], double ske[10][10], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
 const double dt, const double t, const double mu, const double lambda, const double kp)
 {
-    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3], i5 = 3 * ial[5], i6 = 3 * ial[6],
-     i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
+    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3];// i5 = 3 * ial[5], i6 = 3 * ial[6], i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
     const double x1 = xc[i1 + 0] - xc[i4 + 0],  y1 = xc[i1 + 1] - xc[i4 + 1], z1 = xc[i1 + 2] - xc[i4 + 2],
                  x2 = xc[i2 + 0] - xc[i4 + 0],  y2 = xc[i2 + 1] - xc[i4 + 1], z2 = xc[i2 + 2] - xc[i4 + 2],
                  x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
@@ -893,22 +833,17 @@ const double dt, const double t, const double mu, const double lambda, const dou
                  b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
                  c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
      
-     const double r0_n = r_old_n.at(ial[0]), r0_m = r_old_m.at(ial[0]),
-                 r1_n = r_old_n.at(ial[1]), r1_m = r_old_m.at(ial[1]),
-                 r2_n = r_old_n.at(ial[2]), r2_m = r_old_m.at(ial[2]),
-                 r3_n = r_old_n.at(ial[3]), r3_m = r_old_m.at(ial[3]);
+     const double //r0_n = r_old_n.at(ial[0]), r1_n = r_old_n.at(ial[1]), r2_n = r_old_n.at(ial[2]), r3_n = r_old_n.at(ial[3]),
+                 r0_m = r_old_m.at(ial[0]), r1_m = r_old_m.at(ial[1]), r2_m = r_old_m.at(ial[2]), r3_m = r_old_m.at(ial[3]);
                              
-    const double u0_n = u_old_n.at(ial[0]), u0_m = u_old_m.at(ial[0]), v0_n = v_old_n.at(ial[0]), v0_m = v_old_m.at(ial[0]), w0_n = w_old_n.at(ial[0]), w0_m = w_old_m.at(ial[0]),
-                 u1_n = u_old_n.at(ial[1]), u1_m = u_old_m.at(ial[1]), v1_n = v_old_n.at(ial[1]), v1_m = v_old_m.at(ial[1]), w1_n = w_old_n.at(ial[1]), w1_m = w_old_m.at(ial[1]),
-                 u2_n = u_old_n.at(ial[2]), u2_m = u_old_m.at(ial[2]), v2_n = v_old_n.at(ial[2]), v2_m = v_old_m.at(ial[2]), w2_n = w_old_n.at(ial[2]), w2_m = w_old_m.at(ial[2]),
-                 u3_n = u_old_n.at(ial[3]), u3_m = u_old_m.at(ial[3]), v3_n = v_old_n.at(ial[3]), v3_m = v_old_m.at(ial[3]), w3_n = w_old_n.at(ial[3]), w3_m = w_old_m.at(ial[3]),
-                 u4_n = u_old_n.at(ial[4]), u4_m = u_old_m.at(ial[4]), v4_n = v_old_n.at(ial[4]), v4_m = v_old_m.at(ial[4]), w4_n = w_old_n.at(ial[4]), w4_m = w_old_m.at(ial[4]),
-                 u5_n = u_old_n.at(ial[5]), u5_m = u_old_m.at(ial[5]), v5_n = v_old_n.at(ial[5]), v5_m = v_old_m.at(ial[5]), w5_n = w_old_n.at(ial[5]), w5_m = w_old_m.at(ial[5]),
-                 u6_n = u_old_n.at(ial[6]), u6_m = u_old_m.at(ial[6]), v6_n = v_old_n.at(ial[6]), v6_m = v_old_m.at(ial[6]), w6_n = w_old_n.at(ial[6]), w6_m = w_old_m.at(ial[6]),
-                 u7_n = u_old_n.at(ial[7]), u7_m = u_old_m.at(ial[7]), v7_n = v_old_n.at(ial[7]), v7_m = v_old_m.at(ial[7]), w7_n = w_old_n.at(ial[7]), w7_m = w_old_m.at(ial[7]),
-                 u8_n = u_old_n.at(ial[8]), u8_m = u_old_m.at(ial[8]), v8_n = v_old_n.at(ial[8]), v8_m = v_old_m.at(ial[8]), w8_n = w_old_n.at(ial[8]), w8_m = w_old_m.at(ial[8]),
-                 u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
-                 
+     const double //u0_n = u_old_n.at(ial[0]), u1_n = u_old_n.at(ial[1]), u2_n = u_old_n.at(ial[2]), u3_n = u_old_n.at(ial[3]), u4_n = u_old_n.at(ial[4]), u5_n = u_old_n.at(ial[5]), u6_n = u_old_n.at(ial[6]), u7_n = u_old_n.at(ial[7]), u8_n = u_old_n.at(ial[8]), u9_n = u_old_n.at(ial[9]),
+                  u0_m = u_old_m.at(ial[0]), u1_m = u_old_m.at(ial[1]), u2_m = u_old_m.at(ial[2]), u3_m = u_old_m.at(ial[3]), u4_m = u_old_m.at(ial[4]), u5_m = u_old_m.at(ial[5]), u6_m = u_old_m.at(ial[6]), u7_m = u_old_m.at(ial[7]), u8_m = u_old_m.at(ial[8]), u9_m = u_old_m.at(ial[9]),
+                  //v0_n = v_old_n.at(ial[0]), v1_n = v_old_n.at(ial[1]), v2_n = v_old_n.at(ial[2]), v3_n = v_old_n.at(ial[3]), v4_n = v_old_n.at(ial[4]), v5_n = v_old_n.at(ial[5]), v6_n = v_old_n.at(ial[6]), v7_n = v_old_n.at(ial[7]), v8_n = v_old_n.at(ial[8]), v9_n = v_old_n.at(ial[9]),
+                  v0_m = v_old_m.at(ial[0]), v1_m = v_old_m.at(ial[1]), v2_m = v_old_m.at(ial[2]), v3_m = v_old_m.at(ial[3]), v4_m = v_old_m.at(ial[4]), v5_m = v_old_m.at(ial[5]), v6_m = v_old_m.at(ial[6]), v7_m = v_old_m.at(ial[7]), v8_m = v_old_m.at(ial[8]), v9_m = v_old_m.at(ial[9]),
+                  //w0_n = w_old_n.at(ial[0]), w1_n = w_old_n.at(ial[1]), w2_n = w_old_n.at(ial[2]), w3_n = w_old_n.at(ial[3]), w4_n = w_old_n.at(ial[4]), w5_n = w_old_n.at(ial[5]), w6_n = w_old_n.at(ial[6]), w7_n = w_old_n.at(ial[7]), w8_n = w_old_n.at(ial[8]), w9_n = w_old_n.at(ial[9]),
+                  w0_m = w_old_m.at(ial[0]), w1_m = w_old_m.at(ial[1]), w2_m = w_old_m.at(ial[2]), w3_m = w_old_m.at(ial[3]), w4_m = w_old_m.at(ial[4]), w5_m = w_old_m.at(ial[5]), w6_m = w_old_m.at(ial[6]), w7_m = w_old_m.at(ial[7]), w8_m = w_old_m.at(ial[8]), w9_m = w_old_m.at(ial[9]);
+     
+        
     double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
     
     A22 function22[10][10] = {{A22_00,A22_01,A22_02,A22_03,A22_04,A22_05,A22_06,A22_07,A22_08,A22_09},
@@ -950,34 +885,28 @@ typedef double (*A23) (double x, double y, double z, double b1, double b2, doubl
 void CalcElem_Navier_Stokes_A23(int const ial[10], double const xc[], double ske[10][10], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
 const double dt, const double t, const double mu, const double lambda, const double kp)
 {
-    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3], i5 = 3 * ial[5], i6 = 3 * ial[6],
-     i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
+    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3];// i5 = 3 * ial[5], i6 = 3 * ial[6], i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
     const double x1 = xc[i1 + 0] - xc[i4 + 0],  y1 = xc[i1 + 1] - xc[i4 + 1], z1 = xc[i1 + 2] - xc[i4 + 2],
                  x2 = xc[i2 + 0] - xc[i4 + 0],  y2 = xc[i2 + 1] - xc[i4 + 1], z2 = xc[i2 + 2] - xc[i4 + 2],
                  x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
                  
     const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
     //coefficients for derivatives
-    const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
+    const double //a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
                  b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
                  c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
     
-    const double r0_n = r_old_n.at(ial[0]), r0_m = r_old_m.at(ial[0]),
-                 r1_n = r_old_n.at(ial[1]), r1_m = r_old_m.at(ial[1]),
-                 r2_n = r_old_n.at(ial[2]), r2_m = r_old_m.at(ial[2]),
-                 r3_n = r_old_n.at(ial[3]), r3_m = r_old_m.at(ial[3]);
-                              
-    const double u0_n = u_old_n.at(ial[0]), u0_m = u_old_m.at(ial[0]), v0_n = v_old_n.at(ial[0]), v0_m = v_old_m.at(ial[0]), w0_n = w_old_n.at(ial[0]), w0_m = w_old_m.at(ial[0]),
-                 u1_n = u_old_n.at(ial[1]), u1_m = u_old_m.at(ial[1]), v1_n = v_old_n.at(ial[1]), v1_m = v_old_m.at(ial[1]), w1_n = w_old_n.at(ial[1]), w1_m = w_old_m.at(ial[1]),
-                 u2_n = u_old_n.at(ial[2]), u2_m = u_old_m.at(ial[2]), v2_n = v_old_n.at(ial[2]), v2_m = v_old_m.at(ial[2]), w2_n = w_old_n.at(ial[2]), w2_m = w_old_m.at(ial[2]),
-                 u3_n = u_old_n.at(ial[3]), u3_m = u_old_m.at(ial[3]), v3_n = v_old_n.at(ial[3]), v3_m = v_old_m.at(ial[3]), w3_n = w_old_n.at(ial[3]), w3_m = w_old_m.at(ial[3]),
-                 u4_n = u_old_n.at(ial[4]), u4_m = u_old_m.at(ial[4]), v4_n = v_old_n.at(ial[4]), v4_m = v_old_m.at(ial[4]), w4_n = w_old_n.at(ial[4]), w4_m = w_old_m.at(ial[4]),
-                 u5_n = u_old_n.at(ial[5]), u5_m = u_old_m.at(ial[5]), v5_n = v_old_n.at(ial[5]), v5_m = v_old_m.at(ial[5]), w5_n = w_old_n.at(ial[5]), w5_m = w_old_m.at(ial[5]),
-                 u6_n = u_old_n.at(ial[6]), u6_m = u_old_m.at(ial[6]), v6_n = v_old_n.at(ial[6]), v6_m = v_old_m.at(ial[6]), w6_n = w_old_n.at(ial[6]), w6_m = w_old_m.at(ial[6]),
-                 u7_n = u_old_n.at(ial[7]), u7_m = u_old_m.at(ial[7]), v7_n = v_old_n.at(ial[7]), v7_m = v_old_m.at(ial[7]), w7_n = w_old_n.at(ial[7]), w7_m = w_old_m.at(ial[7]),
-                 u8_n = u_old_n.at(ial[8]), u8_m = u_old_m.at(ial[8]), v8_n = v_old_n.at(ial[8]), v8_m = v_old_m.at(ial[8]), w8_n = w_old_n.at(ial[8]), w8_m = w_old_m.at(ial[8]),
-                 u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
-                 
+    const double //r0_n = r_old_n.at(ial[0]), r1_n = r_old_n.at(ial[1]), r2_n = r_old_n.at(ial[2]), r3_n = r_old_n.at(ial[3]),
+                 r0_m = r_old_m.at(ial[0]), r1_m = r_old_m.at(ial[1]), r2_m = r_old_m.at(ial[2]), r3_m = r_old_m.at(ial[3]);
+                             
+     const double //u0_n = u_old_n.at(ial[0]), u1_n = u_old_n.at(ial[1]), u2_n = u_old_n.at(ial[2]), u3_n = u_old_n.at(ial[3]), u4_n = u_old_n.at(ial[4]), u5_n = u_old_n.at(ial[5]), u6_n = u_old_n.at(ial[6]), u7_n = u_old_n.at(ial[7]), u8_n = u_old_n.at(ial[8]), u9_n = u_old_n.at(ial[9]),
+                  //u0_m = u_old_m.at(ial[0]), u1_m = u_old_m.at(ial[1]), u2_m = u_old_m.at(ial[2]), u3_m = u_old_m.at(ial[3]), u4_m = u_old_m.at(ial[4]), u5_m = u_old_m.at(ial[5]), u6_m = u_old_m.at(ial[6]), u7_m = u_old_m.at(ial[7]), u8_m = u_old_m.at(ial[8]), u9_m = u_old_m.at(ial[9]),
+                  //v0_n = v_old_n.at(ial[0]), v1_n = v_old_n.at(ial[1]), v2_n = v_old_n.at(ial[2]), v3_n = v_old_n.at(ial[3]), v4_n = v_old_n.at(ial[4]), v5_n = v_old_n.at(ial[5]), v6_n = v_old_n.at(ial[6]), v7_n = v_old_n.at(ial[7]), v8_n = v_old_n.at(ial[8]), v9_n = v_old_n.at(ial[9]),
+                  v0_m = v_old_m.at(ial[0]), v1_m = v_old_m.at(ial[1]), v2_m = v_old_m.at(ial[2]), v3_m = v_old_m.at(ial[3]), v4_m = v_old_m.at(ial[4]), v5_m = v_old_m.at(ial[5]), v6_m = v_old_m.at(ial[6]), v7_m = v_old_m.at(ial[7]), v8_m = v_old_m.at(ial[8]), v9_m = v_old_m.at(ial[9]);
+                  //w0_n = w_old_n.at(ial[0]), w1_n = w_old_n.at(ial[1]), w2_n = w_old_n.at(ial[2]), w3_n = w_old_n.at(ial[3]), w4_n = w_old_n.at(ial[4]), w5_n = w_old_n.at(ial[5]), w6_n = w_old_n.at(ial[6]), w7_n = w_old_n.at(ial[7]), w8_n = w_old_n.at(ial[8]), w9_n = w_old_n.at(ial[9]),
+                  //w0_m = w_old_m.at(ial[0]), w1_m = w_old_m.at(ial[1]), w2_m = w_old_m.at(ial[2]), w3_m = w_old_m.at(ial[3]), w4_m = w_old_m.at(ial[4]), w5_m = w_old_m.at(ial[5]), w6_m = w_old_m.at(ial[6]), w7_m = w_old_m.at(ial[7]), w8_m = w_old_m.at(ial[8]), w9_m = w_old_m.at(ial[9]);
+     
+          
     double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
     
     A23 function23[10][10] = {{A23_00,A23_01,A23_02,A23_03,A23_04,A23_05,A23_06,A23_07,A23_08,A23_09},
@@ -1018,15 +947,13 @@ const double dt, const double t, const double mu, const double lambda, const dou
 //A30
 typedef double (*A30) (double x, double y, double z, double a1, double a2, double a3, double b1, double b2, double b3, double c1, double c2, double c3, double dt, double u0_m, double u1_m, double u2_m, double u3_m, double u4_m, double u5_m, double u6_m, double u7_m, double u8_m, double u9_m, double v0_m, double v1_m, double v2_m, double v3_m, double v4_m, double v5_m, double v6_m, double v7_m, double v8_m, double v9_m, 
 double w0_n, double w1_n, double w2_n, double w3_n, double w4_n, double w5_n, double w6_n, double w7_n, double w8_n, double w9_n, double w0_m, double w1_m, double w2_m, double w3_m, double w4_m, double w5_m, double w6_m, double w7_m, double w8_m, double w9_m);
-typedef double (*B3) (double x, double y, double z, double a1, double a2, double a3, double b1, double b2, double b3, double c1, double c2, double c3, double dt, double mu, double lambda, double kp, double r0_n, double r1_n, double r2_n, double r3_n, double r0_m, double r1_m, double r2_m, double r3_m, 
-double u0_n, double u1_n, double u2_n, double u3_n, double u4_n, double u5_n, double u6_n, double u7_n, double u8_n, double u9_n, double u0_m, double u1_m, double u2_m, double u3_m, double u4_m, double u5_m, double u6_m, double u7_m, double u8_m, double u9_m, 
-double v0_n, double v1_n, double v2_n, double v3_n, double v4_n, double v5_n, double v6_n, double v7_n, double v8_n, double v9_n, double v0_m, double v1_m, double v2_m, double v3_m, double v4_m, double v5_m, double v6_m, double v7_m, double v8_m, double v9_m, 
+typedef double (*B3) (double x, double y, double z, double a1, double a2, double a3, double b1, double b2, double b3, double c1, double c2, double c3, double dt, double mu, double lambda, double kp, double r0_m, double r1_m, double r2_m, double r3_m, 
+double u0_m, double u1_m, double u2_m, double u3_m, double u4_m, double u5_m, double u6_m, double u7_m, double u8_m, double u9_m, double v0_m, double v1_m, double v2_m, double v3_m, double v4_m, double v5_m, double v6_m, double v7_m, double v8_m, double v9_m, 
 double w0_n, double w1_n, double w2_n, double w3_n, double w4_n, double w5_n, double w6_n, double w7_n, double w8_n, double w9_n, double w0_m, double w1_m, double w2_m, double w3_m, double w4_m, double w5_m, double w6_m, double w7_m, double w8_m, double w9_m );
 void CalcElem_Navier_Stokes_A30(int const ial[10], double const xc[], double ske[10][4], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
 const double dt, const double t, const double mu, const double lambda, const double kp)
 {
-    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3], i5 = 3 * ial[5], i6 = 3 * ial[6],
-     i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
+    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3];// i5 = 3 * ial[5], i6 = 3 * ial[6], i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
     const double x1 = xc[i1 + 0] - xc[i4 + 0],  y1 = xc[i1 + 1] - xc[i4 + 1], z1 = xc[i1 + 2] - xc[i4 + 2],
                  x2 = xc[i2 + 0] - xc[i4 + 0],  y2 = xc[i2 + 1] - xc[i4 + 1], z2 = xc[i2 + 2] - xc[i4 + 2],
                  x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
@@ -1037,22 +964,17 @@ const double dt, const double t, const double mu, const double lambda, const dou
                  b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
                  c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
     
-    const double r0_n = r_old_n.at(ial[0]), r0_m = r_old_m.at(ial[0]),
-                 r1_n = r_old_n.at(ial[1]), r1_m = r_old_m.at(ial[1]),
-                 r2_n = r_old_n.at(ial[2]), r2_m = r_old_m.at(ial[2]),
-                 r3_n = r_old_n.at(ial[3]), r3_m = r_old_m.at(ial[3]);
-                              
-    const double u0_n = u_old_n.at(ial[0]), u0_m = u_old_m.at(ial[0]), v0_n = v_old_n.at(ial[0]), v0_m = v_old_m.at(ial[0]), w0_n = w_old_n.at(ial[0]), w0_m = w_old_m.at(ial[0]),
-                 u1_n = u_old_n.at(ial[1]), u1_m = u_old_m.at(ial[1]), v1_n = v_old_n.at(ial[1]), v1_m = v_old_m.at(ial[1]), w1_n = w_old_n.at(ial[1]), w1_m = w_old_m.at(ial[1]),
-                 u2_n = u_old_n.at(ial[2]), u2_m = u_old_m.at(ial[2]), v2_n = v_old_n.at(ial[2]), v2_m = v_old_m.at(ial[2]), w2_n = w_old_n.at(ial[2]), w2_m = w_old_m.at(ial[2]),
-                 u3_n = u_old_n.at(ial[3]), u3_m = u_old_m.at(ial[3]), v3_n = v_old_n.at(ial[3]), v3_m = v_old_m.at(ial[3]), w3_n = w_old_n.at(ial[3]), w3_m = w_old_m.at(ial[3]),
-                 u4_n = u_old_n.at(ial[4]), u4_m = u_old_m.at(ial[4]), v4_n = v_old_n.at(ial[4]), v4_m = v_old_m.at(ial[4]), w4_n = w_old_n.at(ial[4]), w4_m = w_old_m.at(ial[4]),
-                 u5_n = u_old_n.at(ial[5]), u5_m = u_old_m.at(ial[5]), v5_n = v_old_n.at(ial[5]), v5_m = v_old_m.at(ial[5]), w5_n = w_old_n.at(ial[5]), w5_m = w_old_m.at(ial[5]),
-                 u6_n = u_old_n.at(ial[6]), u6_m = u_old_m.at(ial[6]), v6_n = v_old_n.at(ial[6]), v6_m = v_old_m.at(ial[6]), w6_n = w_old_n.at(ial[6]), w6_m = w_old_m.at(ial[6]),
-                 u7_n = u_old_n.at(ial[7]), u7_m = u_old_m.at(ial[7]), v7_n = v_old_n.at(ial[7]), v7_m = v_old_m.at(ial[7]), w7_n = w_old_n.at(ial[7]), w7_m = w_old_m.at(ial[7]),
-                 u8_n = u_old_n.at(ial[8]), u8_m = u_old_m.at(ial[8]), v8_n = v_old_n.at(ial[8]), v8_m = v_old_m.at(ial[8]), w8_n = w_old_n.at(ial[8]), w8_m = w_old_m.at(ial[8]),
-                 u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
-                 
+    const double //r0_n = r_old_n.at(ial[0]), r1_n = r_old_n.at(ial[1]), r2_n = r_old_n.at(ial[2]), r3_n = r_old_n.at(ial[3]),
+                 r0_m = r_old_m.at(ial[0]), r1_m = r_old_m.at(ial[1]), r2_m = r_old_m.at(ial[2]), r3_m = r_old_m.at(ial[3]);
+                             
+     const double //u0_n = u_old_n.at(ial[0]), u1_n = u_old_n.at(ial[1]), u2_n = u_old_n.at(ial[2]), u3_n = u_old_n.at(ial[3]), u4_n = u_old_n.at(ial[4]), u5_n = u_old_n.at(ial[5]), u6_n = u_old_n.at(ial[6]), u7_n = u_old_n.at(ial[7]), u8_n = u_old_n.at(ial[8]), u9_n = u_old_n.at(ial[9]),
+                  u0_m = u_old_m.at(ial[0]), u1_m = u_old_m.at(ial[1]), u2_m = u_old_m.at(ial[2]), u3_m = u_old_m.at(ial[3]), u4_m = u_old_m.at(ial[4]), u5_m = u_old_m.at(ial[5]), u6_m = u_old_m.at(ial[6]), u7_m = u_old_m.at(ial[7]), u8_m = u_old_m.at(ial[8]), u9_m = u_old_m.at(ial[9]),
+                  //v0_n = v_old_n.at(ial[0]), v1_n = v_old_n.at(ial[1]), v2_n = v_old_n.at(ial[2]), v3_n = v_old_n.at(ial[3]), v4_n = v_old_n.at(ial[4]), v5_n = v_old_n.at(ial[5]), v6_n = v_old_n.at(ial[6]), v7_n = v_old_n.at(ial[7]), v8_n = v_old_n.at(ial[8]), v9_n = v_old_n.at(ial[9]),
+                  v0_m = v_old_m.at(ial[0]), v1_m = v_old_m.at(ial[1]), v2_m = v_old_m.at(ial[2]), v3_m = v_old_m.at(ial[3]), v4_m = v_old_m.at(ial[4]), v5_m = v_old_m.at(ial[5]), v6_m = v_old_m.at(ial[6]), v7_m = v_old_m.at(ial[7]), v8_m = v_old_m.at(ial[8]), v9_m = v_old_m.at(ial[9]),
+                  w0_n = w_old_n.at(ial[0]), w1_n = w_old_n.at(ial[1]), w2_n = w_old_n.at(ial[2]), w3_n = w_old_n.at(ial[3]), w4_n = w_old_n.at(ial[4]), w5_n = w_old_n.at(ial[5]), w6_n = w_old_n.at(ial[6]), w7_n = w_old_n.at(ial[7]), w8_n = w_old_n.at(ial[8]), w9_n = w_old_n.at(ial[9]),
+                  w0_m = w_old_m.at(ial[0]), w1_m = w_old_m.at(ial[1]), w2_m = w_old_m.at(ial[2]), w3_m = w_old_m.at(ial[3]), w4_m = w_old_m.at(ial[4]), w5_m = w_old_m.at(ial[5]), w6_m = w_old_m.at(ial[6]), w7_m = w_old_m.at(ial[7]), w8_m = w_old_m.at(ial[8]), w9_m = w_old_m.at(ial[9]);
+     
+           
     double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
     
     A30 function30[10][4] = {{A30_00,A30_01,A30_02,A30_03},
@@ -1092,34 +1014,20 @@ const double dt, const double t, const double mu, const double lambda, const dou
              
       for(int i=0; i<=9; ++i)
       {
-			  fe[i]=jac*(0.01878132*(function3[i](a,a,a, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp, r0_n, r1_n, r2_n, r3_n, r0_m, r1_m, r2_m, r3_m, u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n, u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m, v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n, v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m, 
-w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n, w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m) 
-			      +function3[i](b,a,a, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp, r0_n, r1_n, r2_n, r3_n, r0_m, r1_m, r2_m, r3_m, u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n, u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m, v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n, v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m, 
-w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n, w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m) 
-			      +function3[i](a,b,a, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp, r0_n, r1_n, r2_n, r3_n, r0_m, r1_m, r2_m, r3_m, u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n, u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m, v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n, v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m, 
-w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n, w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m) 
-			      +function3[i](a,a,b, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp, r0_n, r1_n, r2_n, r3_n, r0_m, r1_m, r2_m, r3_m, u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n, u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m, v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n, v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m, 
-w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n, w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m)) 
-			      +0.01224884*(function3[i](c,c,c, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp, r0_n, r1_n, r2_n, r3_n, r0_m, r1_m, r2_m, r3_m, u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n, u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m, v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n, v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m, 
-w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n, w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m) 
-			      +function3[i](d,c,c, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp, r0_n, r1_n, r2_n, r3_n, r0_m, r1_m, r2_m, r3_m, u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n, u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m, v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n, v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m, 
-w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n, w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m) 
-			      +function3[i](c,d,c, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp, r0_n, r1_n, r2_n, r3_n, r0_m, r1_m, r2_m, r3_m, u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n, u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m, v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n, v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m, 
-w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n, w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m) 
-			      +function3[i](c,c,d, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp, r0_n, r1_n, r2_n, r3_n, r0_m, r1_m, r2_m, r3_m, u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n, u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m, v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n, v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m, 
-w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n, w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m))
-			      +0.007091003*(function3[i](f,e,e, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp, r0_n, r1_n, r2_n, r3_n, r0_m, r1_m, r2_m, r3_m, u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n, u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m, v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n, v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m, 
-w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n, w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m) 
-			      + function3[i](e,f,e, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp, r0_n, r1_n, r2_n, r3_n, r0_m, r1_m, r2_m, r3_m, u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n, u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m, v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n, v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m, 
-w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n, w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m) 
-			      +function3[i](e,e,f, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp, r0_n, r1_n, r2_n, r3_n, r0_m, r1_m, r2_m, r3_m, u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n, u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m, v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n, v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m, 
-w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n, w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m) 
-			      +function3[i](e,f,f, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp, r0_n, r1_n, r2_n, r3_n, r0_m, r1_m, r2_m, r3_m, u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n, u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m, v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n, v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m, 
-w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n, w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m)
-			      + function3[i](f,e,f, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp, r0_n, r1_n, r2_n, r3_n, r0_m, r1_m, r2_m, r3_m, u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n, u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m, v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n, v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m, 
-w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n, w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m) 
-			      +function3[i](f,f,e, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp, r0_n, r1_n, r2_n, r3_n, r0_m, r1_m, r2_m, r3_m, u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n, u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m, v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n, v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m, 
-w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n, w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m)));
+			  fe[i]=jac*(0.01878132*(function3[i](a,a,a,a1,a2,a3,b1,b2,b3,c1,c2,c3,dt,mu,lambda,kp,r0_m,r1_m,r2_m,r3_m,u0_m,u1_m,u2_m,u3_m,u4_m,u5_m,u6_m,u7_m,u8_m,u9_m,v0_m,v1_m,v2_m,v3_m,v4_m,v5_m,v6_m,v7_m,v8_m,v9_m,w0_n,w1_n,w2_n,w3_n,w4_n,w5_n,w6_n,w7_n,w8_n,w9_n,w0_m,w1_m,w2_m,w3_m,w4_m,w5_m,w6_m,w7_m,w8_m,w9_m) 
+			      +function3[i](b,a,a,a1,a2,a3,b1,b2,b3,c1,c2,c3,dt,mu,lambda,kp,r0_m,r1_m,r2_m,r3_m,u0_m,u1_m,u2_m,u3_m,u4_m,u5_m,u6_m,u7_m,u8_m,u9_m,v0_m,v1_m,v2_m,v3_m,v4_m,v5_m,v6_m,v7_m,v8_m,v9_m,w0_n,w1_n,w2_n,w3_n,w4_n,w5_n,w6_n,w7_n,w8_n,w9_n,w0_m,w1_m,w2_m,w3_m,w4_m,w5_m,w6_m,w7_m,w8_m,w9_m) 
+			      +function3[i](a,b,a,a1,a2,a3,b1,b2,b3,c1,c2,c3,dt,mu,lambda,kp,r0_m,r1_m,r2_m,r3_m,u0_m,u1_m,u2_m,u3_m,u4_m,u5_m,u6_m,u7_m,u8_m,u9_m,v0_m,v1_m,v2_m,v3_m,v4_m,v5_m,v6_m,v7_m,v8_m,v9_m,w0_n,w1_n,w2_n,w3_n,w4_n,w5_n,w6_n,w7_n,w8_n,w9_n,w0_m,w1_m,w2_m,w3_m,w4_m,w5_m,w6_m,w7_m,w8_m,w9_m) 
+			      +function3[i](a,a,b,a1,a2,a3,b1,b2,b3,c1,c2,c3,dt,mu,lambda,kp,r0_m,r1_m,r2_m,r3_m,u0_m,u1_m,u2_m,u3_m,u4_m,u5_m,u6_m,u7_m,u8_m,u9_m,v0_m,v1_m,v2_m,v3_m,v4_m,v5_m,v6_m,v7_m,v8_m,v9_m,w0_n,w1_n,w2_n,w3_n,w4_n,w5_n,w6_n,w7_n,w8_n,w9_n,w0_m,w1_m,w2_m,w3_m,w4_m,w5_m,w6_m,w7_m,w8_m,w9_m)) 
+			      +0.01224884*(function3[i](c,c,c,a1,a2,a3,b1,b2,b3,c1,c2,c3,dt,mu,lambda,kp,r0_m,r1_m,r2_m,r3_m,u0_m,u1_m,u2_m,u3_m,u4_m,u5_m,u6_m,u7_m,u8_m,u9_m,v0_m,v1_m,v2_m,v3_m,v4_m,v5_m,v6_m,v7_m,v8_m,v9_m,w0_n,w1_n,w2_n,w3_n,w4_n,w5_n,w6_n,w7_n,w8_n,w9_n,w0_m,w1_m,w2_m,w3_m,w4_m,w5_m,w6_m,w7_m,w8_m,w9_m) 
+			      +function3[i](d,c,c,a1,a2,a3,b1,b2,b3,c1,c2,c3,dt,mu,lambda,kp,r0_m,r1_m,r2_m,r3_m,u0_m,u1_m,u2_m,u3_m,u4_m,u5_m,u6_m,u7_m,u8_m,u9_m,v0_m,v1_m,v2_m,v3_m,v4_m,v5_m,v6_m,v7_m,v8_m,v9_m,w0_n,w1_n,w2_n,w3_n,w4_n,w5_n,w6_n,w7_n,w8_n,w9_n,w0_m,w1_m,w2_m,w3_m,w4_m,w5_m,w6_m,w7_m,w8_m,w9_m) 
+			      +function3[i](c,d,c,a1,a2,a3,b1,b2,b3,c1,c2,c3,dt,mu,lambda,kp,r0_m,r1_m,r2_m,r3_m,u0_m,u1_m,u2_m,u3_m,u4_m,u5_m,u6_m,u7_m,u8_m,u9_m,v0_m,v1_m,v2_m,v3_m,v4_m,v5_m,v6_m,v7_m,v8_m,v9_m,w0_n,w1_n,w2_n,w3_n,w4_n,w5_n,w6_n,w7_n,w8_n,w9_n,w0_m,w1_m,w2_m,w3_m,w4_m,w5_m,w6_m,w7_m,w8_m,w9_m) 
+			      +function3[i](c,c,d,a1,a2,a3,b1,b2,b3,c1,c2,c3,dt,mu,lambda,kp,r0_m,r1_m,r2_m,r3_m,u0_m,u1_m,u2_m,u3_m,u4_m,u5_m,u6_m,u7_m,u8_m,u9_m,v0_m,v1_m,v2_m,v3_m,v4_m,v5_m,v6_m,v7_m,v8_m,v9_m,w0_n,w1_n,w2_n,w3_n,w4_n,w5_n,w6_n,w7_n,w8_n,w9_n,w0_m,w1_m,w2_m,w3_m,w4_m,w5_m,w6_m,w7_m,w8_m,w9_m))
+			      +0.007091003*(function3[i](f,e,e,a1,a2,a3,b1,b2,b3,c1,c2,c3,dt,mu,lambda,kp,r0_m,r1_m,r2_m,r3_m,u0_m,u1_m,u2_m,u3_m,u4_m,u5_m,u6_m,u7_m,u8_m,u9_m,v0_m,v1_m,v2_m,v3_m,v4_m,v5_m,v6_m,v7_m,v8_m,v9_m,w0_n,w1_n,w2_n,w3_n,w4_n,w5_n,w6_n,w7_n,w8_n,w9_n,w0_m,w1_m,w2_m,w3_m,w4_m,w5_m,w6_m,w7_m,w8_m,w9_m) 
+			      + function3[i](e,f,e,a1,a2,a3,b1,b2,b3,c1,c2,c3,dt,mu,lambda,kp,r0_m,r1_m,r2_m,r3_m,u0_m,u1_m,u2_m,u3_m,u4_m,u5_m,u6_m,u7_m,u8_m,u9_m,v0_m,v1_m,v2_m,v3_m,v4_m,v5_m,v6_m,v7_m,v8_m,v9_m,w0_n,w1_n,w2_n,w3_n,w4_n,w5_n,w6_n,w7_n,w8_n,w9_n,w0_m,w1_m,w2_m,w3_m,w4_m,w5_m,w6_m,w7_m,w8_m,w9_m) 
+			      +function3[i](e,e,f,a1,a2,a3,b1,b2,b3,c1,c2,c3,dt,mu,lambda,kp,r0_m,r1_m,r2_m,r3_m,u0_m,u1_m,u2_m,u3_m,u4_m,u5_m,u6_m,u7_m,u8_m,u9_m,v0_m,v1_m,v2_m,v3_m,v4_m,v5_m,v6_m,v7_m,v8_m,v9_m,w0_n,w1_n,w2_n,w3_n,w4_n,w5_n,w6_n,w7_n,w8_n,w9_n,w0_m,w1_m,w2_m,w3_m,w4_m,w5_m,w6_m,w7_m,w8_m,w9_m) 
+			      +function3[i](e,f,f,a1,a2,a3,b1,b2,b3,c1,c2,c3,dt,mu,lambda,kp,r0_m,r1_m,r2_m,r3_m,u0_m,u1_m,u2_m,u3_m,u4_m,u5_m,u6_m,u7_m,u8_m,u9_m,v0_m,v1_m,v2_m,v3_m,v4_m,v5_m,v6_m,v7_m,v8_m,v9_m,w0_n,w1_n,w2_n,w3_n,w4_n,w5_n,w6_n,w7_n,w8_n,w9_n,w0_m,w1_m,w2_m,w3_m,w4_m,w5_m,w6_m,w7_m,w8_m,w9_m)
+			      + function3[i](f,e,f,a1,a2,a3,b1,b2,b3,c1,c2,c3,dt,mu,lambda,kp,r0_m,r1_m,r2_m,r3_m,u0_m,u1_m,u2_m,u3_m,u4_m,u5_m,u6_m,u7_m,u8_m,u9_m,v0_m,v1_m,v2_m,v3_m,v4_m,v5_m,v6_m,v7_m,v8_m,v9_m,w0_n,w1_n,w2_n,w3_n,w4_n,w5_n,w6_n,w7_n,w8_n,w9_n,w0_m,w1_m,w2_m,w3_m,w4_m,w5_m,w6_m,w7_m,w8_m,w9_m) 
+			      +function3[i](f,f,e,a1,a2,a3,b1,b2,b3,c1,c2,c3,dt,mu,lambda,kp,r0_m,r1_m,r2_m,r3_m,u0_m,u1_m,u2_m,u3_m,u4_m,u5_m,u6_m,u7_m,u8_m,u9_m,v0_m,v1_m,v2_m,v3_m,v4_m,v5_m,v6_m,v7_m,v8_m,v9_m,w0_n,w1_n,w2_n,w3_n,w4_n,w5_n,w6_n,w7_n,w8_n,w9_n,w0_m,w1_m,w2_m,w3_m,w4_m,w5_m,w6_m,w7_m,w8_m,w9_m)));
 	   }
 
   
@@ -1130,8 +1038,7 @@ double w0_m, double w1_m, double w2_m, double w3_m, double w4_m, double w5_m, do
 void CalcElem_Navier_Stokes_A31(int const ial[10], double const xc[], double ske[10][10], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
 const double dt, const double t, const double mu, const double lambda, const double kp)
 {
-    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3], i5 = 3 * ial[5], i6 = 3 * ial[6],
-     i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
+    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3];//i5 = 3 * ial[5], i6 = 3 * ial[6], i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
     const double x1 = xc[i1 + 0] - xc[i4 + 0],  y1 = xc[i1 + 1] - xc[i4 + 1], z1 = xc[i1 + 2] - xc[i4 + 2],
                  x2 = xc[i2 + 0] - xc[i4 + 0],  y2 = xc[i2 + 1] - xc[i4 + 1], z2 = xc[i2 + 2] - xc[i4 + 2],
                  x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
@@ -1139,25 +1046,20 @@ const double dt, const double t, const double mu, const double lambda, const dou
     const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
     //coefficients for derivatives
     const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
-                 b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
+                 //b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
                  c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
      
-     const double r0_n = r_old_n.at(ial[0]), r0_m = r_old_m.at(ial[0]),
-                 r1_n = r_old_n.at(ial[1]), r1_m = r_old_m.at(ial[1]),
-                 r2_n = r_old_n.at(ial[2]), r2_m = r_old_m.at(ial[2]),
-                 r3_n = r_old_n.at(ial[3]), r3_m = r_old_m.at(ial[3]);
+     const double //r0_n = r_old_n.at(ial[0]), r1_n = r_old_n.at(ial[1]), r2_n = r_old_n.at(ial[2]), r3_n = r_old_n.at(ial[3]),
+                 r0_m = r_old_m.at(ial[0]), r1_m = r_old_m.at(ial[1]), r2_m = r_old_m.at(ial[2]), r3_m = r_old_m.at(ial[3]);
                              
-     const double u0_n = u_old_n.at(ial[0]), u0_m = u_old_m.at(ial[0]), v0_n = v_old_n.at(ial[0]), v0_m = v_old_m.at(ial[0]), w0_n = w_old_n.at(ial[0]), w0_m = w_old_m.at(ial[0]),
-                 u1_n = u_old_n.at(ial[1]), u1_m = u_old_m.at(ial[1]), v1_n = v_old_n.at(ial[1]), v1_m = v_old_m.at(ial[1]), w1_n = w_old_n.at(ial[1]), w1_m = w_old_m.at(ial[1]),
-                 u2_n = u_old_n.at(ial[2]), u2_m = u_old_m.at(ial[2]), v2_n = v_old_n.at(ial[2]), v2_m = v_old_m.at(ial[2]), w2_n = w_old_n.at(ial[2]), w2_m = w_old_m.at(ial[2]),
-                 u3_n = u_old_n.at(ial[3]), u3_m = u_old_m.at(ial[3]), v3_n = v_old_n.at(ial[3]), v3_m = v_old_m.at(ial[3]), w3_n = w_old_n.at(ial[3]), w3_m = w_old_m.at(ial[3]),
-                 u4_n = u_old_n.at(ial[4]), u4_m = u_old_m.at(ial[4]), v4_n = v_old_n.at(ial[4]), v4_m = v_old_m.at(ial[4]), w4_n = w_old_n.at(ial[4]), w4_m = w_old_m.at(ial[4]),
-                 u5_n = u_old_n.at(ial[5]), u5_m = u_old_m.at(ial[5]), v5_n = v_old_n.at(ial[5]), v5_m = v_old_m.at(ial[5]), w5_n = w_old_n.at(ial[5]), w5_m = w_old_m.at(ial[5]),
-                 u6_n = u_old_n.at(ial[6]), u6_m = u_old_m.at(ial[6]), v6_n = v_old_n.at(ial[6]), v6_m = v_old_m.at(ial[6]), w6_n = w_old_n.at(ial[6]), w6_m = w_old_m.at(ial[6]),
-                 u7_n = u_old_n.at(ial[7]), u7_m = u_old_m.at(ial[7]), v7_n = v_old_n.at(ial[7]), v7_m = v_old_m.at(ial[7]), w7_n = w_old_n.at(ial[7]), w7_m = w_old_m.at(ial[7]),
-                 u8_n = u_old_n.at(ial[8]), u8_m = u_old_m.at(ial[8]), v8_n = v_old_n.at(ial[8]), v8_m = v_old_m.at(ial[8]), w8_n = w_old_n.at(ial[8]), w8_m = w_old_m.at(ial[8]),
-                 u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
-                 
+     const double //u0_n = u_old_n.at(ial[0]), u1_n = u_old_n.at(ial[1]), u2_n = u_old_n.at(ial[2]), u3_n = u_old_n.at(ial[3]), u4_n = u_old_n.at(ial[4]), u5_n = u_old_n.at(ial[5]), u6_n = u_old_n.at(ial[6]), u7_n = u_old_n.at(ial[7]), u8_n = u_old_n.at(ial[8]), u9_n = u_old_n.at(ial[9]),
+                  //u0_m = u_old_m.at(ial[0]), u1_m = u_old_m.at(ial[1]), u2_m = u_old_m.at(ial[2]), u3_m = u_old_m.at(ial[3]), u4_m = u_old_m.at(ial[4]), u5_m = u_old_m.at(ial[5]), u6_m = u_old_m.at(ial[6]), u7_m = u_old_m.at(ial[7]), u8_m = u_old_m.at(ial[8]), u9_m = u_old_m.at(ial[9]),
+                  //v0_n = v_old_n.at(ial[0]), v1_n = v_old_n.at(ial[1]), v2_n = v_old_n.at(ial[2]), v3_n = v_old_n.at(ial[3]), v4_n = v_old_n.at(ial[4]), v5_n = v_old_n.at(ial[5]), v6_n = v_old_n.at(ial[6]), v7_n = v_old_n.at(ial[7]), v8_n = v_old_n.at(ial[8]), v9_n = v_old_n.at(ial[9]),
+                  //v0_m = v_old_m.at(ial[0]), v1_m = v_old_m.at(ial[1]), v2_m = v_old_m.at(ial[2]), v3_m = v_old_m.at(ial[3]), v4_m = v_old_m.at(ial[4]), v5_m = v_old_m.at(ial[5]), v6_m = v_old_m.at(ial[6]), v7_m = v_old_m.at(ial[7]), v8_m = v_old_m.at(ial[8]), v9_m = v_old_m.at(ial[9]),
+                  //w0_n = w_old_n.at(ial[0]), w1_n = w_old_n.at(ial[1]), w2_n = w_old_n.at(ial[2]), w3_n = w_old_n.at(ial[3]), w4_n = w_old_n.at(ial[4]), w5_n = w_old_n.at(ial[5]), w6_n = w_old_n.at(ial[6]), w7_n = w_old_n.at(ial[7]), w8_n = w_old_n.at(ial[8]), w9_n = w_old_n.at(ial[9]),
+                  w0_m = w_old_m.at(ial[0]), w1_m = w_old_m.at(ial[1]), w2_m = w_old_m.at(ial[2]), w3_m = w_old_m.at(ial[3]), w4_m = w_old_m.at(ial[4]), w5_m = w_old_m.at(ial[5]), w6_m = w_old_m.at(ial[6]), w7_m = w_old_m.at(ial[7]), w8_m = w_old_m.at(ial[8]), w9_m = w_old_m.at(ial[9]);
+     
+      
      double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
      
      A31 function31[10][10] = {{A31_00,A31_01,A31_02,A31_03,A31_04,A31_05,A31_06,A31_07,A31_08,A31_09},
@@ -1200,34 +1102,28 @@ double v0_m, double v1_m, double v2_m, double v3_m, double v4_m, double v5_m, do
 void CalcElem_Navier_Stokes_A32(int const ial[10], double const xc[], double ske[10][10], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
 const double dt, const double t, const double mu, const double lambda, const double kp)
 {
-    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3], i5 = 3 * ial[5], i6 = 3 * ial[6],
-     i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
+    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3];// i5 = 3 * ial[5], i6 = 3 * ial[6], i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
     const double x1 = xc[i1 + 0] - xc[i4 + 0],  y1 = xc[i1 + 1] - xc[i4 + 1], z1 = xc[i1 + 2] - xc[i4 + 2],
                  x2 = xc[i2 + 0] - xc[i4 + 0],  y2 = xc[i2 + 1] - xc[i4 + 1], z2 = xc[i2 + 2] - xc[i4 + 2],
                  x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
                  
     const double jac = fabs(x1*y2*z3 - x1*y3*z2 - x2*y1*z3 + x2*y3*z1 + x3*y1*z2 - x3*y2*z1);
     //coefficients for derivatives
-    const double a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
+    const double //a1 = (y2*z3-y3*z2)/jac, a2 = (y3*z1-y1*z3)/jac, a3 = (y1*z2-y2*z1)/jac, 
                  b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
                  c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
     
-    const double r0_n = r_old_n.at(ial[0]), r0_m = r_old_m.at(ial[0]),
-                 r1_n = r_old_n.at(ial[1]), r1_m = r_old_m.at(ial[1]),
-                 r2_n = r_old_n.at(ial[2]), r2_m = r_old_m.at(ial[2]),
-                 r3_n = r_old_n.at(ial[3]), r3_m = r_old_m.at(ial[3]);
-                 
-    const double u0_n = u_old_n.at(ial[0]), u0_m = u_old_m.at(ial[0]), v0_n = v_old_n.at(ial[0]), v0_m = v_old_m.at(ial[0]), w0_n = w_old_n.at(ial[0]), w0_m = w_old_m.at(ial[0]),
-                 u1_n = u_old_n.at(ial[1]), u1_m = u_old_m.at(ial[1]), v1_n = v_old_n.at(ial[1]), v1_m = v_old_m.at(ial[1]), w1_n = w_old_n.at(ial[1]), w1_m = w_old_m.at(ial[1]),
-                 u2_n = u_old_n.at(ial[2]), u2_m = u_old_m.at(ial[2]), v2_n = v_old_n.at(ial[2]), v2_m = v_old_m.at(ial[2]), w2_n = w_old_n.at(ial[2]), w2_m = w_old_m.at(ial[2]),
-                 u3_n = u_old_n.at(ial[3]), u3_m = u_old_m.at(ial[3]), v3_n = v_old_n.at(ial[3]), v3_m = v_old_m.at(ial[3]), w3_n = w_old_n.at(ial[3]), w3_m = w_old_m.at(ial[3]),
-                 u4_n = u_old_n.at(ial[4]), u4_m = u_old_m.at(ial[4]), v4_n = v_old_n.at(ial[4]), v4_m = v_old_m.at(ial[4]), w4_n = w_old_n.at(ial[4]), w4_m = w_old_m.at(ial[4]),
-                 u5_n = u_old_n.at(ial[5]), u5_m = u_old_m.at(ial[5]), v5_n = v_old_n.at(ial[5]), v5_m = v_old_m.at(ial[5]), w5_n = w_old_n.at(ial[5]), w5_m = w_old_m.at(ial[5]),
-                 u6_n = u_old_n.at(ial[6]), u6_m = u_old_m.at(ial[6]), v6_n = v_old_n.at(ial[6]), v6_m = v_old_m.at(ial[6]), w6_n = w_old_n.at(ial[6]), w6_m = w_old_m.at(ial[6]),
-                 u7_n = u_old_n.at(ial[7]), u7_m = u_old_m.at(ial[7]), v7_n = v_old_n.at(ial[7]), v7_m = v_old_m.at(ial[7]), w7_n = w_old_n.at(ial[7]), w7_m = w_old_m.at(ial[7]),
-                 u8_n = u_old_n.at(ial[8]), u8_m = u_old_m.at(ial[8]), v8_n = v_old_n.at(ial[8]), v8_m = v_old_m.at(ial[8]), w8_n = w_old_n.at(ial[8]), w8_m = w_old_m.at(ial[8]),
-                 u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
-                 
+    const double //r0_n = r_old_n.at(ial[0]), r1_n = r_old_n.at(ial[1]), r2_n = r_old_n.at(ial[2]), r3_n = r_old_n.at(ial[3]),
+                 r0_m = r_old_m.at(ial[0]), r1_m = r_old_m.at(ial[1]), r2_m = r_old_m.at(ial[2]), r3_m = r_old_m.at(ial[3]);
+                             
+     const double //u0_n = u_old_n.at(ial[0]), u1_n = u_old_n.at(ial[1]), u2_n = u_old_n.at(ial[2]), u3_n = u_old_n.at(ial[3]), u4_n = u_old_n.at(ial[4]), u5_n = u_old_n.at(ial[5]), u6_n = u_old_n.at(ial[6]), u7_n = u_old_n.at(ial[7]), u8_n = u_old_n.at(ial[8]), u9_n = u_old_n.at(ial[9]),
+                  //u0_m = u_old_m.at(ial[0]), u1_m = u_old_m.at(ial[1]), u2_m = u_old_m.at(ial[2]), u3_m = u_old_m.at(ial[3]), u4_m = u_old_m.at(ial[4]), u5_m = u_old_m.at(ial[5]), u6_m = u_old_m.at(ial[6]), u7_m = u_old_m.at(ial[7]), u8_m = u_old_m.at(ial[8]), u9_m = u_old_m.at(ial[9]),
+                  //v0_n = v_old_n.at(ial[0]), v1_n = v_old_n.at(ial[1]), v2_n = v_old_n.at(ial[2]), v3_n = v_old_n.at(ial[3]), v4_n = v_old_n.at(ial[4]), v5_n = v_old_n.at(ial[5]), v6_n = v_old_n.at(ial[6]), v7_n = v_old_n.at(ial[7]), v8_n = v_old_n.at(ial[8]), v9_n = v_old_n.at(ial[9]),
+                  v0_m = v_old_m.at(ial[0]), v1_m = v_old_m.at(ial[1]), v2_m = v_old_m.at(ial[2]), v3_m = v_old_m.at(ial[3]), v4_m = v_old_m.at(ial[4]), v5_m = v_old_m.at(ial[5]), v6_m = v_old_m.at(ial[6]), v7_m = v_old_m.at(ial[7]), v8_m = v_old_m.at(ial[8]), v9_m = v_old_m.at(ial[9]);
+                  //w0_n = w_old_n.at(ial[0]), w1_n = w_old_n.at(ial[1]), w2_n = w_old_n.at(ial[2]), w3_n = w_old_n.at(ial[3]), w4_n = w_old_n.at(ial[4]), w5_n = w_old_n.at(ial[5]), w6_n = w_old_n.at(ial[6]), w7_n = w_old_n.at(ial[7]), w8_n = w_old_n.at(ial[8]), w9_n = w_old_n.at(ial[9]),
+                  //w0_m = w_old_m.at(ial[0]), w1_m = w_old_m.at(ial[1]), w2_m = w_old_m.at(ial[2]), w3_m = w_old_m.at(ial[3]), w4_m = w_old_m.at(ial[4]), w5_m = w_old_m.at(ial[5]), w6_m = w_old_m.at(ial[6]), w7_m = w_old_m.at(ial[7]), w8_m = w_old_m.at(ial[8]), w9_m = w_old_m.at(ial[9]);
+     
+       
     double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
     
     A32 function32[10][10] = { {A32_00,A32_01,A32_02,A32_03,A32_04,A32_05,A32_06,A32_07,A32_08,A32_09},
@@ -1265,15 +1161,13 @@ const double dt, const double t, const double mu, const double lambda, const dou
    
 }
 //A33
-typedef double (*A33) (double x, double y, double z, double a1, double a2, double a3, double b1, double b2, double b3, double c1, double c2, double c3, double dt, double mu, double lambda, double kp, double r0_n, double r1_n, double r2_n, double r3_n, double r0_m, double r1_m, double r2_m, double r3_m, 
-double u0_n, double u1_n, double u2_n, double u3_n, double u4_n, double u5_n, double u6_n, double u7_n, double u8_n, double u9_n, double u0_m, double u1_m, double u2_m, double u3_m, double u4_m, double u5_m, double u6_m, double u7_m, double u8_m, double u9_m, 
-double v0_n, double v1_n, double v2_n, double v3_n, double v4_n, double v5_n, double v6_n, double v7_n, double v8_n, double v9_n, double v0_m, double v1_m, double v2_m, double v3_m, double v4_m, double v5_m, double v6_m, double v7_m, double v8_m, double v9_m, 
-double w0_n, double w1_n, double w2_n, double w3_n, double w4_n, double w5_n, double w6_n, double w7_n, double w8_n, double w9_n, double w0_m, double w1_m, double w2_m, double w3_m, double w4_m, double w5_m, double w6_m, double w7_m, double w8_m, double w9_m);
+typedef double (*A33) (double x, double y, double z, double a1, double a2, double a3, double b1, double b2, double b3, double c1, double c2, double c3, double dt, double mu, double lambda, double kp, double r0_m, double r1_m, double r2_m, double r3_m, 
+double u0_m, double u1_m, double u2_m, double u3_m, double u4_m, double u5_m, double u6_m, double u7_m, double u8_m, double u9_m, double v0_m, double v1_m, double v2_m, double v3_m, double v4_m, double v5_m, double v6_m, double v7_m, double v8_m, double v9_m, 
+double w0_m, double w1_m, double w2_m, double w3_m, double w4_m, double w5_m, double w6_m, double w7_m, double w8_m, double w9_m);
 void CalcElem_Navier_Stokes_A33(int const ial[10], double const xc[], double ske[10][10], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
 const double dt, const double t, const double mu, const double lambda, const double kp)
 {
-    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3], i5 = 3 * ial[5], i6 = 3 * ial[6],
-     i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
+    const int    i1  = 3 * ial[0],   i2 = 3 * ial[1],   i3 = 3 * ial[2], i4 = 3 * ial[3];// i5 = 3 * ial[5], i6 = 3 * ial[6], i7 = 3 * ial[7], i8 = 3 * ial[8], i9 = 3 * ial[9], i10 = 3 * ial[10];
     const double x1 = xc[i1 + 0] - xc[i4 + 0],  y1 = xc[i1 + 1] - xc[i4 + 1], z1 = xc[i1 + 2] - xc[i4 + 2],
                  x2 = xc[i2 + 0] - xc[i4 + 0],  y2 = xc[i2 + 1] - xc[i4 + 1], z2 = xc[i2 + 2] - xc[i4 + 2],
                  x3 = xc[i3 + 0] - xc[i4 + 0],  y3 = xc[i3 + 1] - xc[i4 + 1], z3 = xc[i3 + 2] - xc[i4 + 2];
@@ -1284,22 +1178,17 @@ const double dt, const double t, const double mu, const double lambda, const dou
                  b1 = (x3*z2-x2*z3)/jac, b2 = (x3*y1-x1*y3)/jac, b3 = (x2*z1-x1*z2)/jac, 
                  c1 = (x2*y3-x3*y2)/jac, c2 = (x1*z3-x3*z1)/jac, c3 = (x1*y2-x2*y1)/jac;
      
-     const double r0_n = r_old_n.at(ial[0]), r0_m = r_old_m.at(ial[0]),
-                 r1_n = r_old_n.at(ial[1]), r1_m = r_old_m.at(ial[1]),
-                 r2_n = r_old_n.at(ial[2]), r2_m = r_old_m.at(ial[2]),
-                 r3_n = r_old_n.at(ial[3]), r3_m = r_old_m.at(ial[3]);
-                 
-     const double u0_n = u_old_n.at(ial[0]), u0_m = u_old_m.at(ial[0]), v0_n = v_old_n.at(ial[0]), v0_m = v_old_m.at(ial[0]), w0_n = w_old_n.at(ial[0]), w0_m = w_old_m.at(ial[0]),
-                 u1_n = u_old_n.at(ial[1]), u1_m = u_old_m.at(ial[1]), v1_n = v_old_n.at(ial[1]), v1_m = v_old_m.at(ial[1]), w1_n = w_old_n.at(ial[1]), w1_m = w_old_m.at(ial[1]),
-                 u2_n = u_old_n.at(ial[2]), u2_m = u_old_m.at(ial[2]), v2_n = v_old_n.at(ial[2]), v2_m = v_old_m.at(ial[2]), w2_n = w_old_n.at(ial[2]), w2_m = w_old_m.at(ial[2]),
-                 u3_n = u_old_n.at(ial[3]), u3_m = u_old_m.at(ial[3]), v3_n = v_old_n.at(ial[3]), v3_m = v_old_m.at(ial[3]), w3_n = w_old_n.at(ial[3]), w3_m = w_old_m.at(ial[3]),
-                 u4_n = u_old_n.at(ial[4]), u4_m = u_old_m.at(ial[4]), v4_n = v_old_n.at(ial[4]), v4_m = v_old_m.at(ial[4]), w4_n = w_old_n.at(ial[4]), w4_m = w_old_m.at(ial[4]),
-                 u5_n = u_old_n.at(ial[5]), u5_m = u_old_m.at(ial[5]), v5_n = v_old_n.at(ial[5]), v5_m = v_old_m.at(ial[5]), w5_n = w_old_n.at(ial[5]), w5_m = w_old_m.at(ial[5]),
-                 u6_n = u_old_n.at(ial[6]), u6_m = u_old_m.at(ial[6]), v6_n = v_old_n.at(ial[6]), v6_m = v_old_m.at(ial[6]), w6_n = w_old_n.at(ial[6]), w6_m = w_old_m.at(ial[6]),
-                 u7_n = u_old_n.at(ial[7]), u7_m = u_old_m.at(ial[7]), v7_n = v_old_n.at(ial[7]), v7_m = v_old_m.at(ial[7]), w7_n = w_old_n.at(ial[7]), w7_m = w_old_m.at(ial[7]),
-                 u8_n = u_old_n.at(ial[8]), u8_m = u_old_m.at(ial[8]), v8_n = v_old_n.at(ial[8]), v8_m = v_old_m.at(ial[8]), w8_n = w_old_n.at(ial[8]), w8_m = w_old_m.at(ial[8]),
-                 u9_n = u_old_n.at(ial[9]), u9_m = u_old_m.at(ial[9]), v9_n = v_old_n.at(ial[9]), v9_m = v_old_m.at(ial[9]), w9_n = w_old_n.at(ial[9]), w9_m = w_old_m.at(ial[9]);
-                 
+     const double //r0_n = r_old_n.at(ial[0]), r1_n = r_old_n.at(ial[1]), r2_n = r_old_n.at(ial[2]), r3_n = r_old_n.at(ial[3]),
+                 r0_m = r_old_m.at(ial[0]), r1_m = r_old_m.at(ial[1]), r2_m = r_old_m.at(ial[2]), r3_m = r_old_m.at(ial[3]);
+                             
+     const double //u0_n = u_old_n.at(ial[0]), u1_n = u_old_n.at(ial[1]), u2_n = u_old_n.at(ial[2]), u3_n = u_old_n.at(ial[3]), u4_n = u_old_n.at(ial[4]), u5_n = u_old_n.at(ial[5]), u6_n = u_old_n.at(ial[6]), u7_n = u_old_n.at(ial[7]), u8_n = u_old_n.at(ial[8]), u9_n = u_old_n.at(ial[9]),
+                  u0_m = u_old_m.at(ial[0]), u1_m = u_old_m.at(ial[1]), u2_m = u_old_m.at(ial[2]), u3_m = u_old_m.at(ial[3]), u4_m = u_old_m.at(ial[4]), u5_m = u_old_m.at(ial[5]), u6_m = u_old_m.at(ial[6]), u7_m = u_old_m.at(ial[7]), u8_m = u_old_m.at(ial[8]), u9_m = u_old_m.at(ial[9]),
+                  //v0_n = v_old_n.at(ial[0]), v1_n = v_old_n.at(ial[1]), v2_n = v_old_n.at(ial[2]), v3_n = v_old_n.at(ial[3]), v4_n = v_old_n.at(ial[4]), v5_n = v_old_n.at(ial[5]), v6_n = v_old_n.at(ial[6]), v7_n = v_old_n.at(ial[7]), v8_n = v_old_n.at(ial[8]), v9_n = v_old_n.at(ial[9]),
+                  v0_m = v_old_m.at(ial[0]), v1_m = v_old_m.at(ial[1]), v2_m = v_old_m.at(ial[2]), v3_m = v_old_m.at(ial[3]), v4_m = v_old_m.at(ial[4]), v5_m = v_old_m.at(ial[5]), v6_m = v_old_m.at(ial[6]), v7_m = v_old_m.at(ial[7]), v8_m = v_old_m.at(ial[8]), v9_m = v_old_m.at(ial[9]),
+                  //w0_n = w_old_n.at(ial[0]), w1_n = w_old_n.at(ial[1]), w2_n = w_old_n.at(ial[2]), w3_n = w_old_n.at(ial[3]), w4_n = w_old_n.at(ial[4]), w5_n = w_old_n.at(ial[5]), w6_n = w_old_n.at(ial[6]), w7_n = w_old_n.at(ial[7]), w8_n = w_old_n.at(ial[8]), w9_n = w_old_n.at(ial[9]),
+                  w0_m = w_old_m.at(ial[0]), w1_m = w_old_m.at(ial[1]), w2_m = w_old_m.at(ial[2]), w3_m = w_old_m.at(ial[3]), w4_m = w_old_m.at(ial[4]), w5_m = w_old_m.at(ial[5]), w6_m = w_old_m.at(ial[6]), w7_m = w_old_m.at(ial[7]), w8_m = w_old_m.at(ial[8]), w9_m = w_old_m.at(ial[9]);
+     
+        
      double a=0.3108859, b=1-3*a, c=0.09273525, d=1-3*c, e=0.454463, f=0.5-e;
      
      A33 function33[10][10] = {{A33_00,A33_01,A33_02,A33_03,A33_04,A33_05,A33_06,A33_07,A33_08,A33_09},
@@ -1317,34 +1206,20 @@ const double dt, const double t, const double mu, const double lambda, const dou
       {
 		  for(int j=0; j<=9; ++j)
 		  {
-			  ske[i][j]=jac*(0.01878132*(function33[i][j](a,a,a, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp, r0_n, r1_n, r2_n, r3_n, r0_m, r1_m, r2_m, r3_m, u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n, u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m, v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n, v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m, 
-w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n, w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m) 
-			           +function33[i][j](b,a,a, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp, r0_n, r1_n, r2_n, r3_n, r0_m, r1_m, r2_m, r3_m, u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n, u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m, v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n, v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m, 
-w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n, w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m) 
-			           +function33[i][j](a,b,a, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp, r0_n, r1_n, r2_n, r3_n, r0_m, r1_m, r2_m, r3_m, u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n, u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m, v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n, v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m, 
-w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n, w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m) 
-			           +function33[i][j](a,a,b, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp, r0_n, r1_n, r2_n, r3_n, r0_m, r1_m, r2_m, r3_m, u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n, u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m, v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n, v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m, 
-w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n, w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m)) 
-			           +0.01224884*(function33[i][j](c,c,c, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp, r0_n, r1_n, r2_n, r3_n, r0_m, r1_m, r2_m, r3_m, u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n, u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m, v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n, v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m, 
-w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n, w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m) 
-			           +function33[i][j](d,c,c, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp, r0_n, r1_n, r2_n, r3_n, r0_m, r1_m, r2_m, r3_m, u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n, u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m, v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n, v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m, 
-w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n, w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m) 
-			           +function33[i][j](c,d,c, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp, r0_n, r1_n, r2_n, r3_n, r0_m, r1_m, r2_m, r3_m, u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n, u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m, v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n, v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m, 
-w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n, w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m) 
-			           +function33[i][j](c,c,d, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp, r0_n, r1_n, r2_n, r3_n, r0_m, r1_m, r2_m, r3_m, u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n, u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m, v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n, v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m, 
-w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n, w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m))
-			           +0.007091003*(function33[i][j](f,e,e, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp, r0_n, r1_n, r2_n, r3_n, r0_m, r1_m, r2_m, r3_m, u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n, u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m, v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n, v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m, 
-w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n, w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m) 
-			           +function33[i][j](e,f,e, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp, r0_n, r1_n, r2_n, r3_n, r0_m, r1_m, r2_m, r3_m, u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n, u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m, v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n, v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m, 
-w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n, w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m) 
-			           +function33[i][j](e,e,f, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp, r0_n, r1_n, r2_n, r3_n, r0_m, r1_m, r2_m, r3_m, u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n, u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m, v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n, v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m, 
-w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n, w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m) 
-			           +function33[i][j](e,f,f, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp, r0_n, r1_n, r2_n, r3_n, r0_m, r1_m, r2_m, r3_m, u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n, u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m, v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n, v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m, 
-w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n, w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m)
-			           +function33[i][j](f,e,f, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp, r0_n, r1_n, r2_n, r3_n, r0_m, r1_m, r2_m, r3_m, u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n, u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m, v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n, v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m, 
-w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n, w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m) 
-			           +function33[i][j](f,f,e, a1, a2, a3, b1, b2, b3, c1, c2, c3, dt, mu, lambda, kp, r0_n, r1_n, r2_n, r3_n, r0_m, r1_m, r2_m, r3_m, u0_n, u1_n, u2_n, u3_n, u4_n, u5_n, u6_n, u7_n, u8_n, u9_n, u0_m, u1_m, u2_m, u3_m, u4_m, u5_m, u6_m, u7_m, u8_m, u9_m, v0_n, v1_n, v2_n, v3_n, v4_n, v5_n, v6_n, v7_n, v8_n, v9_n, v0_m, v1_m, v2_m, v3_m, v4_m, v5_m, v6_m, v7_m, v8_m, v9_m, 
-w0_n, w1_n, w2_n, w3_n, w4_n, w5_n, w6_n, w7_n, w8_n, w9_n, w0_m, w1_m, w2_m, w3_m, w4_m, w5_m, w6_m, w7_m, w8_m, w9_m)));
+			  ske[i][j]=jac*(0.01878132*(function33[i][j](a,a,a,a1,a2,a3,b1,b2,b3,c1,c2,c3,dt,mu,lambda,kp,r0_m,r1_m,r2_m,r3_m,u0_m,u1_m,u2_m,u3_m,u4_m,u5_m,u6_m,u7_m,u8_m,u9_m,v0_m,v1_m,v2_m,v3_m,v4_m,v5_m,v6_m,v7_m,v8_m,v9_m,w0_m,w1_m,w2_m,w3_m,w4_m,w5_m,w6_m,w7_m,w8_m,w9_m) 
+			           +function33[i][j](b,a,a,a1,a2,a3,b1,b2,b3,c1,c2,c3,dt,mu,lambda,kp,r0_m,r1_m,r2_m,r3_m,u0_m,u1_m,u2_m,u3_m,u4_m,u5_m,u6_m,u7_m,u8_m,u9_m,v0_m,v1_m,v2_m,v3_m,v4_m,v5_m,v6_m,v7_m,v8_m,v9_m,w0_m,w1_m,w2_m,w3_m,w4_m,w5_m,w6_m,w7_m,w8_m,w9_m) 
+			           +function33[i][j](a,b,a,a1,a2,a3,b1,b2,b3,c1,c2,c3,dt,mu,lambda,kp,r0_m,r1_m,r2_m,r3_m,u0_m,u1_m,u2_m,u3_m,u4_m,u5_m,u6_m,u7_m,u8_m,u9_m,v0_m,v1_m,v2_m,v3_m,v4_m,v5_m,v6_m,v7_m,v8_m,v9_m,w0_m,w1_m,w2_m,w3_m,w4_m,w5_m,w6_m,w7_m,w8_m,w9_m) 
+			           +function33[i][j](a,a,b,a1,a2,a3,b1,b2,b3,c1,c2,c3,dt,mu,lambda,kp,r0_m,r1_m,r2_m,r3_m,u0_m,u1_m,u2_m,u3_m,u4_m,u5_m,u6_m,u7_m,u8_m,u9_m,v0_m,v1_m,v2_m,v3_m,v4_m,v5_m,v6_m,v7_m,v8_m,v9_m,w0_m,w1_m,w2_m,w3_m,w4_m,w5_m,w6_m,w7_m,w8_m,w9_m)) 
+			           +0.01224884*(function33[i][j](c,c,c,a1,a2,a3,b1,b2,b3,c1,c2,c3,dt,mu,lambda,kp,r0_m,r1_m,r2_m,r3_m,u0_m,u1_m,u2_m,u3_m,u4_m,u5_m,u6_m,u7_m,u8_m,u9_m,v0_m,v1_m,v2_m,v3_m,v4_m,v5_m,v6_m,v7_m,v8_m,v9_m,w0_m,w1_m,w2_m,w3_m,w4_m,w5_m,w6_m,w7_m,w8_m,w9_m) 
+			           +function33[i][j](d,c,c,a1,a2,a3,b1,b2,b3,c1,c2,c3,dt,mu,lambda,kp,r0_m,r1_m,r2_m,r3_m,u0_m,u1_m,u2_m,u3_m,u4_m,u5_m,u6_m,u7_m,u8_m,u9_m,v0_m,v1_m,v2_m,v3_m,v4_m,v5_m,v6_m,v7_m,v8_m,v9_m,w0_m,w1_m,w2_m,w3_m,w4_m,w5_m,w6_m,w7_m,w8_m,w9_m) 
+			           +function33[i][j](c,d,c,a1,a2,a3,b1,b2,b3,c1,c2,c3,dt,mu,lambda,kp,r0_m,r1_m,r2_m,r3_m,u0_m,u1_m,u2_m,u3_m,u4_m,u5_m,u6_m,u7_m,u8_m,u9_m,v0_m,v1_m,v2_m,v3_m,v4_m,v5_m,v6_m,v7_m,v8_m,v9_m,w0_m,w1_m,w2_m,w3_m,w4_m,w5_m,w6_m,w7_m,w8_m,w9_m) 
+			           +function33[i][j](c,c,d,a1,a2,a3,b1,b2,b3,c1,c2,c3,dt,mu,lambda,kp,r0_m,r1_m,r2_m,r3_m,u0_m,u1_m,u2_m,u3_m,u4_m,u5_m,u6_m,u7_m,u8_m,u9_m,v0_m,v1_m,v2_m,v3_m,v4_m,v5_m,v6_m,v7_m,v8_m,v9_m,w0_m,w1_m,w2_m,w3_m,w4_m,w5_m,w6_m,w7_m,w8_m,w9_m))
+			           +0.007091003*(function33[i][j](f,e,e,a1,a2,a3,b1,b2,b3,c1,c2,c3,dt,mu,lambda,kp,r0_m,r1_m,r2_m,r3_m,u0_m,u1_m,u2_m,u3_m,u4_m,u5_m,u6_m,u7_m,u8_m,u9_m,v0_m,v1_m,v2_m,v3_m,v4_m,v5_m,v6_m,v7_m,v8_m,v9_m,w0_m,w1_m,w2_m,w3_m,w4_m,w5_m,w6_m,w7_m,w8_m,w9_m) 
+			           +function33[i][j](e,f,e,a1,a2,a3,b1,b2,b3,c1,c2,c3,dt,mu,lambda,kp,r0_m,r1_m,r2_m,r3_m,u0_m,u1_m,u2_m,u3_m,u4_m,u5_m,u6_m,u7_m,u8_m,u9_m,v0_m,v1_m,v2_m,v3_m,v4_m,v5_m,v6_m,v7_m,v8_m,v9_m,w0_m,w1_m,w2_m,w3_m,w4_m,w5_m,w6_m,w7_m,w8_m,w9_m) 
+			           +function33[i][j](e,e,f,a1,a2,a3,b1,b2,b3,c1,c2,c3,dt,mu,lambda,kp,r0_m,r1_m,r2_m,r3_m,u0_m,u1_m,u2_m,u3_m,u4_m,u5_m,u6_m,u7_m,u8_m,u9_m,v0_m,v1_m,v2_m,v3_m,v4_m,v5_m,v6_m,v7_m,v8_m,v9_m,w0_m,w1_m,w2_m,w3_m,w4_m,w5_m,w6_m,w7_m,w8_m,w9_m) 
+			           +function33[i][j](e,f,f,a1,a2,a3,b1,b2,b3,c1,c2,c3,dt,mu,lambda,kp,r0_m,r1_m,r2_m,r3_m,u0_m,u1_m,u2_m,u3_m,u4_m,u5_m,u6_m,u7_m,u8_m,u9_m,v0_m,v1_m,v2_m,v3_m,v4_m,v5_m,v6_m,v7_m,v8_m,v9_m,w0_m,w1_m,w2_m,w3_m,w4_m,w5_m,w6_m,w7_m,w8_m,w9_m)
+			           +function33[i][j](f,e,f,a1,a2,a3,b1,b2,b3,c1,c2,c3,dt,mu,lambda,kp,r0_m,r1_m,r2_m,r3_m,u0_m,u1_m,u2_m,u3_m,u4_m,u5_m,u6_m,u7_m,u8_m,u9_m,v0_m,v1_m,v2_m,v3_m,v4_m,v5_m,v6_m,v7_m,v8_m,v9_m,w0_m,w1_m,w2_m,w3_m,w4_m,w5_m,w6_m,w7_m,w8_m,w9_m) 
+			           +function33[i][j](f,f,e,a1,a2,a3,b1,b2,b3,c1,c2,c3,dt,mu,lambda,kp,r0_m,r1_m,r2_m,r3_m,u0_m,u1_m,u2_m,u3_m,u4_m,u5_m,u6_m,u7_m,u8_m,u9_m,v0_m,v1_m,v2_m,v3_m,v4_m,v5_m,v6_m,v7_m,v8_m,v9_m,w0_m,w1_m,w2_m,w3_m,w4_m,w5_m,w6_m,w7_m,w8_m,w9_m)));
 		  }
 	   }
 
