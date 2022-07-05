@@ -6,8 +6,11 @@
 #include <cassert>
 #include <cmath>
 #include <iostream>
-//#include <suitesparse/colamd.h>
+#ifndef UBUNTU
 #include <colamd.h>
+#else
+#include <suitesparse/colamd.h>
+#endif
 #include <vector>
 
 using namespace std;

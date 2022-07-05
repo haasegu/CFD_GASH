@@ -39,7 +39,7 @@ endif
 # BLAS, LAPACK
 ifeq ($(UBUNTU),1)
 LINKFLAGS += -llapack -lblas
-# -lopenblas
+CXXFLAGS  += -DUBUNTU
 else
 # on  archlinux
 LINKFLAGS += -llapack -lopenblas -lcblas
