@@ -116,6 +116,7 @@ int main(int , char **)
      //SK.Debug();
     
     FEM_Matrix SK1(mesh); 
+    cout << "########################################################\n";
     SK1.Debug();
     
 
