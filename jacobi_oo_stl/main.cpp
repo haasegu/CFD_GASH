@@ -8,7 +8,7 @@
 #include "jacsolve.h"
 #include "userset.h"
 #include "vdop.h"
-#include "elements.h"
+#include "sa_elements.h"
 #include <cmath>
 #include <iostream>
 #include <sstream>

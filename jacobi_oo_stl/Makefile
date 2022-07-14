@@ -9,7 +9,8 @@ COMPILER=GCC_
 
 MAIN = main
 SOURCES = ${MAIN}.cpp vdop.cpp geom.cpp geom3.cpp\
-	getmatrix.cpp jacsolve.cpp userset.cpp   
+	getmatrix.cpp jacsolve.cpp userset.cpp\
+	elements.cpp
 # 	dexx.cpp debugd.cpp skalar.cpp  vecaccu.cpp accudiag.cpp
 
 OBJECTS = $(SOURCES:.cpp=.o)

@@ -1,7 +1,9 @@
 #include "getmatrix.h"
 #include "userset.h"
 #include "binaryIO.h"
-#include "elements.h"
+#include "elements.h"              // GH
+#include "sa_elements.h"
+#include "utils.h"
 #include "omp.h"
 #include <algorithm>
 #include <cassert>
@@ -9,6 +11,8 @@
 #include <iomanip>
 #include <iostream>
 #include <list>
+#include <string>
+#include <utility>
 #include <vector>
 using namespace std;
 
@@ -2878,110 +2882,110 @@ void AddElem(int const ial[4], double const ske[4][4], double const fe[4],
 
 
 
-CRS_Matrix::CRS_Matrix(Mesh const & mesh, int ndof_v)
- : _mesh(mesh), _nrows(0), _nnz(0), _id(0), _ik(0), _sk(0), _ndof_v(ndof_v)
-{
-    Derive_Matrix_Pattern();
-    Skalar2VectorMatrix(ndof_v);
-    return;
-}
+//CRS_Matrix::CRS_Matrix(Mesh const & mesh, int ndof_v)
+ //: _mesh(mesh), _nrows(0), _nnz(0), _id(0), _ik(0), _sk(0), _ndof_v(ndof_v)
+//{
+    //Derive_Matrix_Pattern();
+    //Skalar2VectorMatrix(ndof_v);
+    //return;
+//}
 
-void CRS_Matrix::Derive_Matrix_Pattern()
-{
-    int const nelem(_mesh.Nelems());
-    int const ndof_e(_mesh.NdofsElement());
-    auto const &ia(_mesh.GetConnectivity());
-//  Determine the number of matrix rows
-    _nrows = *max_element(ia.cbegin(), ia.cbegin() + ndof_e * nelem);
-    ++_nrows;                                 // node numberng: 0 ... nnode-1
-    assert(*min_element(ia.cbegin(), ia.cbegin() + ndof_e * nelem) == 0); // numbering starts with 0 ?
+//void CRS_Matrix::Derive_Matrix_Pattern()
+//{
+    //int const nelem(_mesh.Nelems());
+    //int const ndof_e(_mesh.NdofsElement());
+    //auto const &ia(_mesh.GetConnectivity());
+////  Determine the number of matrix rows
+    //_nrows = *max_element(ia.cbegin(), ia.cbegin() + ndof_e * nelem);
+    //++_nrows;                                 // node numberng: 0 ... nnode-1
+    //assert(*min_element(ia.cbegin(), ia.cbegin() + ndof_e * nelem) == 0); // numbering starts with 0 ?
 
-//  Collect for each node those nodes it is connected to (multiple entries)
-//  Detect the neighboring nodes
-    vector< list<int> > cc(_nrows);             //  cc[i] is the  list of nodes a node i is connected to
-    for (int i = 0; i < nelem; ++i)
-    {
-        int const idx = ndof_e * i;
-        for (int k = 0; k < ndof_e; ++k)
-        {
-            list<int> &cck = cc.at(ia[idx + k]);
-            cck.insert( cck.end(), ia.cbegin() + idx, ia.cbegin() + idx + ndof_e );
-        }
-    }
-//  Delete the multiple entries
-    _nnz = 0;
-    for (auto &it : cc)
-    {
-        it.sort();
-        it.unique();
-        _nnz += it.size();
-        // cout << it.size() << " :: "; copy(it->begin(),it->end(), ostream_iterator<int,char>(cout,"  ")); cout << endl;
-    }
+////  Collect for each node those nodes it is connected to (multiple entries)
+////  Detect the neighboring nodes
+    //vector< list<int> > cc(_nrows);             //  cc[i] is the  list of nodes a node i is connected to
+    //for (int i = 0; i < nelem; ++i)
+    //{
+        //int const idx = ndof_e * i;
+        //for (int k = 0; k < ndof_e; ++k)
+        //{
+            //list<int> &cck = cc.at(ia[idx + k]);
+            //cck.insert( cck.end(), ia.cbegin() + idx, ia.cbegin() + idx + ndof_e );
+        //}
+    //}
+////  Delete the multiple entries
+    //_nnz = 0;
+    //for (auto &it : cc)
+    //{
+        //it.sort();
+        //it.unique();
+        //_nnz += it.size();
+        //// cout << it.size() << " :: "; copy(it->begin(),it->end(), ostream_iterator<int,char>(cout,"  ")); cout << endl;
+    //}
 
-// CSR data allocation
-    _id.resize(_nrows + 1);                  // Allocate memory for CSR row pointer
-    _ik.resize(_nnz);                        // Allocate memory for CSR column index vector
+//// CSR data allocation
+    //_id.resize(_nrows + 1);                  // Allocate memory for CSR row pointer
+    //_ik.resize(_nnz);                        // Allocate memory for CSR column index vector
 
-//  copy CSR data
-    _id[0] = 0;                                 // begin of first row
-    for (size_t i = 0; i < cc.size(); ++i)
-    {
-        //cout << i << "   " << nid.at(i) << endl;;
-        const list<int> &ci = cc.at(i);
-        const auto nci = static_cast<int>(ci.size());
-        _id[i + 1] = _id[i] + nci; // begin of next line
-        copy(ci.begin(), ci.end(), _ik.begin() + _id[i] );
-    }
+////  copy CSR data
+    //_id[0] = 0;                                 // begin of first row
+    //for (size_t i = 0; i < cc.size(); ++i)
+    //{
+        ////cout << i << "   " << nid.at(i) << endl;;
+        //const list<int> &ci = cc.at(i);
+        //const auto nci = static_cast<int>(ci.size());
+        //_id[i + 1] = _id[i] + nci; // begin of next line
+        //copy(ci.begin(), ci.end(), _ik.begin() + _id[i] );
+    //}
 
-    assert(_nnz == _id[_nrows]);
-    _sk.resize(_nnz);                      // Allocate memory for CSR column index vector
-    return;
-}
+    //assert(_nnz == _id[_nrows]);
+    //_sk.resize(_nnz);                      // Allocate memory for CSR column index vector
+    //return;
+//}
 
-void CRS_Matrix::Skalar2VectorMatrix(int ndof_v)
-{
-    this->Debug();
-    cout << "\n########################\n";
-    if (1 == ndof_v) return;
-    assert(2 == ndof_v);
+//void CRS_Matrix::Skalar2VectorMatrix(int ndof_v)
+//{
+    //this->Debug();
+    //cout << "\n########################\n";
+    //if (1 == ndof_v) return;
+    //assert(2 == ndof_v);
 
-    auto old_id = _id;
-    auto old_ik = _ik;
+    //auto old_id = _id;
+    //auto old_ik = _ik;
 
-    _sk.resize(ndof_v * ndof_v * _sk.size(), -1.0);
-    _id.resize(ndof_v * (_id.size() - 1) + 1);
-    _ik.resize(ndof_v * ndof_v * _ik.size(), -7);
+    //_sk.resize(ndof_v * ndof_v * _sk.size(), -1.0);
+    //_id.resize(ndof_v * (_id.size() - 1) + 1);
+    //_ik.resize(ndof_v * ndof_v * _ik.size(), -7);
 
-    _id[0] = 0;
-    for (int kold = 0; kold < Nrows(); ++kold) {
-        int nr = old_id[kold + 1] - old_id[kold];
+    //_id[0] = 0;
+    //for (int kold = 0; kold < Nrows(); ++kold) {
+        //int nr = old_id[kold + 1] - old_id[kold];
         
-        for (int ii=1; ii<=ndof_v; ++ii){
-			_id[ndof_v * kold + ii] = _id[ndof_v * kold + ii-1] + ndof_v * nr;
-		}
+        //for (int ii=1; ii<=ndof_v; ++ii){
+			//_id[ndof_v * kold + ii] = _id[ndof_v * kold + ii-1] + ndof_v * nr;
+		//}
   
-    }
+    //}
 
-    for (int newrow = 0; newrow < ndof_v * Nrows(); ++newrow ) {
-        int oldrow = newrow / ndof_v;
-        int idx = _id[newrow];
-        //cout << " ("<< newrow<<")  " << idx;
-        for (int oid = old_id[oldrow]; oid < old_id[oldrow + 1]; ++oid) {
-            int oldcol = old_ik[oid];
+    //for (int newrow = 0; newrow < ndof_v * Nrows(); ++newrow ) {
+        //int oldrow = newrow / ndof_v;
+        //int idx = _id[newrow];
+        ////cout << " ("<< newrow<<")  " << idx;
+        //for (int oid = old_id[oldrow]; oid < old_id[oldrow + 1]; ++oid) {
+            //int oldcol = old_ik[oid];
             
-            for (int ii=0; ii < ndof_v; ++ii){
-				_ik[idx + ii] = ndof_v * oldcol+ii;
-				}
+            //for (int ii=0; ii < ndof_v; ++ii){
+				//_ik[idx + ii] = ndof_v * oldcol+ii;
+				//}
          
-            idx += ndof_v;
-        }
-    }
+            //idx += ndof_v;
+        //}
+    //}
 
-    _nrows =  _id.size() - 1;
-    _nnz   =  _ik.size();
+    //_nrows =  _id.size() - 1;
+    //_nnz   =  _ik.size();
 
-    return;
-}
+    //return;
+//}
 
 void CRS_Matrix::Debug() const
 {
@@ -3004,40 +3008,40 @@ void CRS_Matrix::Debug() const
     return;
 }
 
-void CRS_Matrix::CalculateLaplace(vector<double> &f)
-{
-    assert(_mesh.NdofsElement() == 4);               // only for triangular, linear elements
-    //cout << _nnz << " vs. " << _id[_nrows] << "  " << _nrows<< endl;
-    assert(_nnz == _id[_nrows]);
+//void CRS_Matrix::CalculateLaplace(vector<double> &f)
+//{
+    //assert(_mesh.NdofsElement() == 4);               // only for triangular, linear elements
+    ////cout << _nnz << " vs. " << _id[_nrows] << "  " << _nrows<< endl;
+    //assert(_nnz == _id[_nrows]);
 
-    for (int k = 0; k < _nrows; ++k)
-    {
-        _sk[k] = 0.0;
-    }
-    for (int k = 0; k < _nrows; ++k)
-    {
-        f[k] = 0.0;
-    }
+    //for (int k = 0; k < _nrows; ++k)
+    //{
+        //_sk[k] = 0.0;
+    //}
+    //for (int k = 0; k < _nrows; ++k)
+    //{
+        //f[k] = 0.0;
+    //}
 
-    //double ske[3][3], fe[3];               // move inside loop (==> thread private)
-    //  Loop over all elements
-    auto const nelem = _mesh.Nelems();
-    auto const &ia   = _mesh.GetConnectivity();
-    auto const &xc   = _mesh.GetCoords();
+    ////double ske[3][3], fe[3];               // move inside loop (==> thread private)
+    ////  Loop over all elements
+    //auto const nelem = _mesh.Nelems();
+    //auto const &ia   = _mesh.GetConnectivity();
+    //auto const &xc   = _mesh.GetCoords();
 
-#pragma omp parallel for
-    for (int i = 0; i < nelem; ++i)
-    {
-        double ske[4][4], fe[4];             // OpenMP: Thread private
-        CalcElem(ia.data()+4 * i, xc.data(), ske, fe);
-        //AddElem(ia.data()+3 * i, ske, fe, _id.data(), _ik.data(), _sk.data(), f.data()); // GH: deprecated
-        AddElem_3(ia.data()+4 * i, ske, fe, f);
-    }
+//#pragma omp parallel for
+    //for (int i = 0; i < nelem; ++i)
+    //{
+        //double ske[4][4], fe[4];             // OpenMP: Thread private
+        //CalcElem(ia.data()+4 * i, xc.data(), ske, fe);
+        ////AddElem(ia.data()+3 * i, ske, fe, _id.data(), _ik.data(), _sk.data(), f.data()); // GH: deprecated
+        //AddElem_3(ia.data()+4 * i, ske, fe, f);
+    //}
 
-    //Debug();
+    ////Debug();
 
-    return;
-}
+    //return;
+//}
 
 /*
 void FEM_Matrix::ApplyDirichletBC(std::vector<double> const &u, std::vector<double> &f)
@@ -3190,30 +3194,30 @@ int CRS_Matrix::fetch(int const row, int const col) const
 }
 
 
-void CRS_Matrix::AddElem_3(int const ial[4], double const ske[4][4], double const fe[4], vector<double> & f)
-{
-    for (int i = 0; i < 4; ++i)
-    {
-        const int ii  = ial[i];           // row ii (global index)
-        for (int j = 0; j < 4; ++j)       // no symmetry assumed
-        {
-            const int jj = ial[j];        // column jj (global index)
-            int ip = fetch(ii,jj);        // find column entry jj in row ii
-#ifndef NDEBUG                 // compiler option -DNDEBUG switches off the check
-            if (ip<0)          // no entry found !!
-            {
-                cout << "Error in AddElem: (" << ii << "," << jj << ") ["
-                     << ial[0] << "," << ial[1] << "," << ial[2] << "," << ial[3] << "]\n";
-                assert(ip>=0);
-            }
-#endif
-#pragma omp atomic
-            _sk[ip] += ske[i][j];
-        }
-#pragma omp atomic
-        f[ii] += fe[i];
-    }
-}
+//void CRS_Matrix::AddElem_3(int const ial[4], double const ske[4][4], double const fe[4], vector<double> & f)
+//{
+    //for (int i = 0; i < 4; ++i)
+    //{
+        //const int ii  = ial[i];           // row ii (global index)
+        //for (int j = 0; j < 4; ++j)       // no symmetry assumed
+        //{
+            //const int jj = ial[j];        // column jj (global index)
+            //int ip = fetch(ii,jj);        // find column entry jj in row ii
+//#ifndef NDEBUG                 // compiler option -DNDEBUG switches off the check
+            //if (ip<0)          // no entry found !!
+            //{
+                //cout << "Error in AddElem: (" << ii << "," << jj << ") ["
+                     //<< ial[0] << "," << ial[1] << "," << ial[2] << "," << ial[3] << "]\n";
+                //assert(ip>=0);
+            //}
+//#endif
+//#pragma omp atomic
+            //_sk[ip] += ske[i][j];
+        //}
+//#pragma omp atomic
+        //f[ii] += fe[i];
+    //}
+//}
 // ############################################################################################################################################################################################################
 
 
@@ -3227,58 +3231,23 @@ Matrix::~Matrix()
 
 
 
-
-CRS_Matrix1::CRS_Matrix1()
+CRS_Matrix::CRS_Matrix()
     : Matrix(0, 0), _nnz(0), _id(0), _ik(0), _sk(0)
 {}
 
-CRS_Matrix1::CRS_Matrix1(const std::string &file) : Matrix(0, 0), _nnz(0), _id(0), _ik(0), _sk(0)
-{
-    readBinary(file);
-    _nrows = static_cast<int>(size(_id) - 1);
-    _ncols = _nrows;
-}
+//CRS_Matrix::CRS_Matrix(const std::string &file) : Matrix(0, 0), _nnz(0), _id(0), _ik(0), _sk(0)
+//{
+    //readBinary(file);
+    //_nrows = static_cast<int>(size(_id) - 1);
+    //_ncols = _nrows;
+//}
 
 
-CRS_Matrix1::~CRS_Matrix1()
+CRS_Matrix::~CRS_Matrix()
 {}
 
-void CRS_Matrix1::Mult(vector<double> &w, vector<double> const &u) const
-{
-    assert( _ncols == static_cast<int>(u.size()) ); // compatibility of inner dimensions
-    assert( _nrows == static_cast<int>(w.size()) ); // compatibility of outer dimensions
 
-    #pragma omp parallel for
-    for (int row = 0; row < _nrows; ++row) {
-        double wi = 0.0;
-        for (int ij = _id[row]; ij < _id[row + 1]; ++ij) {
-            wi += _sk[ij] * u[ _ik[ij] ];
-        }
-        w[row] = wi;
-    }
-    return;
-}
-
-void CRS_Matrix1::Defect(vector<double> &w,
-                        vector<double> const &f, vector<double> const &u) const
-{
-    assert( _ncols == static_cast<int>(u.size()) ); // compatibility of inner dimensions
-    assert( _nrows == static_cast<int>(w.size()) ); // compatibility of outer dimensions
-    assert( w.size() == f.size() );
-
-    #pragma omp parallel for
-    for (int row = 0; row < _nrows; ++row) {
-        double wi = f[row];
-        for (int ij = _id[row]; ij < _id[row + 1]; ++ij) {
-            wi -= _sk[ij] * u[ _ik[ij] ];
-        }
-        w[row] = wi;
-    }
-    return;
-}
-
-
-void CRS_Matrix1::JacobiSmoother(std::vector<double> const &f, std::vector<double> &u,
+void CRS_Matrix::JacobiSmoother(std::vector<double> const &f, std::vector<double> &u,
                     std::vector<double> &r, int nsmooth, double const omega, bool zero) const
 {
     // ToDO: ensure compatible dimensions
@@ -3319,95 +3288,7 @@ void CRS_Matrix1::JacobiSmoother(std::vector<double> const &f, std::vector<doubl
     return;
 }
 
-void CRS_Matrix1::GetDiag(vector<double> &d) const
-{
-    // be carefull when using a rectangular matrix
-    int const nm = min(_nrows, _ncols);
-
-    assert( nm == static_cast<int>(d.size()) ); // instead of stopping we could resize d and warn the user
-
-    #pragma omp parallel for
-    for (int row = 0; row < nm; ++row) {
-        const int ia = fetch(row, row); // Find diagonal entry of row
-        assert(ia >= 0);
-        d[row] = _sk[ia];
-    }
-    cout << ">>>>> CRS_Matrix::GetDiag  <<<<<" << endl;
-    return;
-}
-
-inline
-int CRS_Matrix1::fetch(int const row, int const col) const
-{
-    int const id2 = _id[row + 1];    // end   and
-    int       ip  = _id[row];        // start of recent row (global index)
-
-    while (ip < id2 && _ik[ip] != col) { // find index col (global index)
-        ++ip;
-    }
-    if (ip >= id2) {
-        ip = -1;
-#ifndef NDEBUG                 // compiler option -DNDEBUG switches off the check
-        cout << "No column  " << col << "  in row  " << row << endl;
-        assert(ip >= id2);
-#endif
-    }
-    return ip;
-}
-
-void CRS_Matrix1::Debug() const
-{
-//  ID points to first entry of row
-//  no symmetry assumed
-    cout << "\nMatrix  (" << _nrows << " x " << _ncols << "  with  nnz = " << _id[_nrows] << ")\n";
-
-    for (int row = 0; row < _nrows; ++row) {
-        cout << "Row " << row << " : ";
-        int const id1 = _id[row];
-        int const id2 = _id[row + 1];
-        for (int j = id1; j < id2; ++j) {
-            cout.setf(ios::right, ios::adjustfield);
-            cout << "[" << setw(2) << _ik[j] << "]  " << setw(4) << _sk[j] << "  ";
-        }
-        cout << endl;
-    }
-    return;
-}
-
-
-
-bool CRS_Matrix1::Compare2Old(int nnode, int const id[], int const ik[], double const sk[]) const
-{
-    bool bn = (nnode == _nrows);     // number of rows
-    if (!bn) {
-        cout << "#########   Error: " << "number of rows" << endl;
-    }
-
-    bool bz = (id[nnode] == _nnz);   // number of non zero elements
-    if (!bz) {
-        cout << "#########   Error: " << "number of non zero elements" << endl;
-    }
-
-    bool bd = equal(id, id + nnode + 1, _id.cbegin()); // row starts
-    if (!bd) {
-        cout << "#########   Error: " << "row starts" << endl;
-    }
-
-    bool bk = equal(ik, ik + id[nnode], _ik.cbegin()); // column indices
-    if (!bk) {
-        cout << "#########   Error: " << "column indices" << endl;
-    }
-
-    bool bv = equal(sk, sk + id[nnode], _sk.cbegin()); // values
-    if (!bv) {
-        cout << "#########   Error: " << "values" << endl;
-    }
-
-    return bn && bz && bd && bk && bv;
-}
-
-
-void CRS_Matrix1::writeBinary(const std::string &file)
+void CRS_Matrix::writeBinary(const std::string &file)
 {
     vector<int> cnt(size(_id) - 1);
     for (size_t k = 0; k < size(cnt); ++k) {
@@ -3417,7 +3298,7 @@ void CRS_Matrix1::writeBinary(const std::string &file)
     write_binMatrix(file, cnt, _ik, _sk);
 }
 
-void CRS_Matrix1::readBinary(const std::string &file)
+void CRS_Matrix::readBinary(const std::string &file)
 {
     vector<int> cnt;
     write_binMatrix(file, cnt, _ik, _sk);
@@ -3430,28 +3311,11 @@ void CRS_Matrix1::readBinary(const std::string &file)
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // ############################################################################################################################################################################################################
 
 
 FEM_Matrix::FEM_Matrix(Mesh const &mesh, int ndof_v)
-    : CRS_Matrix1(), _mesh(mesh), _ndof_v(ndof_v)
+    : CRS_Matrix(), _mesh(mesh), _ndof_v(ndof_v)
 {
     Derive_Matrix_Pattern();
     Skalar2VectorMatrix(ndof_v);
@@ -3883,7 +3747,7 @@ void FEM_Matrix::AddElem_3(int const ial[4], double const ske[4][4], double cons
     }
 }
 
-bool FEM_Matrix::CheckSymmetry() const
+bool CRS_Matrix::CheckSymmetry() const
 {
     cout << "+++  Check matrix symmetry  +++" << endl;
     bool bs{true};
@@ -3906,7 +3770,7 @@ bool FEM_Matrix::CheckSymmetry() const
 }
 
 
-bool FEM_Matrix::CheckRowSum() const
+bool CRS_Matrix::CheckRowSum() const
 {
     cout << "+++  Check row sum  +++" << endl;
     vector<double> rhs(_ncols, 1.0);  //replace Ncols() by _ncols
@@ -3925,7 +3789,7 @@ bool FEM_Matrix::CheckRowSum() const
     return bb;
 }
 
-bool FEM_Matrix::CheckMproperty() const
+bool CRS_Matrix::CheckMproperty() const
 {
     cout << "+++  Check M property  +++" << endl;
     bool bm{true};
@@ -3951,7 +3815,7 @@ bool FEM_Matrix::CheckMproperty() const
     return bm;
 }
 
-bool FEM_Matrix::ForceMproperty()
+bool CRS_Matrix::ForceMproperty()
 {
     cout << "+++  Force M property  +++" << endl;
     bool bm{false};
@@ -3974,7 +3838,7 @@ bool FEM_Matrix::ForceMproperty()
     return bm;
 }
 
-bool FEM_Matrix::CheckMatrix() const
+bool CRS_Matrix::CheckMatrix() const
 {
     bool b1 = CheckRowSum();
     if (!b1) {
@@ -3989,7 +3853,7 @@ bool FEM_Matrix::CheckMatrix() const
     return b1 && b2;
 }
 
-void FEM_Matrix::GetDiag_M(vector<double> &d) const
+void CRS_Matrix::GetDiag_M(vector<double> &d) const
 {
     // be carefull when using a rectangular matrix
     int const nm = min(_nrows, _ncols);
@@ -4212,7 +4076,7 @@ void BisectIntDirichlet::MultT(vector<double> const &wf, vector<double> &uc) con
 
 // #####################################################################
 
-void DefectRestrict(CRS_Matrix1 const &SK1, BisectInterpolation const &P,
+void DefectRestrict(CRS_Matrix const &SK1, BisectInterpolation const &P,
                     vector<double> &fc, vector<double> &ff, vector<double> &uf)
 {
     assert( P.Nrows() == static_cast<int>(ff.size()) );

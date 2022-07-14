@@ -1,6 +1,6 @@
 #ifndef JACSOLVE_FILE
 #define JACSOLVE_FILE
-#include "geom3.h"
+#include "geom.h"
 #include "getmatrix.h"
 #include <vector>
 
@@ -14,9 +14,6 @@
  * @param[out] u	accumulated local vector storing the solution.
 */
 void JacobiSolve(CRS_Matrix const &SK, std::vector<double> const &f, std::vector<double> &u);
-
-void JacobiSolve(CRS_Matrix1 const &SK1, std::vector<double> const &f, std::vector<double> &u);
-
 
 /**
  * Solves linear system of equations  K @p u = @p f  via the Jacobi iteration.
@@ -82,25 +79,25 @@ class Multigrid
        /**
 		 * @return  Number of meshes in hierarchy.
 		 */
-       size_t Nlevels() const
+       [[nodiscard]] size_t Nlevels() const
        {return _meshes.size(); }
 
        /**
 		 * @return  Number of Unknowns.
 		 */
-       int Ndofs() const
+       [[nodiscard]] int Ndofs() const
        {return _meshes[Nlevels()-1].Nnodes(); }
 
        /**
 		 * @return  Meshes number @p lev .
 		*/
-       Mesh const& GetMesh(int lev) const
+       [[nodiscard]] Mesh const& GetMesh(int lev) const
        { return _meshes[lev]; }
 
        /**
 		 * @return  Solution vector at level @p lev .
 		 */
-       std::vector<double> const&  GetSolution(int lev) const
+       [[nodiscard]] std::vector<double> const&  GetSolution(int lev) const
        { return _u.at(lev); }
 
        /**
