@@ -52,8 +52,8 @@ int main(int, char **)
 bool check_P1_3d()
 {     
     //Mesh_3d_P1_matlab const mesh("../salman_problem/NS_3D.txt");  // old
-    //Mesh const mesh("../salman_problem/NS_3D.txt");               // new
-    Mesh const mesh("../salman_problem/GH_NS_3D.txt");
+    Mesh const mesh("../salman_problem/NS_3D.txt");               // new
+    //Mesh const mesh("../salman_problem/GH_NS_3D.txt");
     //mesh.Debug();
 
     const P1_3d elem;                      // P1 tetrahedron
