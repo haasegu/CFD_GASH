@@ -209,7 +209,8 @@ void P1_3d::CalcLaplace(
 
 void P1_2vec_3d::CalcLaplace(
     int const ial[34], double const xc[], 
-    vector<vector<double>> &ske, vector<double> &fe) const
+    vector<vector<double>> &ske, vector<double> &fe,
+    const function<double(double, double, double)> &f_func ) const     
 {
     cout << "P1_2vec_3d::CalcLaplace\n";
     assert(nVertices_loc()==10);

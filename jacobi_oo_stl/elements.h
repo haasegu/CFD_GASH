@@ -349,8 +349,11 @@ class P1_2vec_3d: public Element
      * @param[in]	xc	vector of node coordinates with x(2*k,2*k+1) as coordinates of node k
      * @param[out] ske	element stiffness matrix [_ndof][_ndof]
      * @param[out] fe	element load vector [_ndof]
+     * @param[out] f_func function @p f_func (x,y,z)
      */    
-    void CalcLaplace(int const ial[34], double const xc[], std::vector<std::vector<double>> &ske, std::vector<double> &fe) const;    
+    void CalcLaplace(int const ial[34], double const xc[], 
+         std::vector<std::vector<double>> &ske, std::vector<double> &fe,
+         const std::function<double(double, double, double)> &f_func    ) const;      
     
 };
 
