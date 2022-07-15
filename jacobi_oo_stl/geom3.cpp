@@ -234,7 +234,7 @@ void Mesh_3d_P2_matlab::deriveMeshFromP1(Mesh_3d_P1_matlab const &p1)
     // p2 coordinates: max. memory reservation and partial initialization with P1 data
     vector<double>  & xc_p2 = p2.GetCoords();
     // reserve max. memory, append new vertices with push_back(),  call shrink_to_fit() finally.
-    xc_p2.reserve(nnodes1+(p2.NverticesElements()-p1.NverticesElements())*nelem);
+    xc_p2.reserve(nnodes1+(p2.NverticesElement()-p1.NverticesElement())*nelem);
     xc_p2.resize(nnodes1*3,-12345);
     copy(cbegin(xc_p1),cend(xc_p1),begin(xc_p2));
     

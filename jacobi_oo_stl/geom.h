@@ -2,9 +2,10 @@
 #define GEOM_FILE
 #include <array>
 #include <functional>             // function; C++11
+#include <iostream>
+#include <memory>                  // shared_ptr
 #include <string>
 #include <vector>
-#include <memory>  
 
 /**
  * Basis class for finite element meshes.
@@ -13,14 +14,16 @@ class Mesh
 {
 public:
     /**
-     * Constructor initializing the members with default values.
+      * Constructor initializing the members with default values.
       *
       * @param[in] ndim  space dimensions (dimension for coordinates)
       * @param[in] nvert_e  number of vertices per element (dimension for connectivity)
       * @param[in] ndof_e   degrees of freedom per element (= @p nvert_e for linear elements)
-     */
+      */
     explicit Mesh(int ndim, int nvert_e = 0, int ndof_e = 0);
     
+    Mesh() : Mesh(0) {}
+
     Mesh(Mesh const &) = default;
 
     Mesh &operator=(Mesh const &) = delete;
@@ -32,9 +35,8 @@ public:
      * <a href="https://stackoverflow.com/questions/28786473/clang-no-out-of-line-virtual-method-definitions-pure-abstract-c-class/40550578">weak-vtables</a>.
      */
     virtual ~Mesh();
-     
-     
-     /**
+
+    /**
      * Reads mesh data from a binary file.
      *
      * File format, see ascii_write_mesh.m
@@ -51,15 +53,12 @@ public:
      * @param[in] fname file name
     */
     void ReadVertexBasedMesh(std::string const &fname);
-    
-   
-
 
     /**
      * Number of finite elements in (sub)domain.
      * @return number of elements.
      */
-    int Nelems() const
+    [[nodiscard]] int Nelems() const
     {
         return _nelem;
     }
@@ -68,7 +67,7 @@ public:
      * Global number of vertices for each finite element.
      * @return number of vertices per element.
      */
-    int NverticesElements() const
+    [[nodiscard]] int NverticesElement() const
     {
         return _nvert_e;
     }
@@ -77,7 +76,7 @@ public:
      * Global number of degrees of freedom (dof) for each finite element.
      * @return degrees of freedom per element.
      */
-    int NdofsElement() const
+    [[nodiscard]] int NdofsElement() const
     {
         return _ndof_e;
     }
@@ -86,7 +85,7 @@ public:
      * Number of vertices in mesh.
      * @return number of vertices.
      */
-    int Nnodes() const
+    [[nodiscard]] int Nnodes() const
     {
         return _nnode;
     }
@@ -95,13 +94,13 @@ public:
      * Space dimension.
      * @return number of dimensions.
      */
-    int Ndims() const
+    [[nodiscard]] int Ndims() const
     {
         return _ndim;
     }
 
     /**
-     * (Re-)Allocates memory for the element connectivity and redefines the appropriate dimensions.
+     * (Re-)Allocates memory for the geometric element connectivity and redefines the appropriate dimensions.
      *
      * @param[in] nelem    number of elements
      * @param[in] nvert_e  number of vertices per element
@@ -114,16 +113,16 @@ public:
     }
 
     /**
-     * Read connectivity information (g1,g2,g3)_i.
+     * Read geometric connectivity information (g1,g2,g3)_i.
      * @return connectivity vector [nelems*ndofs].
      */
-    const std::vector<int>  &GetConnectivity() const
+    [[nodiscard]] const std::vector<int>  &GetConnectivity() const
     {
         return _ia;
     }
 
     /**
-     * Access/Change connectivity information (g1,g2,g3)_i.
+     * Access/Change geometric connectivity information (g1,g2,g3)_i.
      * @return connectivity vector [nelems*ndofs].
      */
     std::vector<int>  &GetConnectivity()
@@ -132,7 +131,7 @@ public:
     }
 
     /**
-     * (Re-)Allocates memory for the element connectivity and redefines the appropriate dimensions.
+     * (Re-)Allocates memory for coordinates and redefines the appropriate dimensions.
      *
      * @param[in] nnodes    number of nodes
      * @param[in] ndim      space dimension
@@ -148,7 +147,7 @@ public:
      * Read coordinates of vertices (x,y)_i.
      * @return coordinates vector [nnodes*2].
      */
-    const std::vector<double> &GetCoords() const
+    [[nodiscard]] const std::vector<double> &GetCoords() const
     {
         return _xc;
     }
@@ -163,11 +162,30 @@ public:
     }
 
     /**
-     * Calculate values in vector @p v via function @p func(x,y)
-     * @param[in] v     vector
+     * Calculate values in scalar vector @p v via function @p func(x,y)
+     * @param[in] v     scalar vector
      * @param[in] func  function of (x,y) returning a double value.
      */
+    void SetValues(std::vector<double> &v, const std::function<double(double, double)> &func) const;
+
+    /**
+     * Calculate values in scalar vector @p v via function @p func(x,y,z)
+     * @param[in] v     scalar  vector
+     * @param[in] func  function of (x,y,z) returning a double value.
+     */
     void SetValues(std::vector<double> &v, const std::function<double(double, double, double)> &func) const;
+
+    /**
+     * Calculate values in vector valued vector @p v via functions @p func?(x,y,z)
+     * @param[in] vvec  vector
+     * @param[in] func0  function of (x,y,z) returning a double value.
+     * @param[in] func1  function of (x,y,z) returning a double value.
+     * @param[in] func2  function of (x,y,z) returning a double value.
+     */
+     void SetValues(std::vector<double> &vvec, 
+        const std::function<double(double, double, double)> &func0,
+        const std::function<double(double, double, double)> &func1,
+        const std::function<double(double, double, double)> &func2 ) const;
 
     /**
      * Prints the information for a finite element mesh
@@ -175,35 +193,104 @@ public:
     void Debug() const;
 
     /**
-     * Determines the indices of those vertices with Dirichlet boundary conditions
-     * @return index vector.
+     * Prints the edge based information for a finite element mesh
      */
-    // GH virtual std::vector<int> Index_DirichletNodes() const = 0;
-    virtual std::vector<int> Index_DirichletNodes() const;
+    void DebugEdgeBased() const;
 
     /**
-     * Write vector @p v toghether with its mesh information to an ASCii file @p fname.
-      *
-      * The data are written in C-style.
-      *
-      * @param[in] fname  file name
+     * Determines the indices of those vertices with Dirichlet boundary conditions.
+     * 
+     * All boundary nodes are considered as Dirchlet nodes. 
+     * @return index vector.
+     * @warning Not available in 3D. 
+     *          Vector _bedges is currently not included in the 3D input file.
+     */
+    [[nodiscard]] virtual std::vector<int> Index_DirichletNodes() const;
+    
+
+    /**
+     * Determines the indices of those vertices with Dirichlet boundary conditions.
+     * 
+     * All discretization nodes located at the perimeter of rectangle
+     * [@p xl, @p xh]x[@p yl, @p yh]
+     * are defined as Dirichlet nodes.
+     * 
+     * @param[in] xl lower  value x-bounds
+     * @param[in] xh higher value x-bounds
+     * @param[in] yl lower  value y-bounds
+     * @param[in] yh higher value y-bounds
+     * @return index vector.
+     */
+    [[nodiscard]] 
+    virtual std::vector<int> Index_DirichletNodes_Box
+            (double xl, double xh, double yl, double yh) const;
+
+    
+    /**
+     * Determines the indices of those vertices with Dirichlet boundary conditions.
+     * 
+     * All discretization nodes located at the surface 
+     * of the bounding box are [@p xl, @p xh]x[@p yl, @p yh]x[@p zl, @p zh]
+     * are defined as Dirichlet nodes.
+     * 
+     * @param[in] xl lower  value x-bounds
+     * @param[in] xh higher value x-bounds
+     * @param[in] yl lower  value y-bounds
+     * @param[in] yh higher value y-bounds
+     * @param[in] zl lower  value z-bounds
+     * @param[in] zh higher value z-bounds
+     * @return index vector.
+     */
+    [[nodiscard]] 
+    virtual std::vector<int> Index_DirichletNodes_Box
+            (double xl, double xh, double yl, double yh,double zl, double zh) const;
+
+
+    /**
+     * Exports the mesh information to ASCii files  @p basename + {_coords|_elements}.txt.
+     *
+     * The data are written in C indexing.
+     *
+     * @param[in] basename  first part of file names
+     */
+    void Export_scicomp(std::string const &basename) const;
+
+    /**
+     * Write vector @p v together with its mesh information to an ASCii file @p fname.
+     *
+     * The data are written in Matlab indexing.
+     *
+     * @param[in] fname  file name
      * @param[in] v      vector
      */
     void Write_ascii_matlab(std::string const &fname, std::vector<double> const &v) const;
 
     /**
      * Visualize @p v together with its mesh information via matlab or octave.
-      *
-      * Comment/uncomment those code lines in method Mesh:Visualize (geom.cpp)
-      * that are supported on your system.
-      *
-      * @param[in] v      vector
-      *
-      * @warning matlab files ascii_read_meshvector.m  visualize_results.m
-      *          must be in the executing directory.
+     *
+     * Comment/uncomment those code lines in method Mesh:Visualize (geom.cpp)
+     * that are supported on your system.
+     *
+     * @param[in] v      vector
+     *
+     * @warning matlab files ascii_read_meshvector.m  visualize_results.m
+     *          must be in the executing directory.
      */
-    void Visualize(std::vector<double> const &v) const;
+    void Visualize_matlab(std::vector<double> const &v) const;
     
+     /**
+     * Visualizse @p v together with its mesh information.
+     *
+     * Comment/uncomment those code lines in method Mesh:Visualize (geom.cpp)
+     * that are supported on your system.
+     *
+     * @param[in] v      vector
+     *
+     * @warning matlab files ascii_read_meshvector.m  visualize_results.m
+     *          must be in the executing directory.
+     */   
+    void Visualize(std::vector<double> const &v) const;
+
     /**
      * Write vector @p v together with its mesh information to an ASCii file @p fname.
      *
@@ -213,7 +300,11 @@ public:
      * @param[in] v      vector
      */
     void Write_ascii_paraview(std::string const &fname, std::vector<double> const &v) const;
+private:    
+    void Write_ascii_paraview_2D(std::string const &fname, std::vector<double> const &v) const;
+    void Write_ascii_paraview_3D(std::string const &fname, std::vector<double> const &v) const;
     
+public:
      /**
      * Visualize @p v together with its mesh information via paraview
      *
@@ -221,7 +312,62 @@ public:
      *
      */   
     void Visualize_paraview(std::vector<double> const &v) const;
-    
+
+
+    ///**
+     //* Global number of edges.
+     //* @return number of edges in mesh.
+     //*/
+    //[[nodiscard]] int Nedges() const
+    //{
+        //return _nedge;
+    //}
+
+    ///**
+     //* Global number of edges for each finite element.
+     //* @return number of edges per element.
+     //*/
+    //[[nodiscard]] int NedgesElements() const
+    //{
+        //return _nedge_e;
+    //}
+
+    ///**
+     //* Read edge connectivity information (e1,e2,e3)_i.
+     //* @return edge connectivity vector [nelems*_nedge_e].
+     //*/
+    //[[nodiscard]] const std::vector<int>  &GetEdgeConnectivity() const
+    //{
+        //return _ea;
+    //}
+
+    ///**
+     //* Access/Change edge connectivity information (e1,e2,e3)_i.
+     //* @return edge connectivity vector [nelems*_nedge_e].
+     //*/
+    //std::vector<int>  &GetEdgeConnectivity()
+    //{
+        //return _ea;
+    //}
+
+    ///**
+     //* Read edge information (v1,v2)_i.
+     //* @return edge connectivity vector [_nedge*2].
+     //*/
+    //[[nodiscard]] const std::vector<int>  &GetEdges() const
+    //{
+        //return _edges;
+    //}
+
+    ///**
+     //* Access/Change edge information (v1,v2)_i.
+     //* @return edge connectivity vector [_nedge*2].
+     //*/
+    //std::vector<int>  &GetEdges()
+    //{
+        //return _edges;
+    //}
+
     /**
      * Determines all node to node connections from the vertex based mesh.
       *
@@ -257,11 +403,10 @@ public:
      */
     virtual void PermuteVertices(std::vector<int> const& old2new);
     
-    virtual std::vector<int> const &GetFathersOfVertices() const
-    {
-        return _dummy;
-    }
-
+   /**
+     * Converts the (linear) P1 mesh into a (quadratic) P2 mesh.
+     */
+    void liftToQuadratic();    
 
 protected:
     void SetNelem(int nelem)
@@ -297,12 +442,17 @@ private:
     int _ndim;          //!< space dimension of the problem (1, 2, or 3)
     std::vector<int> _ia;    //!< element connectivity
     std::vector<double> _xc; //!< coordinates
-    
+
+protected:
+    // B.C.
+    std::vector<int> _bedges;     //!< boundary edges [nbedges][2] storing start/end vertex
+        
 private:
     const std::vector<int> _dummy; //!< empty dummy vector
 };
 
-/*
+
+/**
  * Determines all node to node connections from the element connectivity @p ia.
  * 
  * @param[in] nnode   global number of degrees of freedom
@@ -318,11 +468,49 @@ std::vector<std::vector<int>> Node2NodeGraph(int nelem, int ndof_e,
 
 
 /**
- * 2D finite element mesh consiting of linear triangular elements.
+ * Returns the vertex index of the arithmetic mean of vertices @p v1 and @p v2.
  * 
- 
+ * If that vertex is not already contained in the coordinate vector @p xc then 
+ * this new vertex is appended to @p xc.
+ * 
+ * @param[in]     v1    index of vertex
+ * @param[in]     v2    index of vertex
+ * @param[in,out] xc    coordinate vector [nnodes*ndim]
+ * @param[in]     ndim  space dimension
+ * @return vertex index of midpoint of vertices @p v1 and @p v2.
+ * 
  */
- 
+int appendMidpoint(int v1, int v2, std::vector<double> &xc, int ndim=3);
+
+/**
+ * Determines the index of a vertex @p xm in the coordinate vector @p xc.
+ * 
+ * @param[in]     xm    one vertex
+ * @param[in]     xc    vector of vertices [nnodes*ndim]
+ * @param[in]     ndim  space dimension
+ * @return index in vector or -1 in case the vertex is not contained in the vector.
+ * 
+ */
+int getVertexIndex(std::vector<double> const &xm, std::vector<double> const &xc, int ndim=3);
+
+
+/**
+ * Compares two floating point numbers with respect to a sloppy accuracy.
+ * 
+ * @param[in]     a  number
+ * @param[in]     b  number
+ * @param[in]   eps  accuracy
+ * @return result of @f$ |a-b| < \varepsilon @f$
+ * 
+ */
+inline
+bool equal(double a, double b, double eps=1e-6)
+{
+    return std::abs(b-a)<eps;
+}
+
+// *********************************************************************
+
 class RefinedMesh: public Mesh
 {
 public:

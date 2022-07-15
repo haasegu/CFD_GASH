@@ -12,7 +12,7 @@
 using namespace std;
 
 Mesh::Mesh(int ndim, int nvert_e, int ndof_e)
-    : _nelem(0), _nvert_e(nvert_e), _ndof_e(ndof_e), _nnode(0), _ndim(ndim), _ia(0), _xc(0), _dummy(0)
+    : _nelem(0), _nvert_e(nvert_e), _ndof_e(ndof_e), _nnode(0), _ndim(ndim), _ia(0), _xc(0), _bedges(0), _dummy(0)
 {
 }
 
@@ -22,6 +22,7 @@ Mesh::~Mesh()
 void Mesh::SetValues(std::vector<double> &v, const function<double(double,double,double)>& func) const
 {
     int const nnode=Nnodes();              // number of vertices in mesh
+    cout << "##  Mesh::SetValues : nnode " << nnode << "   size " << v.size() << endl;
     assert( nnode == static_cast<int>(v.size()) );
     for (int k=0; k<nnode; ++k)
     {
@@ -69,7 +70,7 @@ void Mesh::Write_ascii_matlab(std::string const &fname, std::vector<double> cons
     int const    OFFSET(1);         // convert C-indexing to matlab
 
     // Write data: #nodes, #space dimensions, #elements, #vertices per element
-    fout << Nnodes() << DELIMETER << Ndims() << DELIMETER << Nelems() << DELIMETER << NverticesElements() << endl;
+    fout << Nnodes() << DELIMETER << Ndims() << DELIMETER << Nelems() << DELIMETER << NverticesElement() << endl;
 
     // Write cordinates: x_k, y_k   in seperate lines
     assert( Nnodes()*Ndims() ==  static_cast<int>(_xc.size()));
@@ -83,10 +84,10 @@ void Mesh::Write_ascii_matlab(std::string const &fname, std::vector<double> cons
    }
 
     // Write connectivity: ia_k,0, ia_k,1 etc  in seperate lines
-    assert( Nelems()*NverticesElements() ==  static_cast<int>(_ia.size()));
+    assert( Nelems()*NverticesElement() ==  static_cast<int>(_ia.size()));
     for (int k=0, kj=0; k<Nelems(); ++k)
     {
-        for (int j=0; j<NverticesElements(); ++j, ++kj)
+        for (int j=0; j<NverticesElement(); ++j, ++kj)
         {
             fout << _ia[kj]+OFFSET << DELIMETER;       // C to matlab
         }
@@ -107,45 +108,6 @@ void Mesh::Write_ascii_matlab(std::string const &fname, std::vector<double> cons
 vector<vector<int>> Mesh::Node2NodeGraph_2() const
 {
     return ::Node2NodeGraph(Nelems(),NdofsElement(),GetConnectivity());
-    //return ::Node2NodeGraph(Nnodes(),Nelems(),NdofsElement(),_ia);
-    
-    //vector<vector<int>> v2v(_nnode, vector<int>(0));    // stores the vertex to vertex connections
-
-    //////--------------
-    //vector<int> cnt(_nnode,0);
-    //for (size_t i = 0; i < _ia.size(); ++i)  ++cnt[_ia[i]]; // determine number of entries per vertex
-    //for (size_t k = 0; k < v2v.size(); ++k)
-    //{
-        //v2v[k].resize(_nvert_e * cnt[k]);              //    and allocate the memory for that vertex
-        //cnt[k] = 0;
-    //}
-    //////--------------
-
-    //for (int e = 0; e < _nelem; ++e)
-    //{
-        //int const basis = e * _nvert_e;                  // start of vertex connectivity of element e
-        //for (int k = 0; k < _nvert_e; ++k)
-        //{
-            //int const v = _ia[basis + k];
-            //for (int l = 0; l < _nvert_e; ++l)
-            //{
-                //v2v[v][cnt[v]] = _ia[basis + l];
-                //++cnt[v];
-            //}
-        //}
-    //}
-    //// finally  cnt[v]==v2v[v].size()  has to hold for all v!
-
-    //// guarantee unique, ascending sorted entries per vertex
-    //for (size_t v = 0; v < v2v.size(); ++v)
-    //{
-        //sort(v2v[v].begin(), v2v[v].end());
-        //auto ip = unique(v2v[v].begin(), v2v[v].end());
-        //v2v[v].erase(ip, v2v[v].end());
-        ////v2v[v].shrink_to_fit();       // automatically done when copied at return
-    //}
-
-    //return v2v;
 }
 
 
@@ -239,89 +201,6 @@ void Mesh::PermuteVertices(std::vector<int> const& old2new)
     //sortAscending_2(_edges);       // ascending order of vertices in edge
 }
 
-
-
-/*
-void Mesh::Write_ascii_paraview(std::string const &fname, std::vector<double> const &v) const
-{
-    assert(Nnodes() ==  static_cast<int>(v.size()));  // fits vector length to mesh information?
-
-    ofstream fout(fname);                             // open file ASCII mode
-    if ( !fout.is_open() )
-    {
-        cout << "\nFile " << fname << " has not been opened.\n\n" ;
-        assert( fout.is_open() && "File not opened."  );
-    }
-
-    string const DELIMETER(" ");    // define the same delimiter as in matlab/ascii_read*.m
-    //int const    OFFSET(o);         // C-indexing in output
-
-    fout << "# vtk DataFile Version 2.0" << endl;
-    fout << "HEAT EQUATION" << endl;
-    fout << "ASCII" << endl;
-    fout << "DATASET POLYDATA" << endl;
-    fout << "POINTS "<< v.size()<<" float"<<endl;
-
-    assert( Nnodes()*Ndims() ==  static_cast<int>(_xc.size()));
-    for (int k = 0, kj = 0; k < Nnodes(); ++k)
-    {
-        for (int j = 0; j < Ndims(); ++j, ++kj)
-        {
-            fout << _xc[kj] << DELIMETER;
-        }
-
-        fout <<v[k]<< endl;
-    }
-
-
-    fout << "POLYGONS "<< Nelems() << ' ' << Nelems()*5 << endl;
-
-    assert( Nelems()*NverticesElements() ==  static_cast<int>(_ia.size()));
-    for (int k = 0, kj = 0; k < Nelems(); ++k)
-    {
-        fout << 4 << DELIMETER;          // triangular patches
-        for (int j = 0; j < NverticesElements()-1; ++j, ++kj)
-        {
-            fout << _ia[kj] << DELIMETER;
-        }
-
-        fout << _ia[kj];
-        kj=kj+1;
-
-        if(k<Nelems()-1)
-            {
-                fout << endl;
-            }
-    }
-    
-    fout.close();
-    return;
-}
-
-void Mesh::Visualize_paraview(vector<double> const &v) const
-{
-    //const string exec_m("open -a paraview");                 // paraview
-    const string exec_m("paraview");                 // paraview
-   
-    const string fname("uv.vtk");
-    Write_ascii_paraview(fname, v);
-
-    int ierror = system(exec_m.c_str());                                 // call external command
-
-    if (ierror != 0)
-    {
-        cout << endl << "Check path to paraview on your system" << endl;
-    }
-    cout << endl;
-    return;
-}
-*/
-
-
-
-
-
-
  void Mesh::Write_ascii_paraview(std::string const &fname, std::vector<double> const &v) const
 {
     assert(Nnodes() ==  static_cast<int>(v.size()));  // fits vector length to mesh information?
@@ -356,11 +235,11 @@ void Mesh::Visualize_paraview(vector<double> const &v) const
 
     fout << "CELLS "<< Nelems() << ' ' << Nelems()*5 << endl;
 
-    assert( Nelems()*NverticesElements() ==  static_cast<int>(_ia.size()));
+    assert( Nelems()*NverticesElement() ==  static_cast<int>(_ia.size()));
     for (int k = 0, kj = 0; k < Nelems(); ++k)
     {
         fout << 4 << DELIMETER;          // triangular patches
-        for (int j = 0; j < NverticesElements()-1; ++j, ++kj)
+        for (int j = 0; j < NverticesElement()-1; ++j, ++kj)
         {
             fout << _ia[kj] << DELIMETER;
         }
@@ -428,20 +307,224 @@ std::vector<int> Mesh::Index_DirichletNodes() const
     return idx;
 } 
 
+vector<int> Mesh::Index_DirichletNodes_Box
+    (double xl, double xh, double yl, double yh) const
+{
+    assert(2==Ndims());        // not in 3D currently
+	auto x=GetCoords();
+	vector<int> idx;
+	for (int k=0; k<Nnodes()*Ndims(); k+=2)
+	{
+		const double xk(x[k]), yk(x[k+1]);
+		if (equal(xk,xl) || equal(xk,xh) || equal(yk,yl) || equal(yk,yh))
+		{
+			idx.push_back(k/2);
+		}
+	}
+    
+    sort(idx.begin(), idx.end());                           // sort
+    idx.erase( unique(idx.begin(), idx.end()), idx.end() ); // remove duplicate data    
+	return idx;
+}
+
+vector<int> Mesh::Index_DirichletNodes_Box
+    (double xl, double xh, double yl, double yh,double zl, double zh) const
+{
+    assert(3==Ndims());        // not in 3D currently
+	auto x=GetCoords();
+	vector<int> idx;
+	for (int k=0; k<Nnodes()*Ndims(); k+=3)
+	{
+		const double xk(x[k]), yk(x[k+1]), zk(x[k+2]);
+		if (equal(xk,xl) || equal(xk,xh) || equal(yk,yl) || equal(yk,yh) ||  equal(zk,zl) || equal(zk,zh) )
+		{
+			idx.push_back(k/3);
+		}
+	}
+    
+    sort(idx.begin(), idx.end());                           // sort
+    idx.erase( unique(idx.begin(), idx.end()), idx.end() ); // remove duplicate data    
+	return idx;
+}
 
 
+Mesh::Mesh(std::string const &fname)
+    //: Mesh(2, 3, 3, 3) // two dimensions, 3 vertices, 3 dofs, 3 edges per element
+    : Mesh()
+{
+    ReadVertexBasedMesh(fname);
+    //Debug(); int ijk; cin >>ijk;
+    
+    //liftToQuadratic();
+    //Debug();
+    
+    //DeriveEdgeFromVertexBased();        // Generate also the edge based information
+}
+
+void Mesh::ReadVertexBasedMesh(std::string const &fname)
+{
+    ifstream ifs(fname);
+    if (!(ifs.is_open() && ifs.good()))
+    {
+        cerr << "Mesh::ReadVertexBasedMesh: Error cannot open file " << fname << endl;
+        assert(ifs.is_open());
+    }
+
+    int const OFFSET(1);             // Matlab to C indexing
+    cout << "ASCI file  " << fname << "  opened" << endl;
+
+    // Read some mesh constants
+    int nnode, ndim, nelem, nvert_e;
+    ifs >> nnode >> ndim >> nelem >> nvert_e;
+    cout << nnode << "  " << ndim << "  " << nelem << "  " << nvert_e << endl;
+    // accept only    triangles (2D)  or  tetrahedrons (3D)
+    assert((ndim == 2 && nvert_e == 3)||(ndim == 3 && nvert_e == 4));
+    
+    // set member
+    _ndim    = ndim;
+    _nvert_e = nvert_e;
+    _ndof_e  = _nvert_e;
+    //_nedge_e = (2==_ndim)? 3:6;       // Generate also the edge based information
+
+    // Allocate memory
+    Resize_Coords(nnode, ndim);                 // coordinates in 2D [nnode][ndim]
+    Resize_Connectivity(nelem, nvert_e);        // connectivity matrix [nelem][nvert_e]
+
+    // Read coordinates
+    auto &xc = GetCoords();
+    for (int k = 0; k < nnode * ndim; ++k)
+    {
+        ifs >> xc[k];
+    }
+
+    // Read connectivity
+    auto &ia = GetConnectivity();
+    for (int k = 0; k < nelem * nvert_e; ++k)
+    {
+        ifs >> ia[k];
+        ia[k] -= OFFSET;                // Matlab to C indexing
+    }
+
+    if (2==ndim)
+    {
+        // additional read of (Dirichlet) boundary information (only start/end point)
+        int nbedges;
+        ifs >> nbedges;
+
+        _bedges.resize(nbedges * 2);
+        for (int k = 0; k < nbedges * 2; ++k)
+        {
+            ifs >> _bedges[k];
+            _bedges[k] -= OFFSET;            // Matlab to C indexing
+        }
+    }
+    else
+    {
+        // ToDo: add boundary information to 3D mesh
+        cout << std::endl << "NO boundary information available for 3D mesh" << endl;
+    }
+    return;
+}
 
 
+void Mesh::liftToQuadratic()
+{
+    cout << "##  Mesh::liftToQuadratic  ##" << endl;
+    int const nelem   = Nelems();           // number of elements remains unchanged
+    int const nnodes1 = Nnodes();           // number of P1-vertices 
+    int const nvert_1 = NverticesElement(); // #vertices per P1-element
+    assert(NverticesElement()==NdofsElement());
+    
+    vector<double> const xc_p1 = GetCoords();     // save P1 coordinates
+    vector<int> const ia_p1 = GetConnectivity();  // save P1 connevctivity
+    // check dimensions in P1
+    assert( nnodes1*Ndims()==static_cast<int>(xc_p1.size()) );
+    assert( nelem*nvert_1==static_cast<int>(ia_p1.size()) );
+    
+    bool lifting_possible{false};
+    // P1 --> P2 DOFSs per element
+    if (2==Ndims())
+    {
+        lifting_possible = (3==nvert_1);
+        if (lifting_possible)
+        { 
+            SetNverticesElement(6);
+            SetNdofsElement(NverticesElement());
+        }
+    }
+    else if(3==Ndims())
+    {
+        lifting_possible = (4==nvert_1);
+        if (lifting_possible)
+        { 
+            SetNverticesElement(10);
+            SetNdofsElement(NverticesElement());
+        }
+    }
+    else
+    {
+        cout << "Mesh::liftToQuadratic(): Wrong space dimension :" << Ndims() << endl;
+        assert(false);
+    }
+    
+    if (!lifting_possible) 
+    {
+        cout << "Mesh::liftToQuadratic(): Mesh elements must be linear." << endl;
+        return;                                   // Exit function and do nothing.
+    }
+    
+    int const nvert_2 = NverticesElement();       // #vertices per P2-element
+    //cout << "nvert_2: " << nvert_2 << endl;
 
+    // P2 connectivity: memory allocation and partial initialization with P1 data
+    vector<int>  & ia_p2 = GetConnectivity();     // P2 connectivity
+    ia_p2.resize(nelem*nvert_2,-1);
+    // Copy P1 connectivity into P2 
+    for (int ke=0; ke<nelem; ++ke)
+    {
+        int const idx1=ke*nvert_1;
+        int const idx2=ke*nvert_2;
 
+        for (int d=0; d<nvert_1; ++d)
+        {
+            ia_p2.at(idx2+d) = ia_p1.at(idx1+d);
+        }
+    }
+    
+    // P2 coordinates: max. memory reservation and partial initialization with P1 data
+    vector<double>  & xc_p2 = GetCoords();
+    // reserve max. memory, append new vertices with push_back(),  call shrink_to_fit() finally.
+    xc_p2.reserve(nnodes1+(nvert_2-nvert_1)*nelem);
+    xc_p2.resize(nnodes1*Ndims(),-12345);
+    copy(cbegin(xc_p1),cend(xc_p1),begin(xc_p2));
+    
 
+    for (int ke=0; ke<nelem; ++ke)
+    {
+        int const idx2=ke*nvert_2;                // Element starts
+        int const v0 = ia_p2.at(idx2+0);          // vertices of P1
+        int const v1 = ia_p2.at(idx2+1);
+        int const v2 = ia_p2.at(idx2+2);
+        
+        ia_p2.at(idx2+4) = appendMidpoint(v0,v1,xc_p2);
+        ia_p2.at(idx2+5) = appendMidpoint(v1,v2,xc_p2);
+        ia_p2.at(idx2+6) = appendMidpoint(v2,v0,xc_p2);
+        
+        if (3==Ndims())
+        {
+            int const v3 = ia_p2.at(idx2+3);      // forth vertex of P1 in 3D
+            ia_p2.at(idx2+7) = appendMidpoint(v0,v3,xc_p2);
+            ia_p2.at(idx2+8) = appendMidpoint(v1,v3,xc_p2);
+            ia_p2.at(idx2+9) = appendMidpoint(v2,v3,xc_p2);
+        }
+    }
+    
+    xc_p2.shrink_to_fit();
+    SetNnode(xc_p2.size()/Ndims()); 
+    
+    cout << _nnode << "  " << _ndim << "  " << _nelem << "  " << _nvert_e << "  " << _ndof_e << endl;
 
-
-
-
-
-
-
+}
 
 
 // #####################################################################

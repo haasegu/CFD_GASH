@@ -4,8 +4,8 @@
 #include <cassert>
 #include <iomanip>       // setw
 #include <iostream>
-#include <numeric>
 #include <map>
+#include <numeric>
 #include <utility>        // swap()
 #include <vector>
 
@@ -126,7 +126,7 @@ void permute_2(std::vector<int> const& old2new, std::vector<T> & x)
 }
 
 /**
- * Changes the entries in @p x accoring to renumbering @p  old2new.
+ * Changes the entries in @p x according to renumbering @p  old2new.
  *
  * @param[in]     old2new    renumbering vector
  * @param[in,out] x          vector
@@ -146,7 +146,7 @@ void reNumberEntries(std::vector<T> const& old2new, std::vector<T> & x)
 }
 
 /**
- * Changes the entries in @p x accoring to renumbering @p  old2new.
+ * Changes the entries in @p x according to renumbering @p  old2new.
  *
  * @param[in]     old2new    renumbering vector
  * @param[in,out] x          vector
@@ -183,3 +183,30 @@ void sortAscending_2(std::vector<T> & x)
         if (x[k]>x[k+1]) { std::swap(x[k],x[k+1]); }
     }
 }
+
+
+#include <chrono>           // contains timing routines
+typedef std::chrono::system_clock Time;
+typedef std::chrono::milliseconds ms;
+typedef std::chrono::duration<double> dsec;
+
+class MyTimer
+{
+    public:
+    
+    MyTimer() : _tstart(Time::now()) {}
+    
+    void tic()
+    { _tstart = Time::now(); }
+    
+    auto toc()
+    {
+        dsec timed = Time::now() - _tstart;
+        return timed.count();
+    }
+    
+    
+    private:
+    std::chrono::time_point<Time> _tstart;
+    
+};
