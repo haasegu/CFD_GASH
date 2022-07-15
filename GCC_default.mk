@@ -32,9 +32,9 @@ CXXFLAGS  += ${CPU}
 LINKFLAGS += ${CPU}
 
 # different libraries in Ubuntu or manajaró
-ifndef UBUNTU
-UBUNTU=1
-endif
+#ifndef UBUNTU
+#UBUNTU=1
+#endif
 
 # BLAS, LAPACK
 ifeq ($(UBUNTU),1)
