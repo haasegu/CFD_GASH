@@ -351,7 +351,7 @@ class P1_2vec_3d: public Element
      * @param[out] fe	element load vector [_ndof]
      * @param[out] f_func function @p f_func (x,y,z)
      */    
-    void CalcLaplace(int const ial[34], double const xc[], 
+    void CalcLaplace(int const ial[10], double const xc[], 
          std::vector<std::vector<double>> &ske, std::vector<double> &fe,
          const std::function<double(double, double, double)> &f_func    ) const;      
     
@@ -696,7 +696,7 @@ void FEM_Matrix_2<ELEM>::Derive_Matrix_Pattern()
 }
 
 template <class ELEM>
-void FEM_Matrix_2<ELEM>::AddElem(int const ial[], std::vector<std::vector<double>> const &ske, std::vector<double> const &fe, std::vector<double> &f)
+ void FEM_Matrix_2<ELEM>::AddElem(int const ial[], std::vector<std::vector<double>> const &ske, std::vector<double> const &fe, std::vector<double> &f)
 {
     //assert(NdofsElement() == 3);               // only for triangular, linear elements
     for (int i = 0; i < NdofsElement(); ++i) {
@@ -718,6 +718,7 @@ void FEM_Matrix_2<ELEM>::AddElem(int const ial[], std::vector<std::vector<double
         f[ii] += fe[i];
     }
 }
+
 
 template <class ELEM>
 void FEM_Matrix_2<ELEM>::CalculateLaplace(
@@ -778,6 +779,8 @@ void FEM_Matrix_2<ELEM>::CalculateLaplace(
     auto const &ia_geom = GetConnectivityGeom();  // geometric connectivity
     auto const &ia_crs  = GetConnectivity();      // DOF connectivity in CRS matrix
     auto const &xc      = _mesh.GetCoords();      // Coordinates
+
+    std::cout << "geom_ial: " << nvert_e << "   crs_ial: " << ndof_e  << std::endl;
 
     #pragma omp parallel
     {

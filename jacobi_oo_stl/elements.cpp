@@ -208,7 +208,7 @@ void P1_3d::CalcLaplace(
 
 
 void P1_2vec_3d::CalcLaplace(
-    int const ial[34], double const xc[], 
+    int const ial[10], double const xc[], 
     vector<vector<double>> &ske, vector<double> &fe,
     const function<double(double, double, double)> &f_func ) const     
 {
@@ -218,14 +218,429 @@ void P1_2vec_3d::CalcLaplace(
     //cout << ske.size() << "  " << nDOFs_loc() << endl;
     assert(static_cast<int>(ske.size())==nDOFs_loc());
     
-    // Dummy filling for first test
+    // Zero filling for first test
     for (size_t row=0; row<ske.size(); ++row)
     {
-        fill(ske[row].begin(),ske[row].end(),-1);
-        ske[row][row] = ske.size()+0.5;
-        fe[row] = 1.0/ske.size();
+        fill(ske[row].begin(),ske[row].end(),0.0);
+        fe[row] = 0.0;
     }
-    //   Here we have to fill ske, fe
+   
+    {
+		double sa_ske[4][4];
+		double sa_fe[4];
+		const std::vector<double> r_old_n;
+		const std::vector<double> r_old_m;
+		const std::vector<double> u_old_n;
+		const std::vector<double> u_old_m;
+		const std::vector<double> v_old_n;
+		const std::vector<double> v_old_m;
+		const std::vector<double> w_old_n;
+		const std::vector<double> w_old_m;
+		double dt, t, mu, lambda, kp;
+		CalcElem_Navier_Stokes_A00(ial, xc, sa_ske, sa_fe, r_old_n, r_old_m, u_old_n, u_old_m, v_old_n, v_old_m, w_old_n, w_old_m, dt, t, mu, lambda, kp);
+		//CalcElem_Navier_Stokes_A00(..., sa_ske,sa_fe);
+		int off_i = 0 + (1-1)*10;
+        int off_j = 0 + (1-1)*10;
+        for(int i=0; i<=3; ++i)
+        {
+			for(int j=0; j<=3; ++j)
+			{
+				ske[off_i+i][off_j+j] = sa_ske[i][j];
+			}
+			fe[off_i+i] = sa_fe[i];
+		}
+    }
+    
+    {
+		double sa_ske[4][10];
+		double sa_fe[4];
+		const std::vector<double> r_old_n;
+		const std::vector<double> r_old_m;
+		const std::vector<double> u_old_n;
+		const std::vector<double> u_old_m;
+		const std::vector<double> v_old_n;
+		const std::vector<double> v_old_m;
+		const std::vector<double> w_old_n;
+		const std::vector<double> w_old_m;
+		double dt, t, mu, lambda, kp;
+		CalcElem_Navier_Stokes_A01(ial, xc, sa_ske, sa_fe, r_old_n, r_old_m, u_old_n, u_old_m, v_old_n, v_old_m, w_old_n, w_old_m, dt, t, mu, lambda, kp);
+		//CalcElem_Navier_Stokes_A01(..., sa_ske,sa_fe);
+		int off_i = 0 + (1-1)*10;
+        int off_j = 4 + (1-1)*10;
+        for(int i=0; i<=3; ++i)
+        {
+			for(int j=0; j<=9; ++j)
+			{
+				ske[off_i+i][off_j+j] = sa_ske[i][j];
+			}
+			fe[off_i+i] = 0.0;
+		}
+    }
+    
+    {
+		double sa_ske[4][10];
+		double sa_fe[4];
+		const std::vector<double> r_old_n;
+		const std::vector<double> r_old_m;
+		const std::vector<double> u_old_n;
+		const std::vector<double> u_old_m;
+		const std::vector<double> v_old_n;
+		const std::vector<double> v_old_m;
+		const std::vector<double> w_old_n;
+		const std::vector<double> w_old_m;
+		double dt, t, mu, lambda, kp;
+		CalcElem_Navier_Stokes_A02(ial, xc, sa_ske, sa_fe, r_old_n, r_old_m, u_old_n, u_old_m, v_old_n, v_old_m, w_old_n, w_old_m, dt, t, mu, lambda, kp);
+		//CalcElem_Navier_Stokes_A02(..., sa_ske,sa_fe);
+		int off_i = 0 + (1-1)*10;
+        int off_j = 4 + (2-1)*10;
+        for(int i=0; i<=3; ++i)
+        {
+			for(int j=0; j<=9; ++j)
+			{
+				ske[off_i+i][off_j+j] = sa_ske[i][j];
+			}
+			fe[off_i+i] = 0.0;
+		}
+    }
+    
+    {
+		double sa_ske[4][10];
+		double sa_fe[4];
+		const std::vector<double> r_old_n;
+		const std::vector<double> r_old_m;
+		const std::vector<double> u_old_n;
+		const std::vector<double> u_old_m;
+		const std::vector<double> v_old_n;
+		const std::vector<double> v_old_m;
+		const std::vector<double> w_old_n;
+		const std::vector<double> w_old_m;
+		double dt, t, mu, lambda, kp;
+		CalcElem_Navier_Stokes_A03(ial, xc, sa_ske, sa_fe, r_old_n, r_old_m, u_old_n, u_old_m, v_old_n, v_old_m, w_old_n, w_old_m, dt, t, mu, lambda, kp);
+		//CalcElem_Navier_Stokes_A03(..., sa_ske,sa_fe);
+		int off_i = 0 + (1-1)*10;
+        int off_j = 4 + (3-1)*10;
+        for(int i=0; i<=3; ++i)
+        {
+			for(int j=0; j<=9; ++j)
+			{
+				ske[off_i+i][off_j+j] = sa_ske[i][j];
+			}
+			fe[off_i+i] = 0.0;
+		}
+    }
+    
+    {
+		double sa_ske[10][4];
+		double sa_fe[10];
+		const std::vector<double> r_old_n;
+		const std::vector<double> r_old_m;
+		const std::vector<double> u_old_n;
+		const std::vector<double> u_old_m;
+		const std::vector<double> v_old_n;
+		const std::vector<double> v_old_m;
+		const std::vector<double> w_old_n;
+		const std::vector<double> w_old_m;
+		double dt, t, mu, lambda, kp;
+		CalcElem_Navier_Stokes_A10(ial, xc, sa_ske, sa_fe, r_old_n, r_old_m, u_old_n, u_old_m, v_old_n, v_old_m, w_old_n, w_old_m, dt, t, mu, lambda, kp);
+		//CalcElem_Navier_Stokes_A10(..., sa_ske,sa_fe);
+		int off_i = 4 + (1-1)*10;
+        int off_j = 0 + (1-1)*10;
+        for(int i=0; i<=9; ++i)
+        {
+			for(int j=0; j<=3; ++j)
+			{
+				ske[off_i+i][off_j+j] = sa_ske[i][j];
+			}
+			fe[off_i+i] = sa_fe[i];
+		}
+    }
+    
+    {
+		double sa_ske[10][10];
+		double sa_fe[10];
+		const std::vector<double> r_old_n;
+		const std::vector<double> r_old_m;
+		const std::vector<double> u_old_n;
+		const std::vector<double> u_old_m;
+		const std::vector<double> v_old_n;
+		const std::vector<double> v_old_m;
+		const std::vector<double> w_old_n;
+		const std::vector<double> w_old_m;
+		double dt, t, mu, lambda, kp;
+		CalcElem_Navier_Stokes_A11(ial, xc, sa_ske, sa_fe, r_old_n, r_old_m, u_old_n, u_old_m, v_old_n, v_old_m, w_old_n, w_old_m, dt, t, mu, lambda, kp);
+		//CalcElem_Navier_Stokes_A11(..., sa_ske);
+		int off_i = 4 + (1-1)*10;
+        int off_j = 4 + (1-1)*10;
+        for(int i=0; i<=9; ++i)
+        {
+			for(int j=0; j<=9; ++j)
+			{
+				ske[off_i+i][off_j+j] = sa_ske[i][j];
+			}
+			fe[off_i+i] = 0.0;
+		}
+    }
+    
+    {
+		double sa_ske[10][10];
+		double sa_fe[10];
+		const std::vector<double> r_old_n;
+		const std::vector<double> r_old_m;
+		const std::vector<double> u_old_n;
+		const std::vector<double> u_old_m;
+		const std::vector<double> v_old_n;
+		const std::vector<double> v_old_m;
+		const std::vector<double> w_old_n;
+		const std::vector<double> w_old_m;
+		double dt, t, mu, lambda, kp;
+		CalcElem_Navier_Stokes_A12(ial, xc, sa_ske, sa_fe, r_old_n, r_old_m, u_old_n, u_old_m, v_old_n, v_old_m, w_old_n, w_old_m, dt, t, mu, lambda, kp);
+		//CalcElem_Navier_Stokes_A12(..., sa_ske);
+		int off_i = 4 + (1-1)*10;
+        int off_j = 4 + (2-1)*10;
+        for(int i=0; i<=9; ++i)
+        {
+			for(int j=0; j<=9; ++j)
+			{
+				ske[off_i+i][off_j+j] = sa_ske[i][j];
+			}
+			fe[off_i+i] = 0.0;
+		}
+    }
+    
+    {
+		double sa_ske[10][10];
+		double sa_fe[10];
+		const std::vector<double> r_old_n;
+		const std::vector<double> r_old_m;
+		const std::vector<double> u_old_n;
+		const std::vector<double> u_old_m;
+		const std::vector<double> v_old_n;
+		const std::vector<double> v_old_m;
+		const std::vector<double> w_old_n;
+		const std::vector<double> w_old_m;
+		double dt, t, mu, lambda, kp;
+		CalcElem_Navier_Stokes_A13(ial, xc, sa_ske, sa_fe, r_old_n, r_old_m, u_old_n, u_old_m, v_old_n, v_old_m, w_old_n, w_old_m, dt, t, mu, lambda, kp);
+		//CalcElem_Navier_Stokes_A13(..., sa_ske);
+		int off_i = 4 + (1-1)*10;
+        int off_j = 4 + (3-1)*10;
+        for(int i=0; i<=9; ++i)
+        {
+			for(int j=0; j<=9; ++j)
+			{
+				ske[off_i+i][off_j+j] = sa_ske[i][j];
+			}
+			fe[off_i+i] = 0.0;
+		}
+    }
+    
+    {
+		double sa_ske[10][4];
+		double sa_fe[10];
+		const std::vector<double> r_old_n;
+		const std::vector<double> r_old_m;
+		const std::vector<double> u_old_n;
+		const std::vector<double> u_old_m;
+		const std::vector<double> v_old_n;
+		const std::vector<double> v_old_m;
+		const std::vector<double> w_old_n;
+		const std::vector<double> w_old_m;
+		double dt, t, mu, lambda, kp;
+		CalcElem_Navier_Stokes_A20(ial, xc, sa_ske, sa_fe, r_old_n, r_old_m, u_old_n, u_old_m, v_old_n, v_old_m, w_old_n, w_old_m, dt, t, mu, lambda, kp);
+		//CalcElem_Navier_Stokes_A20(..., sa_ske,sa_fe);
+		int off_i = 4 + (2-1)*10;
+        int off_j = 0 + (1-1)*10;
+        for(int i=0; i<=9; ++i)
+        {
+			for(int j=0; j<=3; ++j)
+			{
+				ske[off_i+i][off_j+j] = sa_ske[i][j];
+			}
+			fe[off_i+i] = sa_fe[i];
+		}
+    }
+    
+    {
+		double sa_ske[10][10];
+		double sa_fe[10];
+		const std::vector<double> r_old_n;
+		const std::vector<double> r_old_m;
+		const std::vector<double> u_old_n;
+		const std::vector<double> u_old_m;
+		const std::vector<double> v_old_n;
+		const std::vector<double> v_old_m;
+		const std::vector<double> w_old_n;
+		const std::vector<double> w_old_m;
+		double dt, t, mu, lambda, kp;
+		CalcElem_Navier_Stokes_A21(ial, xc, sa_ske, sa_fe, r_old_n, r_old_m, u_old_n, u_old_m, v_old_n, v_old_m, w_old_n, w_old_m, dt, t, mu, lambda, kp);
+		//CalcElem_Navier_Stokes_A21(..., sa_ske);
+		int off_i = 4 + (2-1)*10;
+        int off_j = 4 + (2-1)*10;
+        for(int i=0; i<=9; ++i)
+        {
+			for(int j=0; j<=9; ++j)
+			{
+				ske[off_i+i][off_j+j] = sa_ske[i][j];
+			}
+			fe[off_i+i] = 0.0;
+		}
+    }
+    
+    {
+		double sa_ske[10][10];
+		double sa_fe[10];
+		const std::vector<double> r_old_n;
+		const std::vector<double> r_old_m;
+		const std::vector<double> u_old_n;
+		const std::vector<double> u_old_m;
+		const std::vector<double> v_old_n;
+		const std::vector<double> v_old_m;
+		const std::vector<double> w_old_n;
+		const std::vector<double> w_old_m;
+		double dt, t, mu, lambda, kp;
+		CalcElem_Navier_Stokes_A22(ial, xc, sa_ske, sa_fe, r_old_n, r_old_m, u_old_n, u_old_m, v_old_n, v_old_m, w_old_n, w_old_m, dt, t, mu, lambda, kp);
+		//CalcElem_Navier_Stokes_A22(..., sa_ske);
+		int off_i = 4 + (2-1)*10;
+        int off_j = 4 + (3-1)*10;
+        for(int i=0; i<=9; ++i)
+        {
+			for(int j=0; j<=9; ++j)
+			{
+				ske[off_i+i][off_j+j] = sa_ske[i][j];
+			}
+			fe[off_i+i] = 0.0;
+		}
+    }
+    
+    {
+		double sa_ske[10][10];
+		double sa_fe[10];
+		const std::vector<double> r_old_n;
+		const std::vector<double> r_old_m;
+		const std::vector<double> u_old_n;
+		const std::vector<double> u_old_m;
+		const std::vector<double> v_old_n;
+		const std::vector<double> v_old_m;
+		const std::vector<double> w_old_n;
+		const std::vector<double> w_old_m;
+		double dt, t, mu, lambda, kp;
+		CalcElem_Navier_Stokes_A23(ial, xc, sa_ske, sa_fe, r_old_n, r_old_m, u_old_n, u_old_m, v_old_n, v_old_m, w_old_n, w_old_m, dt, t, mu, lambda, kp);
+		//CalcElem_Navier_Stokes_A23(..., sa_ske);
+		int off_i = 4 + (2-1)*10;
+        int off_j = 4 + (3-1)*10;
+        for(int i=0; i<=9; ++i)
+        {
+			for(int j=0; j<=9; ++j)
+			{
+				ske[off_i+i][off_j+j] = sa_ske[i][j];
+			}
+			fe[off_i+i] = 0.0;
+		}
+    }
+    
+    {
+		double sa_ske[10][4];
+		double sa_fe[10];
+		const std::vector<double> r_old_n;
+		const std::vector<double> r_old_m;
+		const std::vector<double> u_old_n;
+		const std::vector<double> u_old_m;
+		const std::vector<double> v_old_n;
+		const std::vector<double> v_old_m;
+		const std::vector<double> w_old_n;
+		const std::vector<double> w_old_m;
+		double dt, t, mu, lambda, kp;
+		CalcElem_Navier_Stokes_A30(ial, xc, sa_ske, sa_fe, r_old_n, r_old_m, u_old_n, u_old_m, v_old_n, v_old_m, w_old_n, w_old_m, dt, t, mu, lambda, kp);
+		//CalcElem_Navier_Stokes_A30(..., sa_ske,sa_fe);
+		int off_i = 4 + (3-1)*10;
+        int off_j = 0 + (1-1)*10;
+        for(int i=0; i<=9; ++i)
+        {
+			for(int j=0; j<=3; ++j)
+			{
+				ske[off_i+i][off_j+j] = sa_ske[i][j];
+			}
+			fe[off_i+i] = sa_fe[i];
+		}
+    }
+    
+    {
+		double sa_ske[10][10];
+		double sa_fe[10];
+		const std::vector<double> r_old_n;
+		const std::vector<double> r_old_m;
+		const std::vector<double> u_old_n;
+		const std::vector<double> u_old_m;
+		const std::vector<double> v_old_n;
+		const std::vector<double> v_old_m;
+		const std::vector<double> w_old_n;
+		const std::vector<double> w_old_m;
+		double dt, t, mu, lambda, kp;
+		CalcElem_Navier_Stokes_A31(ial, xc, sa_ske, sa_fe, r_old_n, r_old_m, u_old_n, u_old_m, v_old_n, v_old_m, w_old_n, w_old_m, dt, t, mu, lambda, kp);
+		//CalcElem_Navier_Stokes_A31(..., sa_ske);
+		int off_i = 4 + (3-1)*10;
+        int off_j = 4 + (1-1)*10;
+        for(int i=0; i<=9; ++i)
+        {
+			for(int j=0; j<=9; ++j)
+			{
+				ske[off_i+i][off_j+j] = sa_ske[i][j];
+			}
+			fe[off_i+i] = 0.0;
+		}
+    }
+    
+    {
+		double sa_ske[10][10];
+		double sa_fe[10];
+		const std::vector<double> r_old_n;
+		const std::vector<double> r_old_m;
+		const std::vector<double> u_old_n;
+		const std::vector<double> u_old_m;
+		const std::vector<double> v_old_n;
+		const std::vector<double> v_old_m;
+		const std::vector<double> w_old_n;
+		const std::vector<double> w_old_m;
+		double dt, t, mu, lambda, kp;
+		CalcElem_Navier_Stokes_A32(ial, xc, sa_ske, sa_fe, r_old_n, r_old_m, u_old_n, u_old_m, v_old_n, v_old_m, w_old_n, w_old_m, dt, t, mu, lambda, kp);
+		//CalcElem_Navier_Stokes_A32(..., sa_ske);
+		int off_i = 4 + (3-1)*10;
+        int off_j = 4 + (2-1)*10;
+        for(int i=0; i<=9; ++i)
+        {
+			for(int j=0; j<=9; ++j)
+			{
+				ske[off_i+i][off_j+j] = sa_ske[i][j];
+			}
+			fe[off_i+i] = 0.0;
+		}
+    }
+    
+    {
+		double sa_ske[10][10];
+		double sa_fe[10];
+		const std::vector<double> r_old_n;
+		const std::vector<double> r_old_m;
+		const std::vector<double> u_old_n;
+		const std::vector<double> u_old_m;
+		const std::vector<double> v_old_n;
+		const std::vector<double> v_old_m;
+		const std::vector<double> w_old_n;
+		const std::vector<double> w_old_m;
+		double dt, t, mu, lambda, kp;
+		CalcElem_Navier_Stokes_A33(ial, xc, sa_ske, sa_fe, r_old_n, r_old_m, u_old_n, u_old_m, v_old_n, v_old_m, w_old_n, w_old_m, dt, t, mu, lambda, kp);
+		//CalcElem_Navier_Stokes_A33(..., sa_ske);
+		int off_i = 4 + (3-1)*10;
+        int off_j = 4 + (3-1)*10;
+        for(int i=0; i<=9; ++i)
+        {
+			for(int j=0; j<=9; ++j)
+			{
+				ske[off_i+i][off_j+j] = sa_ske[i][j];
+			}
+			fe[off_i+i] = 0.0;
+		}
+    }
+
 
 }
 
