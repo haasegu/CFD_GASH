@@ -24,7 +24,7 @@ CXXFLAGS += -ffast-math -O3 -march=native -std=c++17 ${WARNINGS}
 # #CFLAGS	= -ffast-math -O3 -DNDEBUG -msse3 -fopenmp
 # FFLAGS	= -ffast-math -O3 -DNDEBUG -msse3 -fopenmp
 # LFLAGS  = -ffast-math -O3 -DNDEBUG -msse3 -fopenmp
-LINKFLAGS   += -O3
+LINKFLAGS   += -O2
 
 #architecture
 #CPU = -march=znver2
@@ -46,8 +46,8 @@ LINKFLAGS += -llapack -lopenblas -lcblas
 endif
 
 # interprocedural optimization
-CXXFLAGS += -flto
-LINKFLAGS += -flto
+#CXXFLAGS += -flto
+#LINKFLAGS += -flto
 
 # for debugging purpose (save code)
 # -fsanitize=leak         # only one out the trhee can be used
@@ -58,6 +58,12 @@ SANITARY =  -fsanitize=address  -fsanitize=undefined -fsanitize=null -fsanitize=
  -fsanitize=bool -fsanitize=enum -fsanitize=vptr
 #CXXFLAGS  += ${SANITARY}
 #LINKFLAGS +=${SANITARY}
+
+#
+SUPERLU_INC= -I/usr/include/superlu
+# -I/usr/include/superlu-dist
+CXXFLAGS  += ${SUPERLU_INC}
+LINKFLAGS +=-lsuperlu
 
 # OpenMP
 CXXFLAGS += -fopenmp

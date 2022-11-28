@@ -173,7 +173,10 @@ public:
      * @param[in] v     scalar  vector
      * @param[in] func  function of (x,y,z) returning a double value.
      */
-    void SetValues(std::vector<double> &v, const std::function<double(double, double, double)> &func) const;
+    void SetValues(std::vector<double> &r, const std::function<double(double, double, double)> &func) const;
+//    void SetValues1(std::vector<double> &u, const std::function<double(double, double, double)> &func1) const;
+//   void SetValues2(std::vector<double> &v, const std::function<double(double, double, double)> &func2) const//;
+//    void SetValues3(std::vector<double> &w, const std::function<double(double, double, double)> &func3) const;
 
     /**
      * Calculate values in vector valued vector @p v via functions @p func?(x,y,z)
@@ -185,7 +188,7 @@ public:
      void SetValues(std::vector<double> &vvec, 
         const std::function<double(double, double, double)> &func0,
         const std::function<double(double, double, double)> &func1,
-        const std::function<double(double, double, double)> &func2 ) const;
+        const std::function<double(double, double, double)> &func2) const;      
 
     /**
      * Prints the information for a finite element mesh
@@ -244,7 +247,12 @@ public:
     [[nodiscard]] 
     virtual std::vector<int> Index_DirichletNodes_Box
             (double xl, double xh, double yl, double yh,double zl, double zh) const;
-
+            
+    std::vector<double> getPeriodicCoordsBox_xy(std::vector<int> &idx, double xl, double xh, double yl, double yh,double zl, double zh) const;
+    std::vector<double> getPeriodicCoordsBox_xz(std::vector<int> &idx, double xl, double xh, double yl, double yh,double zl, double zh) const;
+    std::vector<double> getPeriodicCoordsBox_yz(std::vector<int> &idx, double xl, double xh, double yl, double yh,double zl, double zh) const;
+            
+    double getPeriodicValue(int k, std::vector<double> const &pCoords, std::vector<double> const &u) const;
 
     /**
      * Exports the mesh information to ASCii files  @p basename + {_coords|_elements}.txt.

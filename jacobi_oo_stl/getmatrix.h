@@ -18,6 +18,9 @@
  
 void CalcElem(int const ial[4], double const xc[], double ske[4][4], double fe[4]);
 
+void CalcElem_Navier_Stokes(int const ial[], double const xc[], std::vector<std::vector<double>> &ske, std::vector<double> &fe, const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
+const double dt, const double mu, const double lambda, const double kp, const double t_ni);
+
 //first row
 void CalcElem_Navier_Stokes_A00(int const ial[4], double const xc[], double ske[4][4], double fe[4], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
 const double dt, const double t, const double mu, const double lambda, const double kp);
@@ -69,6 +72,9 @@ const double dt, const double t, const double mu, const double lambda, const dou
 
 void CalcElem_Navier_Stokes_A33(int const ial[10], double const xc[], double ske[10][10], double fe[10], const std::vector<double> &r_old_n, const std::vector<double> &r_old_m, const std::vector<double> &u_old_n, const std::vector<double> &u_old_m, const std::vector<double> &v_old_n, const std::vector<double> &v_old_m, const std::vector<double> &w_old_n, const std::vector<double> &w_old_m, 
 const double dt, const double t, const double mu, const double lambda, const double kp);
+
+
+
 
 /**
  * Calculates the element mass matrix @p ske.
@@ -654,7 +660,7 @@ class FEM_Matrix: public CRS_Matrix
         */
        void ApplyDirichletBC(std::vector<double> const &u, std::vector<double> &f);
        
-       void ApplyDirichletBC_Box(std::vector<double> const &u, std::vector<double> &f,
+       void ApplyDirichletBC_Box1(std::vector<double> const &u, std::vector<double> &f,
             double xl, double xh, double yl, double yh,double zl, double zh );
 
        /**

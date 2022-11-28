@@ -1,7 +1,7 @@
 // see:   http://llvm.org/docs/CodingStandards.html#include-style
 #include "geom.h"
 #include "utils.h"
-
+#include "elements.h"
 #include <algorithm>
 #include <cassert>
 #include <fstream>
@@ -19,28 +19,65 @@ Mesh::Mesh(int ndim, int nvert_e, int ndof_e)
 Mesh::~Mesh()
 {}
 
-void Mesh::SetValues(std::vector<double> &v, const function<double(double,double,double)>& func) const
+void Mesh::SetValues(std::vector<double> &r, const function<double(double,double,double)>& func) const
 {
-    int const nnode=Nnodes();              // number of vertices in mesh
-    cout << "##  Mesh::SetValues : nnode " << nnode << "   size " << v.size() << endl;
-    assert( nnode == static_cast<int>(v.size()) );
+    //int const nnode=Nnodes();              // number of vertices in mesh
+    int const nnode=r.size();
+    cout << "##  Mesh::SetValues : nnode " << nnode << "   size " << r.size() << endl;
+    assert( nnode == static_cast<int>(r.size()) );
     for (int k=0; k<nnode; ++k)
     {
-        v[k] = func( _xc[2*k], _xc[2*k+1] , _xc[2*k+2]);
+        r[k] = func( _xc[3*k], _xc[3*k+1] , _xc[3*k+2]);
     }
 }
 
+/*
+void Mesh::SetValues1(std::vector<double> &u, const std::function<double(double, double, double)> &func1) const
+{
+    int const nnode=Nnodes();              // number of vertices in mesh
+    cout << "##  Mesh::SetValues1 : nnode " << nnode << "   size " << u.size() << endl;
+    //assert( nnode == static_cast<int>(u.size()) );
+    for (int k=0; k<nnode; ++k)
+    {
+        u[k] = func1( _xc[3*k], _xc[3*k+1] , _xc[3*k+2]);
+    }
+}    
+
+void Mesh::SetValues2(std::vector<double> &v, const std::function<double(double, double, double)> &func2) const
+{
+    int const nnode=Nnodes();              // number of vertices in mesh
+    cout << "##  Mesh::SetValues2 : nnode " << nnode << "   size " << v.size() << endl;
+    //assert( nnode == static_cast<int>(v.size()) );
+    for (int k=0; k<nnode; ++k)
+    {
+        v[k] = func2( _xc[3*k], _xc[3*k+1] , _xc[3*k+2]);
+    }
+}        
+
+void Mesh::SetValues3(std::vector<double> &w, const std::function<double(double, double, double)> &func3) const
+{
+    int const nnode=Nnodes();              // number of vertices in mesh
+    cout << "##  Mesh::SetValues3 : nnode " << nnode << "   size " << w.size() << endl;
+    //assert( nnode == static_cast<int>(w.size()) );
+    for (int k=0; k<nnode; ++k)
+    {
+        w[k] = func3( _xc[3*k], _xc[3*k+1] , _xc[3*k+2]);
+    }
+}       
+*/
 
 void Mesh::Debug() const
 {
     cout << "\n ############### Debug  M E S H  ###################\n";
     cout << "\n ...............    Coordinates       ...................\n";
+    
+    
     for (int k = 0; k < _nnode; ++k)
     {
         cout << k << " : ";
         for ( int i=0; i<_ndim; ++i )
         {
-			cout << _xc[2 * k +i] << "  ";
+			cout << _xc[3 * k +i] << "  ";
 		}
         cout << endl;
     }
@@ -54,7 +91,141 @@ void Mesh::Debug() const
     }
     return;
 }
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||Periodic boundary conditions||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+std::vector<double> Mesh::getPeriodicCoordsBox_xy(std::vector<int> &idx, double xl, double xh, double yl, double yh,double zl, double zh) const
+{
+	//const double BLA = -123456;
+    std::vector<double> pCoords;// (Ndims()*idx.size(),BLA);
+    std::vector<int> pidx;
+    for(size_t k=0; k<idx.size(); k+=Ndims())
+        {
+		bool bp{true};
+		double xp = _xc[idx[k]*Ndims()+0];
+		double yp = _xc[idx[k]*Ndims()+1];
+		double zp = _xc[idx[k]*Ndims()+2];
+		if(equal(xp,xl)){
+			xp=xh;}
+		else if(equal(xp,xh)){
+			xp=xl;}
+		else if(equal(yp,yl)){
+			yp=yh;}
+		else if(equal(yp,yh)){
+			yp=yl;}
+		else {
+//			 cout<<"Not found the periodic coordinate";
+//			 assert(false);
+                bp=false;
+			 }
+			 if (bp)
+			 {
+				 pCoords.push_back(xp);
+				 pCoords.push_back(yp);
+				 pCoords.push_back(zp);
+				 pidx.push_back(idx[k]);
+		     }
+		}
+		//auto ip=find(cbegin(pCoords),cend(pCoords),BLA);
+		//assert(cend(pCoords)==ip);
+		idx=pidx;
+		//cout<<"pCoords = "<<pCoords<<endl;
+		return pCoords;
+}
 
+
+std::vector<double> Mesh::getPeriodicCoordsBox_xz(std::vector<int> &idx, double xl, double xh, double yl, double yh,double zl, double zh) const
+{
+	//const double BLA = -123456;
+    std::vector<double> pCoords;// (Ndims()*idx.size(),BLA);
+    std::vector<int> pidx;
+    for(size_t k=0; k<idx.size(); k+=Ndims())
+        {
+		bool bp{true};
+		double xp = _xc[idx[k]*Ndims()+0];
+		double yp = _xc[idx[k]*Ndims()+1];
+		double zp = _xc[idx[k]*Ndims()+2];
+		if(equal(xp,xl)){
+			xp=xh;}
+		else if(equal(xp,xh)){
+			xp=xl;}
+		else if(equal(zp,zl)){
+			zp=zh;}
+		else if(equal(zp,zh)){
+			zp=zl;}
+		else {
+//			 cout<<"Not found the periodic coordinate";
+//			 assert(false);
+                bp=false;
+			 }
+			 if (bp)
+			 {
+				 pCoords.push_back(xp);
+				 pCoords.push_back(yp);
+				 pCoords.push_back(zp);
+				 pidx.push_back(idx[k]);
+		     }
+		}
+		//auto ip=find(cbegin(pCoords),cend(pCoords),BLA);
+		//assert(cend(pCoords)==ip);
+		idx=pidx;
+		return pCoords;
+}
+std::vector<double> Mesh::getPeriodicCoordsBox_yz(std::vector<int> &idx, double xl, double xh, double yl, double yh,double zl, double zh) const
+{
+	//const double BLA = -123456;
+    std::vector<double> pCoords;// (Ndims()*idx.size(),BLA);
+    std::vector<int> pidx;
+    for(size_t k=0; k<idx.size(); k+=Ndims())
+        {
+		bool bp{true};
+		double xp = _xc[idx[k]*Ndims()+0];
+		double yp = _xc[idx[k]*Ndims()+1];
+		double zp = _xc[idx[k]*Ndims()+2];
+		if(equal(yp,yl)){
+			yp=yh;}
+		else if(equal(yp,yh)){
+			yp=yl;}
+		else if(equal(zp,zl)){
+			zp=zh;}
+		else if(equal(zp,zh)){
+			zp=zl;}
+		else {
+//			 cout<<"Not found the periodic coordinate";
+//			 assert(false);
+                bp=false;
+			 }
+			 if (bp)
+			 {
+				 pCoords.push_back(xp);
+				 pCoords.push_back(yp);
+				 pCoords.push_back(zp);
+				 pidx.push_back(idx[k]);
+		     }
+		}
+		//auto ip=find(cbegin(pCoords),cend(pCoords),BLA);
+		//assert(cend(pCoords)==ip);
+		idx=pidx;
+		return pCoords;
+}
+double Mesh::getPeriodicValue(int k, std::vector<double> const &pCoords, std::vector<double> const &u) const
+{
+	    double xp = pCoords[Ndims()*k+0];
+        double yp = pCoords[Ndims()*k+1];
+        double zp = pCoords[Ndims()*k+2];
+        
+        int imin = -1; double dmin = 1e30;
+        
+        for(size_t i=0; i<_xc.size();i+=Ndims())
+            {
+			double disp = dist(xp,xp,zp,_xc[i+0],_xc[i+1],_xc[i+2]);
+			if(dmin>disp)
+			    {
+					imin = i/Ndims();
+					dmin = disp;
+				}
+			}
+			return u[imin];
+}
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||Periodic boundary conditions||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 void Mesh::Write_ascii_matlab(std::string const &fname, std::vector<double> const &v) const
 {
     assert(Nnodes() ==  static_cast<int>(v.size()));  // fits vector length to mesh information?
@@ -203,7 +374,7 @@ void Mesh::PermuteVertices(std::vector<int> const& old2new)
 
  void Mesh::Write_ascii_paraview(std::string const &fname, std::vector<double> const &v) const
 {
-    assert(Nnodes() ==  static_cast<int>(v.size()));  // fits vector length to mesh information?
+    //assert(3*Nnodes()+14 ==  static_cast<int>(v.size()));  // fits vector length to mesh information?
 
     ofstream fout(fname);                             // open file ASCII mode
     if ( !fout.is_open() )
@@ -451,6 +622,7 @@ void Mesh::liftToQuadratic()
             SetNverticesElement(6);
             SetNdofsElement(NverticesElement());
         }
+        assert(false);
     }
     else if(3==Ndims())
     {
@@ -505,7 +677,9 @@ void Mesh::liftToQuadratic()
         int const v0 = ia_p2.at(idx2+0);          // vertices of P1
         int const v1 = ia_p2.at(idx2+1);
         int const v2 = ia_p2.at(idx2+2);
+        //cout << v0 << "  " << v1 << "  " << v2 << "  ::  " << idx2 << "  " << ia_p2.size() <<"\n";
         
+        // GH: not correct in 2D!
         ia_p2.at(idx2+4) = appendMidpoint(v0,v1,xc_p2);
         ia_p2.at(idx2+5) = appendMidpoint(v1,v2,xc_p2);
         ia_p2.at(idx2+6) = appendMidpoint(v2,v0,xc_p2);
@@ -518,6 +692,7 @@ void Mesh::liftToQuadratic()
             ia_p2.at(idx2+9) = appendMidpoint(v2,v3,xc_p2);
         }
     }
+    
     
     xc_p2.shrink_to_fit();
     SetNnode(xc_p2.size()/Ndims()); 

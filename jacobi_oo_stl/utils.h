@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include <cmath>
 #include <iomanip>       // setw
 #include <iostream>
 #include <map>
@@ -182,6 +183,12 @@ void sortAscending_2(std::vector<T> & x)
     {
         if (x[k]>x[k+1]) { std::swap(x[k],x[k+1]); }
     }
+}
+
+template <class T>
+T dist(T x1, T y1, T z1, T x2, T y2, T z2)
+{
+	return std::hypot(x1-x2,y1-y2,z1-z2); 
 }
 
 

@@ -12,7 +12,7 @@ pdegplot(model)
 %pdegplot(model,'FaceLabels','on')
 
 %mesh_Hmax = generateMesh(model,'Hmax',0.5);
-mesh_Hmax = generateMesh(model,'Hmax',1,'GeometricOrder','linear');
+mesh_Hmax = generateMesh(model,'Hmax',0.2,'GeometricOrder','linear');
 
 [p,e,t] = meshToPet(mesh_Hmax);
 pdemesh(mesh_Hmax)

@@ -111,8 +111,8 @@ vector<double> getAbsError(vector<double> const& x, vector<double> const& y)
     
     for (size_t k=0; k<size(err); ++k)
     {
-        //err[k] = std::abs( x[k]-y[k] );
-        err[k] = x[k]-y[k];
+        err[k] = std::abs( x[k]-y[k] );
+        //err[k] = x[k]-y[k];
     }
     return err;
 }
@@ -153,15 +153,28 @@ bool vectorsAreEqual(vector<double> const& x, vector<double> const& y, double ep
     }
     return bb;
 }
-
-
-
-
-
-
 //******************************************************************************
 
-
+/*
+double Error_Newton_Step(vector<double> const& r_old_m,vector<double> const& u_old_m,vector<double> const& v_old_m,vector<double> const& w_old_m,vector<double> const& r,vector<double> const& u,vector<double> const& v,vector<double> const& w)
+{
+	double error; double error_r; double error_u; double error_v; double error_w;
+	
+	for(int i=0; i<r.size(); ++i)
+	    {
+			error_r += (r[i]-r_old_m[i])*(r[i]-r_old_m[i]);
+		}
+	for(int j=0; j<u.size(); ++j)
+	    {
+			error_u += (u[j]-u_old_m[j])*(u[j]-u_old_m[j]);
+			error_v += (v[j]-v_old_m[j])*(v[j]-v_old_m[j]);
+			error_w += (w[j]-w_old_m[j])*(w[j]-w_old_m[j]);
+		}
+		
+	error = sqrt(error_r) + sqrt(error_u)+ sqrt(error_v) + sqrt(error_w);
+		
+	return error;
+}*/
 
 
 

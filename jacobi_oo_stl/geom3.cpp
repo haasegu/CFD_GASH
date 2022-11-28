@@ -94,7 +94,7 @@ gMesh_Hierarchy::gMesh_Hierarchy(Mesh const &cmesh, int const nlevel)
 }
 */
 
-std::vector<int>  Mesh_3d_4_matlab::Index_DirichletNodes_Box(double xl, double xh, double yl, double yh,double zl, double zh )
+std::vector<int>  Mesh_3d_4_matlab::Index_DirichletNodes_Box1(double xl, double xh, double yl, double yh,double zl, double zh )
 {
 	auto x=GetCoords();
 	std::vector<int> iDir;
@@ -168,7 +168,7 @@ Mesh_3d_P1_matlab::Mesh_3d_P1_matlab(string const &fname)
     return;
 }
 
-
+/*
 std::vector<int>  Mesh_3d_P1_matlab::Index_DirichletNodes_Box(double xl, double xh, double yl, double yh,double zl, double zh )
 {
 	auto x=GetCoords();
@@ -184,7 +184,7 @@ std::vector<int>  Mesh_3d_P1_matlab::Index_DirichletNodes_Box(double xl, double 
 	return iDir;
 	
 }
-
+*/
 // ####################################################################
 
 Mesh_3d_P2_matlab::Mesh_3d_P2_matlab(string const &fname)
@@ -271,6 +271,7 @@ void Mesh_3d_P2_matlab::deriveMeshFromP1(Mesh_3d_P1_matlab const &p1)
 
 int appendMidpoint(int v1, int v2, vector<double> &xc, int ndim)
 {
+//	cout << "appendMidpoint\n";
     assert(3==ndim);            // works also for 2D
     int const i1{v1*ndim};
     int const i2{v2*ndim};
@@ -291,13 +292,14 @@ int appendMidpoint(int v1, int v2, vector<double> &xc, int ndim)
 int getVertexIndex(vector<double> const &xm, vector<double> const &xc, int ndim)
 {
     assert(ndim==static_cast<int>(xm.size()));            // works also for 2D
+//    cout << "getVertexIndex" << endl;
     auto xcStart{cbegin(xc)};
     int idx=-1;
     size_t k=0;
     while (idx<0 && k<xc.size())
     {
-        if ( equal( cbegin(xm),cend(xm), xcStart+ndim*k ) )
-        //if ( equal( cbegin(xm),cend(xm), xcStart+ndim*k, [](double a, double b){return equal(a,b);} ) )
+        //if ( equal( cbegin(xm),cend(xm), xcStart+k ) )
+        if ( equal( cbegin(xm),cend(xm), xcStart+k, [](double a, double b){return equal(a,b);} ) )
         {
             idx = static_cast<int>(k)/ndim;
         }
@@ -308,7 +310,7 @@ int getVertexIndex(vector<double> const &xm, vector<double> const &xc, int ndim)
 
 
 
-std::vector<int>  Mesh_3d_P2_matlab::Index_DirichletNodes_Box(double xl, double xh, double yl, double yh,double zl, double zh )
+std::vector<int>  Mesh_3d_P2_matlab::Index_DirichletNodes_Box1(double xl, double xh, double yl, double yh,double zl, double zh )
 {
 	auto x=GetCoords();
 	std::vector<int> iDir;

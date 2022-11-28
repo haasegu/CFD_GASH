@@ -35,7 +35,7 @@ public:
         return std::vector<int>();        
 	}
 	
-	std::vector<int> Index_DirichletNodes_Box(double xl, double xh, double yl, double yh,double zl, double zh );
+	std::vector<int> Index_DirichletNodes_Box1(double xl, double xh, double yl, double yh,double zl, double zh );
 };
 
 /**
@@ -67,7 +67,7 @@ public:
         return std::vector<int>();
 	}
 	
-	std::vector<int> Index_DirichletNodes_Box(double xl, double xh, double yl, double yh,double zl, double zh );
+	std::vector<int> Index_DirichletNodes_Box1(double xl, double xh, double yl, double yh,double zl, double zh );
 };
 
 /**
@@ -105,7 +105,7 @@ public:
         return std::vector<int>();	
     }
 	
-	std::vector<int> Index_DirichletNodes_Box(double xl, double xh, double yl, double yh,double zl, double zh );
+	std::vector<int> Index_DirichletNodes_Box1(double xl, double xh, double yl, double yh,double zl, double zh );
 };
 
 ///**

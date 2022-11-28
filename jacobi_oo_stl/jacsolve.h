@@ -30,7 +30,7 @@ void JacobiSolve(CRS_Matrix const &SK, std::vector<double> const &f, std::vector
  * @param[in] omega	relaxation parameter.
  * @param[in] zero	initial solution @p u is assumed to be zero.
 */
-void JacobiSmoother(Matrix const &SK1, std::vector<double> const &f, std::vector<double> &u,
+void JacobiSmoother(Matrix const &SK, std::vector<double> const &f, std::vector<double> &u,
                     std::vector<double> & r, int nsmooth=1, double const omega=1.0, bool zero=false);
 
 /**
@@ -45,7 +45,7 @@ void JacobiSmoother(Matrix const &SK1, std::vector<double> const &f, std::vector
  * @param[out] w	accumulated local vector storing the correction.
  * @param[in] omega	relaxation parameter.
 */
-void DiagPrecond(Matrix const &SK1, std::vector<double> const &r, std::vector<double> &w,
+void DiagPrecond(Matrix const &SK, std::vector<double> const &r, std::vector<double> &w,
                  double const omega=1.0);
 
 

@@ -4,7 +4,7 @@
 #include <iostream>
 #include <tuple>
 #include <vector>
-
+using namespace std;
 /** @brief  Element-wise vector divison x_k = y_k/z_k.
  *
  * @param[out] x  target vector
@@ -113,3 +113,4 @@ bool vectorsAreEqual(
     std::vector<double> const& y,
     double eps=1e-6, int nlarge=0)           ;
 
+//double Error_Newton_Step(vector<double> const& r_old_m,vector<double> const& u_old_m,vector<double> const& v_old_m,vector<double> const& w_old_m,vector<double> const& r,vector<double> const& u,vector<double> const& v,vector<double> const& w);
