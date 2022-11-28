@@ -1,0 +1,5 @@
+// Jan 15, 2019
+
+geom.h:75        void SetValues(std::vector<double> &v) const;  // GH: TODO with functor
+Set vector values using a functor ff(x,y).
+ See solution in Progs/cds

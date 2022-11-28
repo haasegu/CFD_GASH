@@ -1,0 +1,55 @@
+#
+# use GNU-Compiler tools
+COMPILER=GCC_
+# COMPILER=GCC_SEQ_
+# alternatively from the shell
+# export COMPILER=GCC_
+# or, alternatively from the shell
+# make COMPILER=GCC_
+
+MAIN = gh_main
+SOURCES = ${MAIN}.cpp vdop.cpp geom.cpp geom3.cpp\
+	getmatrix.cpp getmatrix_2.cpp jacsolve.cpp userset.cpp  \
+    elements.cpp
+# 	dexx.cpp debugd.cpp skalar.cpp  vecaccu.cpp accudiag.cpp
+
+OBJECTS = $(SOURCES:.cpp=.o)
+
+PROGRAM	= ${MAIN}.${COMPILER}
+
+# uncomment the next to lines for debugging and detailed performance analysis
+CXXFLAGS += -g
+# -pg slows down the code on my laptop when using CLANG_
+#LINKFLAGS += -pg
+#CXXFLAGS += -Q --help=optimizers
+#CXXFLAGS += -fopt-info
+
+include ../${COMPILER}default.mk
+
+#############################################################################
+# additional specific cleaning in this directory
+clean_all::
+	@rm -f t.dat*
+
+
+#############################################################################
+# special testing
+# NPROCS	= 4
+#
+TFILE	= t.dat
+# TTMP	= t.tmp
+#
+graph: $(PROGRAM)
+# 	@rm -f $(TFILE).*
+	# next two lines only sequentially
+	./$(PROGRAM)
+	@mv  $(TFILE).000 $(TFILE)
+# 	$(MPIRUN) $(MPIFLAGS) -np $(NPROCS) $(PROGRAM)
+# 	@echo " "; echo "Manipulate data for graphics."; echo " "
+# 	@cat $(TFILE).* > $(TTMP)
+# 	@sort -b -k 2    $(TTMP)   -o $(TTMP).1
+# 	@sort -b -k 1    $(TTMP).1 -o $(TTMP).2
+# 	@awk  -f nl.awk  $(TTMP).2  > $(TFILE)
+# 	@rm -f $(TTMP).* $(TTMP) $(TFILE).*
+#
+	-gnuplot jac.dem

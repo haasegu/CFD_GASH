@@ -1,0 +1,9 @@
+
+ There are 1 processes running.
+ 
+Intervalls: 100 x 100
+
+ Start Jacobi solver for 10201 d.o.f.s
+aver. Jacobi rate :  0.997922  (1000 iter)
+final error: 0.124971 (rel)   0.000194029 (abs)
+JacobiSolve: timing in sec. : 0.155127

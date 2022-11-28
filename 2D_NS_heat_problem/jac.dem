@@ -1,0 +1,21 @@
+set style data lines
+set parametric
+set hidden3d
+set nokey
+#set xrange [0:1]
+#set yrange [-0:1]
+#set zrange [-2:2]
+set cntrparam levels 15
+set contour base
+set title "Solution"
+xrot=60
+zrot=0
+splot "t.dat"
+#splot "lsg.gnu"
+pause -1 "Press ENTER to continue."
+#load "gnuplot.rot"
+#set title ""
+#set autosc
+#set nohidden
+#set nopara
+#set key
